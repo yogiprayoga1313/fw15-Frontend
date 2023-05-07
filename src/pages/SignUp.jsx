@@ -1,5 +1,5 @@
-// import { VitePluginFonts } from "vite-plugin-fonts"
 import { Link } from "react-router-dom"
+import { Helmet } from "react-helmet"
 // import Login from "./Login"
 import LogoWetick from "../Asset/Wetick-logo.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
@@ -7,15 +7,22 @@ import LogoHumanProfil from "../Asset/new-animation.png"
 const SignUp = () => {
     return (
         <>
+            {/* helmet */}
+            <div>
+                <Helmet>
+                    <title>Sign Up</title>
+                    <meta name="description" content="Ini adalah deskripsi halaman saya" />
+                </Helmet>
+            </div>
             <div className="flex h-screen justify-center items-center">
-               <div className='flex-1 bg-[#748DA6] w-full h-full'>
-               <div className="flex justify-center items-center h-screen">
-                    <img src={LogoHumanProfil} alt="" />
+                <div className='flex-1 bg-[#748DA6] w-full h-full'>
+                    <div className="flex justify-center items-center h-screen">
+                        <img src={LogoHumanProfil} alt="" />
+                    </div>
                 </div>
-               </div>
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
                     <img src={LogoWetick} alt="" />
-                    <div className='flex flex-col mb-10 gap-4'>
+                    <div className='flex flex-col mb-10 gap-4 w-60'>
                         <div className="font-semibold text-[20px]">Sign Up</div>
                         <div className="text-sm">Already have an account? <span className='text-blue-800 font-semibold'><Link to='/Login'>Log In</Link></span></div>
                     </div>
