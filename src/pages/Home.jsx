@@ -2,18 +2,9 @@ import React from "react"
 import axios from "axios"
 import moment from "moment/moment"
 import { Link } from "react-router-dom"
+import { Helmet } from "react-helmet"
 import LogoWetick from "../Asset/Wetick-logo.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
-import { Helmet } from "react-helmet"
-// import eventBanner from "../Asset/bitmap.png"
-// import imagesCityJkt from "../Asset/jkt.png"
-// import imagesCityBdg from "../Asset/bdg.png"
-// import imagesCityBali from "../Asset/bali.png"
-// import imagesCitySolo from "../Asset/solo.png"
-// import imagesCityAceh from "../Asset/aceh.png"
-// import imagesCityYk from "../Asset/jogja.png"
-// import imagesCitySmg from "../Asset/smg.png"
-// import BackgroundImg1 from "../Asset/background-img-1.png"
 import { FaSearch } from "react-icons/fa"
 import { GrLocation } from "react-icons/Gr"
 import { AiOutlineArrowRight } from "react-icons/ai"
@@ -42,7 +33,6 @@ const Home = () => {
     React.useEffect(() => {
         async function getDataLocation() {
             const { data } = await axios.get('http://localhost:8888/citites')
-            // console.log(data, "dataku disini")
             setLocation(data.results)
         }
         getDataLocation()
@@ -51,33 +41,20 @@ const Home = () => {
     React.useEffect(() => {
         async function getEventscategory() {
             try {
-                const { data } = await axios.get(`http://localhost:8888/events?categories=${activeTabCategory}&limit=3&page=1`)
-                // console.log(data, activeTab,"dataku disini")
+                const { data } = await axios.get(`http://localhost:8888/events?categories=${activeTabCategory}&page=${tabEvents}&limit=3`)
                 setTotalPage(data.totalPage)
-                setEventCategory(data.results);
+                setEventCategory(data.results)
             } catch (error) {
                 console.error(error);
             }
         }
         getEventscategory();
-    }, [activeTabCategory]);
+    }, [activeTabCategory, tabEvents]);
 
     const handleTabClick = (category) => {
-        setActiveTabCategory(category);
+        setActiveTabCategory(category)
+        setTabEvents(1)
     };
-
-    React.useEffect(() => {
-        async function getEventsCategory() {
-            try {
-                const { data } = await axios.get(`http://localhost:8888/events?categories=${activeTabCategory}&page=${tabEvents}&limit=3`)
-                // console.log(data)
-                setEventCategory(data.results)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getEventsCategory()
-    }, [tabEvents, activeTabCategory])
 
     const handlePrevPage = () => {
         if (tabEvents > 1) {
@@ -92,10 +69,10 @@ const Home = () => {
 
     };
 
+
     React.useEffect(() => {
         async function getPartners() {
             const { data } = await axios.get('http://localhost:8888/partners')
-            // console.log(data)
             setPartners(data.results)
         }
         getPartners()
@@ -206,15 +183,17 @@ const Home = () => {
                         {events.map(event => {
                             return (
                                 <>
-                                    <div className='inline-flex'>
-                                        <div className="w-64 rounded-2xl overflow-hidden relative text-white" key={event.id}>
-                                            <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
-                                            <div className='absolute bottom-0 bg-gradient-to-t from-black/[0.7] to-black/[0.0] w-full p-8 flex flex-col gap-3'>
-                                                <div>{moment(event.date).format('DD-MM-YYYY')}</div>
-                                                <div className='text-xl font-bold'>{event.title}</div>
+                                    <Link to={`/events/${event.id}`}>
+                                        <div className='inline-flex'>
+                                            <div className="w-64 rounded-2xl overflow-hidden relative text-white" key={event.id}>
+                                                <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
+                                                <div className='absolute bottom-0 bg-gradient-to-t from-black/[0.7] to-black/[0.0] w-full p-8 flex flex-col gap-3'>
+                                                    <div>{moment(event.date).format('DD-MM-YYYY')}</div>
+                                                    <div className='text-xl font-bold'>{event.title}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </>
                             )
                         })}
@@ -241,7 +220,7 @@ const Home = () => {
                                     <>
                                         <div className='flex flex-col gap-5 justify-center items-center'>
                                             <div key={location.id}></div>
-                                            <img src={`http://localhost:8888/uploads/${location.picture}`} alt="" />
+                                            <img className="w-[230px] h-[140px] rounded-[15px]" src={`http://localhost:8888/uploads/${location.picture}`} alt="" />
                                             <div>{location.name}</div>
                                         </div>
                                     </>
@@ -294,15 +273,17 @@ const Home = () => {
                                     {eventsCategory.map(event => {
                                         return (
                                             <>
-                                                <div className='inline-flex'>
-                                                    <div className='w-64 rounded-2xl overflow-hidden relative text-white' key={event.id}>
-                                                        <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
-                                                        <div className='absolute bottom-0 bg-primary w-full h-[150px] min-h-1 p-8 flex flex-col gap-3'>
-                                                            <div>{moment(event.date).format('DD-MM-YYYY')}</div>
-                                                            <div className='text-2xl font-bold'>{event.title}</div>
+                                                <Link  to={`/events/${event.id}`}>
+                                                    <div className='inline-flex'>
+                                                        <div className='w-64 rounded-2xl overflow-hidden relative text-white' key={event.id}>
+                                                            <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
+                                                            <div className='absolute bottom-0 bg-primary w-full h-[150px] min-h-1 p-8 flex flex-col gap-3'>
+                                                                <div>{moment(event.date).format('DD-MM-YYYY')}</div>
+                                                                <div className='text-2xl font-bold'>{event.title}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </Link>
                                             </>
                                         )
                                     })}
