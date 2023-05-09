@@ -11,6 +11,8 @@ import { AiOutlineArrowRight } from "react-icons/ai"
 import { TbPointFilled } from "react-icons/tb"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 import { AiOutlineMinus } from "react-icons/ai"
+import http from "../helpers/http"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
     const [events, setEvents] = React.useState([])
@@ -21,18 +23,40 @@ const Home = () => {
     const Categories = ['Music', 'Arts', 'Outdoors', 'Workshop', 'Sport', 'Festival', 'Fashion']
     const [partners, setPartners] = React.useState([])
     const [totalPage, setTotalPage] = React.useState()
+    const [profile, setProfile] = React.useState({})
+    const [token, setToken] = React.useState('')
+    const navigate = useNavigate()
+
+
     React.useEffect(() => {
         async function getDataEvents() {
             const { data } = await axios.get('http://localhost:8888/events?limit=8')
             setEvents(data.results)
         }
         getDataEvents()
+
+        async function getDataProfile() {
+            const token = window.localStorage.getItem('token')
+            const { data } = await http(token).get('/profile')
+            console.log(data)
+            setProfile(data.results)
+        }
+        getDataProfile()
+        if (window.localStorage.getItem('token')) {
+            setToken(window.localStorage.getItem('token'))
+        }
     }, [])
+
+    const doLogout = () => {
+        window.localStorage.removeItem('token')
+        navigate('/login')
+    }
 
 
     React.useEffect(() => {
         async function getDataLocation() {
             const { data } = await axios.get('http://localhost:8888/citites')
+            console.log(data)
             setLocation(data.results)
         }
         getDataLocation()
@@ -100,10 +124,20 @@ const Home = () => {
                         <div><Link>Create Event</Link></div>
                         <div><Link>Location</Link></div>
                     </div>
-                    <div className='flex justify-center items-center gap-5'>
-                        <button className="btn btn-ghost normal-case text-black w-[169px] "><Link to='/Login'>Log In</Link></button>
-                        <button className="btn btn-primary normal-case text-white w-[169px] "><Link to='/SignUp'>Sign Up</Link></button>
-                    </div>
+                    {token ?
+                        <div className="text-black flex justify-center items-center gap-10">
+                            <div className="flex justify-center items-center gap-3">
+                                <div className="border-2 border-indigo-600 rounded-full p-[4px]">
+                                    <Link to='/profile'><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} /></Link>
+                                </div>
+                                <div className="text-xl font-semibold"><Link to='/profile'>{profile?.fullName}</Link></div>
+                            </div>
+                            <button onClick={doLogout} className="btn btn-primary normal-case text-white">Log Out</button>
+                        </div> :
+                        <div className="flex justify-center items-center gap-5">
+                            <Link className="btn btn-ghost normal-case text-black w-[169px] " to='/Login'>Log In</Link>
+                            <Link className="btn btn-primary normal-case text-white w-[169px] " to='/Login'>Sign Up</Link>
+                        </div>}
                 </div>
             </nav>
 
@@ -183,12 +217,12 @@ const Home = () => {
                         {events.map(event => {
                             return (
                                 <>
-                                    <Link to={`/events/${event.id}`}>
+                                    <Link to={`/events/${event.id}`} key={event.id}>
                                         <div className='inline-flex'>
-                                            <div className="w-64 rounded-2xl overflow-hidden relative text-white" key={event.id}>
+                                            <div className="w-64 rounded-2xl overflow-hidden relative text-white" >
                                                 <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
                                                 <div className='absolute bottom-0 bg-gradient-to-t from-black/[0.7] to-black/[0.0] w-full p-8 flex flex-col gap-3'>
-                                                    <div>{moment(event.date).format('DD-MM-YYYY')}</div>
+                                                    <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
                                                     <div className='text-xl font-bold'>{event.title}</div>
                                                 </div>
                                             </div>
@@ -273,12 +307,12 @@ const Home = () => {
                                     {eventsCategory.map(event => {
                                         return (
                                             <>
-                                                <Link  to={`/events/${event.id}`}>
+                                                <Link to={`/events/${event.id}`}>
                                                     <div className='inline-flex'>
                                                         <div className='w-64 rounded-2xl overflow-hidden relative text-white' key={event.id}>
                                                             <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
                                                             <div className='absolute bottom-0 bg-primary w-full h-[150px] min-h-1 p-8 flex flex-col gap-3'>
-                                                                <div>{moment(event.date).format('DD-MM-YYYY')}</div>
+                                                                <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
                                                                 <div className='text-2xl font-bold'>{event.title}</div>
                                                             </div>
                                                         </div>

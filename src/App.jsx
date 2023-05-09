@@ -18,7 +18,7 @@ function App(){
         <Route path="/login" element={<Login />}></Route>
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/events/:id" element={<Events />}></Route>
-        <Route path="/profile/:id" element={<Profile/>}></Route>
+        <Route path="/profile" element={<Profile/>}></Route>
         </Routes>
         </BrowserRouter>
     )

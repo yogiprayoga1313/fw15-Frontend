@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet"
 // import Login from "./Login"
 import LogoWetick from "../Asset/Wetick-logo.png"
