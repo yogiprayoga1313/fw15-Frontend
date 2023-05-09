@@ -117,7 +117,7 @@ const Home = () => {
             <nav className='font-poppins'>
                 <div className='flex justify-between px-12 my-[15px]'>
                     <div className='flex justify-center items-center'>
-                        <img src={LogoWetick} alt="" />
+                        <Link to='/'><img src={LogoWetick} alt="" /></Link>
                     </div>
                     <div className='flex gap-12 justify-center items-center font-semibold'>
                         <div><Link to='/'>Home</Link></div>
@@ -136,7 +136,7 @@ const Home = () => {
                         </div> :
                         <div className="flex justify-center items-center gap-5">
                             <Link className="btn btn-ghost normal-case text-black w-[169px] " to='/Login'>Log In</Link>
-                            <Link className="btn btn-primary normal-case text-white w-[169px] " to='/Login'>Sign Up</Link>
+                            <Link  className="btn btn-primary normal-case text-white w-[169px] " to='/signUp'>Sign Up</Link>
                         </div>}
                 </div>
             </nav>

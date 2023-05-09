@@ -11,10 +11,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {
     const location = useLocation()
-    const navigate = useNavigate() 
+    const navigate = useNavigate()
     const [errMessage, setErrMessage] = React.useState('')
-    const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage )
-    const [token, setToken] =React.useState('')
+    const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
+    const [token, setToken] = React.useState('')
     const doLogin = async (event) => {
         event.preventDefault()
         setErrMessage('')
@@ -34,11 +34,11 @@ const Login = () => {
         }
     }
 
-    React.useEffect(()=>{
-        if(token){
+    React.useEffect(() => {
+        if (token) {
             navigate('/')
         }
-    },[token, navigate])
+    }, [token, navigate])
 
     return (
         <>
@@ -56,7 +56,7 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
-                    <img src={LogoWetick} alt="" />
+                    <Link to='/'><img src={LogoWetick} alt="" /></Link>
                     <div>
                         <form onSubmit={doLogin} className="flex-col flex gap-3">
                             <div className='flex flex-col mb-10 gap-4 w-60'>
@@ -64,16 +64,16 @@ const Login = () => {
                                 <div className="text-sm">Hi, Welcome back to Urticket! </div>
                             </div>
                             {errMessage && (<div>
-                                <div className="alert alert-error danger">{errMessage}</div>
+                                <div className="alert alert-error danger text-[11px]">{errMessage}</div>
                             </div>)}
                             {warningMessage && (<div>
-                                <div className="alert alert-warning danger">{warningMessage}</div>
+                                <div className="alert alert-warning danger text-[11px]">{warningMessage}</div>
                             </div>)}
                             <div>
-                                <input onFocus={()=>setWarningMessage('') || setErrMessage('')} type="text" placeholder="Email" name="email" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setWarningMessage('') || setErrMessage('')} type="text" placeholder="Email" name="email" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div>
-                                <input onFocus={()=>setWarningMessage('') || setErrMessage('')} type="password" placeholder="Password" name="password" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setWarningMessage('') || setErrMessage('')} type="password" placeholder="Password" name="password" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div className="flex gap-3 mt-5 justify-end text-sm text-blue-800 font-semibold">
                                 <Link to='/ForgotPassword'>Forgot Password?</Link>

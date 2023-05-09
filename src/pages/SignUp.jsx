@@ -1,10 +1,49 @@
 import { Link } from "react-router-dom"
-import { Helmet } from "react-helmet"
-// import Login from "./Login"
+import { Helmet } from "react-helmet";
 import LogoWetick from "../Asset/Wetick-logo.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
+// import { FcGoogle } from "react-icons/fc";
+// import { FaFacebook } from "react-icons/fa";
+import React from "react";
+import http from "../helpers/http";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SignUp = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
+    const [errMessage, setErrMessage] = React.useState('')
+    const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
+    const [token, setToken] = React.useState('')
+    const doSignUp = async (event) => {
+        event.preventDefault()
+        setErrMessage('')
+        setWarningMessage('')
+        try {
+            const { value: fullName } = event.target.fullName
+            const { value: email } = event.target.email
+            const { value: password } = event.target.password
+            const { value: confirmPassword } = event.target.confirmPassword
+            const body = new URLSearchParams({ fullName, email, password, confirmPassword }).toString()
+            if(password !== confirmPassword){
+                setErrMessage(errMessage)
+            }
+            const { data } = await http().post('http://localhost:8888/auth/register', body)
+            console.log(data)
+            window.localStorage.setItem('token', data.results.token)
+            setToken(data.results.token)
+        } catch (err) {
+            const message = err?.response?.data?.message
+            if (message) {
+                setErrMessage(message)
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        if (token) {
+            navigate('/login')
+        }
+    }, [token, navigate])
     return (
         <>
             {/* helmet */}
@@ -21,34 +60,38 @@ const SignUp = () => {
                     </div>
                 </div>
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
-                    <img src={LogoWetick} alt="" />
+                    <Link to='/'><img src={LogoWetick} alt="" /></Link>
                     <div className='flex flex-col mb-10 gap-4 w-60'>
                         <div className="font-semibold text-[20px]">Sign Up</div>
                         <div className="text-sm">Already have an account? <span className='text-blue-800 font-semibold'><Link to='/Login'>Log In</Link></span></div>
                     </div>
                     <div>
-                        <form className="flex-col flex gap-3">
+                        <form onSubmit={doSignUp} className="flex-col flex gap-3">
                             <div>
-                                <input type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setErrMessage('')}  name="fullName" type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div>
-                                <input type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setErrMessage('')}  name="email" type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div>
-                                <input type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setErrMessage('')} name="password" type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div>
-                                <input type="password" placeholder="Confirm Password" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setErrMessage('')} name="confirmPassword" type="password" placeholder="Confirm Password" className="input input-bordered w-full max-w-xs" />
+                            </div>
+                            {errMessage && (<div>
+                                <div className="alert alert-error danger text-[11px]">{errMessage}</div>
+                            </div>)}
+                            <div className="flex gap-3 mt-5">
+                                <input type="checkbox" name="" id="" />
+                                <div className='text-sm w-52'>Accept terms and condition</div>
+                            </div>
+                            <div className="mt-5">
+                                <button className="btn normal-case btn-primary btn-block text-white">Sign Up</button>
                             </div>
                         </form>
                     </div>
-                    <div className="flex gap-3 mt-5">
-                        <input type="checkbox" name="" id="" />
-                        <div className='text-sm w-52'>Accept terms and condition</div>
-                    </div>
-                    <div className="mt-5">
-                        <button className="btn normal-case btn-primary btn-block text-white">Sign Up</button>
-                    </div>
+
                 </div>
             </div>
         </>

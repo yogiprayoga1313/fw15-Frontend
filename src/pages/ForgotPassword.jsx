@@ -1,15 +1,16 @@
 import { Helmet } from "react-helmet"
+import { Link } from "react-router-dom"
 // import Login from "./Login"
 import LogoWetick from "../Asset/Wetick-logo.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
 
 
 const ForgotPassword = () => {
-    return(
+    return (
         <>
 
-        {/* helmet */}
-        <div>
+            {/* helmet */}
+            <div>
                 <Helmet>
                     <title>Forgot Password</title>
                     <meta name="description" content="Ini adalah deskripsi halaman saya" />
@@ -22,7 +23,7 @@ const ForgotPassword = () => {
                     </div>
                 </div>
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
-                    <img src={LogoWetick} alt="" />
+                    <Link to='/'><img src={LogoWetick} alt="" /></Link>
                     <div className='flex flex-col mb-10 gap-4 w-60'>
                         <div className="font-semibold text-[20px]">Forgot Password</div>
                         <div className="text-sm">You’ll get mail soon on your email</div>
