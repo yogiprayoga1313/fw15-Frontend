@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom"
-import { Helmet } from "react-helmet";
+import http from '../helpers/http';
+import React from 'react';
+import axios from 'axios';
 import LogoWetick from "../Asset/Wetick-logo.png"
-import LogoHumanProfil from "../Asset/new-animation.png"
-import React from "react";
-import http from "../helpers/http";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock } from "react-icons/fa"
 import { BsFillCreditCardFill } from "react-icons/bs"
 import { AiTwotoneEdit } from 'react-icons/ai'

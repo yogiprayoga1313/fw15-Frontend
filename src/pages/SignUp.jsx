@@ -14,6 +14,14 @@ const SignUp = () => {
     const [errMessage, setErrMessage] = React.useState('')
     const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
     const [token, setToken] = React.useState('')
+    const [checkedBox, setCheckedBox] = React.useState(false);
+    const [buttonDisabled, setButtonDisabled] = React.useState(true);
+
+    const handleCheckBoxChange = (event) => {
+        setCheckedBox(event.target.checked);
+        setButtonDisabled(!event.target.checked);
+    };
+
     const doSignUp = async (event) => {
         event.preventDefault()
         setErrMessage('')
@@ -24,10 +32,10 @@ const SignUp = () => {
             const { value: password } = event.target.password
             const { value: confirmPassword } = event.target.confirmPassword
             const body = new URLSearchParams({ fullName, email, password, confirmPassword }).toString()
-            if(password !== confirmPassword){
+
+            if (password !== confirmPassword) {
                 setErrMessage(errMessage)
-            }
-            const { data } = await http().post('http://localhost:8888/auth/register', body)
+            } const { data } = await http().post('http://localhost:8888/auth/register', body)
             console.log(data)
             window.localStorage.setItem('token', data.results.token)
             setToken(data.results.token)
@@ -68,10 +76,10 @@ const SignUp = () => {
                     <div>
                         <form onSubmit={doSignUp} className="flex-col flex gap-3">
                             <div>
-                                <input onFocus={() => setErrMessage('')}  name="fullName" type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setErrMessage('')} name="fullName" type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div>
-                                <input onFocus={() => setErrMessage('')}  name="email" type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
+                                <input onFocus={() => setErrMessage('')} name="email" type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
                             </div>
                             <div>
                                 <input onFocus={() => setErrMessage('')} name="password" type="password" placeholder="Password" className="input input-bordered w-full max-w-xs" />
@@ -82,12 +90,20 @@ const SignUp = () => {
                             {errMessage && (<div>
                                 <div className="alert alert-error danger text-[11px]">{errMessage}</div>
                             </div>)}
-                            <div className="flex gap-3 mt-5">
-                                <input type="checkbox" name="" id="" />
-                                <div className='text-sm w-52'>Accept terms and condition</div>
+                            <div >
+                                <label htmlFor="acceptTermsAndConditions" className="flex gap-3 mt-5">
+                                    <input
+                                        type="checkbox"
+                                        id="acceptTermsAndConditions"
+                                        name="acceptTermsAndConditions"
+                                        checked={checkedBox}
+                                        onChange={handleCheckBoxChange}
+                                    />
+                                    <div className='text-sm w-53'>Accept terms and conditions</div>
+                                </label>
                             </div>
                             <div className="mt-5">
-                                <button className="btn normal-case btn-primary btn-block text-white">Sign Up</button>
+                                <button type="submit" disabled={buttonDisabled} className="btn normal-case btn-primary btn-block text-white">Sign Up</button>
                             </div>
                         </form>
                     </div>
