@@ -13,6 +13,8 @@ import { AiOutlineArrowLeft } from "react-icons/ai"
 import { AiOutlineMinus } from "react-icons/ai"
 import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { logout as logoutAction } from "../redux/reducers/auth"
 
 const Home = () => {
     const [events, setEvents] = React.useState([])
@@ -24,38 +26,38 @@ const Home = () => {
     const [partners, setPartners] = React.useState([])
     const [totalPage, setTotalPage] = React.useState()
     const [profile, setProfile] = React.useState({})
-    const [token, setToken] = React.useState('')
+
+    const token = useSelector(state => state.auth.token)
+    
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
 
     React.useEffect(() => {
         async function getDataEvents() {
-            const { data } = await axios.get('http://localhost:8888/events?limit=8')
+            const { data } = await http().get('/events?limit=8')
             setEvents(data.results)
         }
         getDataEvents()
 
         async function getDataProfile() {
-            const token = window.localStorage.getItem('token')
             const { data } = await http(token).get('/profile')
             console.log(data)
             setProfile(data.results)
         }
         getDataProfile()
-        if (window.localStorage.getItem('token')) {
-            setToken(window.localStorage.getItem('token'))
-        }
+         
     }, [])
 
     const doLogout = () => {
-        window.localStorage.removeItem('token')
+        dispatch(logoutAction())
         navigate('/login')
     }
 
 
     React.useEffect(() => {
         async function getDataLocation() {
-            const { data } = await axios.get('http://localhost:8888/citites')
+            const { data } = await http().get('/citites')
             console.log(data)
             setLocation(data.results)
         }
@@ -65,7 +67,7 @@ const Home = () => {
     React.useEffect(() => {
         async function getEventscategory() {
             try {
-                const { data } = await axios.get(`http://localhost:8888/events?categories=${activeTabCategory}&page=${tabEvents}&limit=3`)
+                const { data } = await http().get(`/events?categories=${activeTabCategory}&page=${tabEvents}&limit=3`)
                 setTotalPage(data.totalPage)
                 setEventCategory(data.results)
             } catch (error) {
@@ -147,7 +149,7 @@ const Home = () => {
                     <div className='flex flex-col justify-center items-center my-[200px]'>
                         <div className='text-[64px] w-[554px] h-[192px] font-bold text-white mb-10'>Find events you love with our</div>
                         <div className='bg-white w-[600px] h-[75px] rounded-2xl flex justify-center items-center'>
-                            <div className='flex gap-7'>
+                            <form className='flex gap-7'>
                                 <div className='flex justify-center items-center gap-3'>
                                     <div><FaSearch /></div>
                                     <input className='outline-none' type="text" placeholder='Search events . . .' />
@@ -159,7 +161,7 @@ const Home = () => {
                                 <div>
                                     <button className='btn btn-secondary'><AiOutlineArrowRight size={20} /></button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div className='my-[110px]'>

@@ -1,18 +1,21 @@
 import http from '../helpers/http';
 import React from 'react';
-import axios from 'axios';
 import LogoWetick from "../Asset/Wetick-logo.png"
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock } from "react-icons/fa"
 import { BsFillCreditCardFill } from "react-icons/bs"
 import { AiTwotoneEdit } from 'react-icons/ai'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { logout as logoutAction } from '../redux/reducers/auth';
+
 
 
 const ProfilePage = () => {
     const navigate = useNavigate()
-    const [token, setToken] = React.useState('')
-    const [intitToken, setInitToken] = React.useState(false)
+    const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
     const [profile, setProfile] = React.useState({})
     const [activeTabProfile, setActiveTabProfile] = React.useState('Edit Profile')
     const [profileEdit, setProfileEdit] = React.useState({})
@@ -20,33 +23,20 @@ const ProfilePage = () => {
 
 
     React.useEffect(() => {
-        if (window.localStorage.getItem('token')) {
-            setToken(window.localStorage.getItem('token'))
-        }
-        setInitToken(true)
-    }, [])
-    const doLogout = () => {
-        window.localStorage.removeItem('token')
-        navigate('/login')
-    }
-
-    React.useEffect(() => {
-        if (intitToken) {
-            if (!token) {
-                navigate('/login', { state: { warningMessage: 'You have to login first' } })
-            }
-        }
-    }, [token, intitToken, navigate])
-
-    React.useEffect(() => {
         async function getDataProfile() {
             const { data } = await http(token).get('/profile')
-            console.log(data)
+            console.log(data)  
             setProfile(data.results)
         }
         getDataProfile()
 
-    }, [token])
+    }, [])
+
+    const doLogout = () => {
+        dispatch(logoutAction()),
+        navigate('/login')
+    }
+
     return (
         <>
             <div>

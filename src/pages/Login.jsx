@@ -6,38 +6,43 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import React from "react";
 import http from "../helpers/http";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import propTypes from 'prop-types'
+import { useDispatch, useSelector } from "react-redux";
+import { clearMessage, setErrorMessage } from "../redux/reducers/auth";
+import { asyncLoginAction } from "../redux/actions/auth";
+
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Email is invalid'),
     password: Yup.string().required('Password is invalid')
 })
 
-const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, warningMessage, errorMessage }) => {
-    
+const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => {
+    const errorMessage = useSelector(state => state.auth.errorMessage)
+    const warningMessage = useSelector(state => state.auth.warningMessage)
     return (
         <form onSubmit={handleSubmit} className="flex-col flex gap-3">
             <div className='flex flex-col mb-10 gap-4 w-60'>
                 <div className="font-semibold text-[20px]">Sign In</div>
                 <div className="text-sm">Hi, Welcome back to Urticket! </div>
             </div>
-            {errorMessage && 
-            (<div>
-                <div className="alert alert-error danger text-[11px]">{errorMessage}</div>
-            </div>)}
-            {warningMessage && 
-            (<div>
-                <div className="alert alert-warning danger text-[11px]">{warningMessage}</div>
-            </div>)}
+            {errorMessage &&
+                (<div>
+                    <div className="alert alert-error danger text-[11px]">{errorMessage}</div>
+                </div>)}
+            {warningMessage &&
+                (<div>
+                    <div className="alert alert-warning danger text-[11px]">{warningMessage}</div>
+                </div>)}
             <div className="form-control">
                 <input
                     type="text"
                     placeholder="Email"
                     name="email"
-                    className={`input input-bordered w-full  max-w-xs ${errors.email && touched.email &&'input-error'}`}
+                    className={`input input-bordered w-full  max-w-xs ${errors.email && touched.email && 'input-error'}`}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email} />
@@ -56,9 +61,9 @@ const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSu
                     onBlur={handleBlur}
                     value={values.password} />
                 {errors.password && touched.password && (
-                <label className="label">
-                    <span className="label-text-left text-error text-xs ">{errors.password}</span>
-                </label>
+                    <label className="label">
+                        <span className="label-text-left text-error text-xs ">{errors.password}</span>
+                    </label>
                 )}
             </div>
             <div className="flex gap-3 mt-5 justify-end text-sm text-blue-800 font-semibold">
@@ -78,57 +83,42 @@ const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSu
     )
 }
 
-FormLogin.propTypes ={
-    values: propTypes.objectof(propTypes.string),
-    errors: propTypes.objectof(propTypes.string),
-    touched: propTypes.objectof(propTypes.bool),
+FormLogin.propTypes = {
+    values: propTypes.string,
+    errors: propTypes.string,
+    touched: propTypes.string,
     handleBlur: propTypes.func,
     handleChange: propTypes.func,
     handleSubmit: propTypes.func,
     isSubmitting: propTypes.bool,
-    warningMessage: propTypes.string,
-    errorMessage: propTypes.string
-
 }
 
 const Login = () => {
-    const location = useLocation()
     const navigate = useNavigate()
-    const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
-    const [errorMessage, setErrorMessage] = React.useState('')
-    const [token, setToken] = React.useState('')
+    const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
+    const formError = useSelector(state => state.auth.formError)
+    // const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
+    // const [errorMessage, setErrorMessage] = React.useState('')
+
     React.useEffect(() => {
         if (token) {
             navigate('/')
         }
     }, [token, navigate])
 
-    const doLogin = async (values, {setSubmitting, setErorrs}) => {
-        setWarningMessage('')
-        setErrorMessage('')
-        try {
-            // const { value: email } = event.target.email
-            // const { value: password } = event.target.password
-            const {email, password}= values
-            const body = new URLSearchParams({ email, password }).toString()
-            const { data } = await http().post('http://localhost:8888/auth/login', body)
-            window.localStorage.setItem('token', data.results.token)
-            setToken(data.results.token)
-            setSubmitting(false)
-        } catch (err) {
-            const message = err?.response?.data?.message
-            if (message) {
-                if(err?.response?.data?.results){
-                    setErorrs({
-                        email: err.response.data.results.filter(item => item.param === "email")[0].message,
-                        password: err.response.data.results.filter(item => item.param === "email")[0].message
-                    })
-                }else{
-                    setErrorMessage(message)
-                }
-            }
+    const doLogin = async (values, { setSubmitting, setErorrs }) => {
+        dispatch(clearMessage())
+        dispatch(asyncLoginAction(values))
+        if (formError.length) {
+            setErorrs({
+                email: formError.filter(item => item.param === "email")[0].message,
+                password: formError.filter(item => item.param === "email")[0].message
+            })
         }
+        setSubmitting(false) 
     }
+    
 
     return (
         <>
@@ -148,24 +138,26 @@ const Login = () => {
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
                     <Link to='/'><img src={LogoWetick} alt="" /></Link>
                     <div>
-                        <Formik 
+                        <Formik
                             initialValues={{
-                                email:'',
-                                password:''
-                        }}
-                        validationSchema={validationSchema}
-                        onSubmit={doLogin}
+                                email: '',
+                                password: ''
+                            }}
+                            validationSchema={validationSchema}
+                            onSubmit={doLogin}
                         >
                             {(props) => (
-                                <FormLogin {...props} warningMessage={warningMessage} errorMessage={errorMessage} />
+                                <FormLogin {...props} />
                             )}
-                            
+    
                         </Formik>
                     </div>
                 </div>
             </div>
         </>
     )
+    
 }
+
 
 export default Login
