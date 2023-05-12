@@ -1,7 +1,5 @@
 import http from '../helpers/http';
 import React from 'react';
-import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
-import Footer from '../components/footer';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock, FaListAlt } from "react-icons/fa"
@@ -11,9 +9,10 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
+import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
+import Footer from '../components/footer';
 
-
-const MyBooking = () => {
+const MyWishlist = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
@@ -42,7 +41,7 @@ const MyBooking = () => {
 
 
             {/* data profile */}
-            <div className='bg-primary/10'>
+            <div className=' bg-primary/10'>
                 <div className='flex font-poppins '>
                     <div className='font-poppins ml-[90px] mt-[50px]'>
                         <div>
@@ -90,13 +89,13 @@ const MyBooking = () => {
                                             <div>Create Event</div>
                                         </div>
                                     </Link>
-                                    <Link className='text-blue-500'  >
+                                    <Link to='/myBooking'>
                                         <div className='flex justify-start items-center gap-5'>
                                             <div><FaListAlt /></div>
                                             <div>My Booking</div>
                                         </div>
                                     </Link>
-                                    <Link to='/myWishlist'>
+                                    <Link className='text-blue-500'>
                                         <div className='flex justify-start items-center gap-5'>
                                             <div><AiFillHeart /></div>
                                             <div>My Wishlist</div>
@@ -120,7 +119,7 @@ const MyBooking = () => {
                     </div>
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
-                            <div className='font-semibold text-xl'>My Booking</div>
+                            <div className='font-semibold text-xl'>My Wishlist</div>
                             <form className='flex  flex-col gap-10'>
 
                             </form>
@@ -135,4 +134,4 @@ const MyBooking = () => {
     )
 }
 
-export default MyBooking
+export default MyWishlist

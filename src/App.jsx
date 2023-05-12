@@ -12,6 +12,8 @@ import Events from "./pages/Events"
 import Profile from "./pages/Profile"
 import ChangePassword from "./pages/ChangePassword"
 import MyBooking from "./pages/MyBooking"
+import MyWishlist from "./pages/MyWishlist"
+import CreateEvents from "./pages/CreateEvents"
 
 
 import { store , persistor} from "./redux/store"
@@ -32,6 +34,8 @@ function App() {
                         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
                         <Route path="/changePassword" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
                         <Route path="/myBooking" element={<PrivateRoute><MyBooking /></PrivateRoute>} />
+                        <Route path="/myWishlist" element={<PrivateRoute><MyWishlist /></PrivateRoute>} />
+                        <Route path="/createEvents" element={<PrivateRoute><CreateEvents /></PrivateRoute>} />
                     </Routes>
                 </BrowserRouter>
             </PersistGate>

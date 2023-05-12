@@ -35,7 +35,8 @@ const SignUp = () => {
 
             if (password !== confirmPassword) {
                 setErrMessage(errMessage)
-            } const { data } = await http().post('/auth/register', body)
+            } 
+            const { data } = await http().post('/auth/register', body)
             console.log(data)
             window.localStorage.setItem('token', data.results.token)
             setToken(data.results.token)

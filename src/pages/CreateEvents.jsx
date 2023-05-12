@@ -13,7 +13,7 @@ import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
 
 
-const MyBooking = () => {
+const CreateEvents = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
@@ -42,7 +42,7 @@ const MyBooking = () => {
 
 
             {/* data profile */}
-            <div className='bg-primary/10'>
+            <div className=' bg-primary/10'>
                 <div className='flex font-poppins '>
                     <div className='font-poppins ml-[90px] mt-[50px]'>
                         <div>
@@ -84,13 +84,13 @@ const MyBooking = () => {
                                             </div>
                                         </Link>
                                     </div>
-                                    <Link to='/createEvents'>
+                                    <Link className='text-blue-500'>
                                         <div className='flex justify-start items-center gap-5'>
                                             <div><AiFillPlusCircle /></div>
                                             <div>Create Event</div>
                                         </div>
                                     </Link>
-                                    <Link className='text-blue-500'  >
+                                    <Link to='/myBooking'>
                                         <div className='flex justify-start items-center gap-5'>
                                             <div><FaListAlt /></div>
                                             <div>My Booking</div>
@@ -120,7 +120,7 @@ const MyBooking = () => {
                     </div>
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
-                            <div className='font-semibold text-xl'>My Booking</div>
+                            <div className='font-semibold text-xl'>Manage Events</div>
                             <form className='flex  flex-col gap-10'>
 
                             </form>
@@ -134,5 +134,4 @@ const MyBooking = () => {
         </>
     )
 }
-
-export default MyBooking
+export default CreateEvents
