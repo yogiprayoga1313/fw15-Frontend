@@ -9,19 +9,15 @@ import { AiTwotoneEdit, AiFillHeart, AiTwotoneSetting } from 'react-icons/ai'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
-import moment from 'moment';
 import { MdLogout } from 'react-icons/md'
 
 
-const ProfilePage = () => {
+
+const ChangePassword = () =>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const [profile, setProfile] = React.useState({})
-    const [activeTabProfile, setActiveTabProfile] = React.useState('Edit Profile')
-    const [profileEdit, setProfileEdit] = React.useState({})
-    const EditProfile = ['Edit Profile', 'Change Password', 'My Booking', 'My Wishlist', 'Setting', 'Logout']
-
 
     React.useEffect(() => {
         async function getDataProfile() {
@@ -30,17 +26,17 @@ const ProfilePage = () => {
             setProfile(data.results)
         }
         getDataProfile()
-
+    
     }, [])
-
+    
     const doLogout = () => {
         dispatch(logoutAction()),
             navigate('/login')
     }
 
-    return (
+    return(
         <>
-            <div>
+        <div>
                 {/* Navbar */}
                 <nav className='font-poppins'>
                     <div className='flex justify-between px-12 my-[15px]'>
@@ -99,20 +95,20 @@ const ProfilePage = () => {
                                             <div>Card</div>
                                         </div>
                                     </Link>
-                                    <Link className='text-blue-500'>
+                                    <Link to='/profile'>
                                         <div className='flex justify-start items-center gap-5'>
                                             <div><AiTwotoneEdit /></div>
                                             <div>Edit Profile</div>
                                         </div>
                                     </Link>
-                                    <Link to='/changePassword'>
+                                    <Link className='text-blue-500'>
                                         <div className='flex justify-start items-center gap-5'>
                                             <div><FaUnlock /></div>
                                             <div>Change Password</div>
                                         </div>
                                     </Link>
                                 </div>
-                                <Link to='/myBooking'>
+                                <Link>
                                     <div className='flex justify-start items-center gap-5'>
                                         <div><FaListAlt /></div>
                                         <div>My Booking</div>
@@ -141,58 +137,37 @@ const ProfilePage = () => {
                     </div>
                 </div>
                 <div className='bg-white rounded-xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
-                    <div className='flex flex-col gap- ml-20 mt-14'>
-                        <div className='font-semibold text-xl'>Profile</div>
+                    <div className='flex flex-col gap-10 ml-20 mt-14'>
+                        <div className='font-semibold text-xl'>Change Password</div>
                         <form className='flex  flex-col gap-10'>
                             <div className='flex justify-start items-center'>
-                                <div>Name</div>
-                                <form className='ml-[107px]'>
-                                    <input type="text" placeholder={profile?.fullName} className="input input-bordered w-full max-w-xs" />
-                                </form>
+                                <div>Old Password</div>
+                                <div className='ml-[100px]'>
+                                    <input type="password" placeholder="Input Old Password...." className="input input-bordered w-[619px]" />
+                                </div>
                             </div>
                             <div className='flex justify-start items-center'>
-                                <div>Username</div>
-                                <form className=' ml-[63px]'>
-                                    <input type="text" placeholder={profile?.username} className="input  w-full max-w-xs" />
-                                </form>
+                                <div>New Password</div>
+                                <div className='ml-[93px]'>
+                                    <input type="password" placeholder="Input New Password...." className="input input-bordered w-[619px]" />
+                                </div>
                             </div>
                             <div className='flex justify-start items-center'>
-                                <div>Email</div>
-                                <form className=' ml-[95px]'>
-                                    <input type="text" placeholder={profile?.email} className="input  w-full max-w-xs" />
-                                </form>
-                            </div>
-                            <div className='flex justify-start items-center '>
-                                <div>Phone Number</div>
-                                <form className=' ml-[20px]'>
-                                    <input type="text" placeholder={profile?.phoneNumber} className="input  w-full max-w-xs" />
-                                </form>
-                            </div>
-                            <div className='flex justify-start items-center '>
-                                <div>Gender</div>
-                            </div>
-                            <div className='flex justify-start items-center'>
-                                <div>Profession</div>
-                                <option className=' ml-[72px] opacity-50' value={profile?.profession}>{profile?.profession}</option>
-                            </div>
-                            <div className='flex justify-start items-center'>
-                                <div>Nationality</div>
-                                <option className=' ml-[67px] opacity-50' value={profile?.nationality}>{profile?.nationality}</option>
-                            </div>
-                            <div className='flex justify-start items-center'>
-                                <div>Birth Date</div>
-                                <div className='ml-[73px] opacity-50 '>{moment(profile?.birthDate).format('DD / MM / YYYY')}</div>
+                                <div>Confirm Password</div>
+                                <div className='ml-[63px]'>
+                                    <input type="password" placeholder="Input Confirm Password...." className="input input-bordered w-[619px]" />
+                                </div>
                             </div>
                             <div>
-                                <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl'>Save</button>
+                                <button className='btn btn-primary normal-case w-[826px] h-[61px] text-white text-[16px]'>Update</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+        
         </>
     )
 }
 
-
-export default ProfilePage;
+export default ChangePassword

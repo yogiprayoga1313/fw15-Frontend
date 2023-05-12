@@ -3,9 +3,28 @@ import { Link } from "react-router-dom"
 // import Login from "./Login"
 import LogoWetick from "../Asset/Wetick-logo.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
+import { setErrorMessage } from "../redux/reducers/auth"
+import React from "react"
+import http from "../helpers/http"
 
 
 const ForgotPassword = () => {
+    const [email, setEmail] = React.useState('')
+    const [resetCode, setResetCode] = React.useState('')
+
+    React.useEffect(() => {
+        async function getDataEmail() {
+            const { data } = await http().patch('/auth/forgotPassword')
+            setEmail(data.results)
+        }
+        getDataEmail()
+
+    })
+
+
+
+
+
     return (
         <>
 
@@ -28,16 +47,18 @@ const ForgotPassword = () => {
                         <div className="font-semibold text-[20px]">Forgot Password</div>
                         <div className="text-sm">You’ll get mail soon on your email</div>
                     </div>
-                    <div>
-                        <form className="flex-col flex gap-3">
-                            <div>
-                                <input type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
-                            </div>
-                        </form>
-                    </div>
-                    <div className="mt-5">
-                        <button className="btn normal-case btn-primary btn-block text-white">Sand</button>
-                    </div>
+                    <form>
+                        <div>
+                            <form className="flex-col flex gap-3">
+                                <div>
+                                    <input type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
+                                </div>
+                            </form>
+                        </div>
+                        <div className="mt-5">
+                            <button className="btn normal-case btn-primary btn-block text-white">Sand</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </>

@@ -8,15 +8,22 @@ import LogoWetick from "../Asset/Wetick-logo.png"
 import { SlLocationPin } from "react-icons/sl"
 import {FiClock} from "react-icons/fi"
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import http from "../helpers/http";
+import { logout as logoutAction } from "../redux/reducers/auth";
  
 const Events = () => {
     const [events, setEvents] = React.useState([])
     const { id } = useParams();
     const navigate = useNavigate()
-    const [token, setToken] = React.useState('')
-    const [intitToken, setInitToken] = React.useState(false)
+    // const [token, setToken] = React.useState('')
+    // const [intitToken, setInitToken] = React.useState(false)
     const [profile, setProfile] = React.useState({})
+    const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
+
+    
 
 
     React.useEffect(() => {
@@ -29,25 +36,6 @@ const Events = () => {
 
 
     React.useEffect(() => {
-        if (window.localStorage.getItem('token')) {
-            setToken(window.localStorage.getItem('token'))
-        }
-        setInitToken(true)
-    }, [])
-    const doLogout = () => {
-        window.localStorage.removeItem('token')
-        navigate('/login')
-    }
-
-    React.useEffect(() => {
-        if (intitToken) {
-            if (!token) {
-                navigate(`/events/${id}`)
-            }
-        }
-    }, [token, intitToken, navigate, id])
-
-    React.useEffect(() => {
         async function getDataProfile() {
             const { data } = await http(token).get('/profile')
             console.log(data)
@@ -55,7 +43,13 @@ const Events = () => {
         }
         getDataProfile()
 
-    },[token])
+    }, [])
+
+    const doLogout = () => {
+        dispatch(logoutAction()),
+            navigate('/login')
+    }
+
     return (
         <>
             {/* helmet */}

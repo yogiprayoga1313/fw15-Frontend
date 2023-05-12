@@ -10,6 +10,8 @@ import Login from "./pages/Login"
 import ForgotPassword from "./pages/ForgotPassword"
 import Events from "./pages/Events"
 import Profile from "./pages/Profile"
+import ChangePassword from "./pages/ChangePassword"
+import MyBooking from "./pages/MyBooking"
 
 
 import { store , persistor} from "./redux/store"
@@ -28,6 +30,8 @@ function App() {
                         <Route path="/forgotPassword" element={<ForgotPassword />} />
                         <Route path="/events/:id" element={<Events />} />
                         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                        <Route path="/changePassword" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
+                        <Route path="/myBooking" element={<PrivateRoute><MyBooking /></PrivateRoute>} />
                     </Routes>
                 </BrowserRouter>
             </PersistGate>
