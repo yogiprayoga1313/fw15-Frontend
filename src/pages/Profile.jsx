@@ -12,6 +12,7 @@ import moment from 'moment';
 import { MdLogout } from 'react-icons/md'
 import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import Footer from '../components/footer';
+import { Helmet } from 'react-helmet';
 
 const ProfilePage = () => {
     const navigate = useNavigate()
@@ -40,6 +41,14 @@ const ProfilePage = () => {
 
     return (
         <>
+            {/* helmet */}
+            <div>
+                <Helmet>
+                    <title>Profile</title>
+                    <meta name="description" content="Ini adalah deskripsi halaman saya" />
+                </Helmet>
+            </div>
+
             <div>
                 {/* Navbar */}
                 <NavbarPrivateRoute />
@@ -54,8 +63,10 @@ const ProfilePage = () => {
                                 {token ?
                                     <div>
                                         <div >
-                                            <div className='flex gap-4'>
-                                                <Link><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} alt="" /></Link>
+                                            <div className='flex gap-4 justify-center items-center'>
+                                                <div className='border-2 border-indigo-600 rounded-full p-1'>
+                                                    <Link><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} alt="" /></Link>
+                                                </div>
                                                 <div>
                                                     <div className='text-sm font-semibold'>{profile?.fullName}</div>
                                                     <div className='text-xs'>{profile?.profession},{profile?.nationality}</div>
@@ -122,7 +133,7 @@ const ProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
+                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[855px]'>
                         <div className='flex flex-col gap- ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Profile</div>
                             <form className='flex  flex-col gap-10'>
@@ -153,20 +164,24 @@ const ProfilePage = () => {
                                 <div className='flex justify-start items-center '>
                                     <div>Gender</div>
                                 </div>
-                                <div className='flex justify-start items-center'>
+                                <div className='flex justify-start items-center gap-16'>
                                     <div>Profession</div>
-                                    <option className=' ml-[72px] opacity-50' value={profile?.profession}>{profile?.profession}</option>
+                                    <select className="select select-bordered w-full max-w-xs opacity-60">
+                                        <option disabled selected>{profile?.profession}</option>
+                                    </select>
                                 </div>
                                 <div className='flex justify-start items-center'>
                                     <div>Nationality</div>
-                                    <option className=' ml-[67px] opacity-50' value={profile?.nationality}>{profile?.nationality}</option>
+                                    <select className="select select-bordered w-full max-w-xs opacity-60 ml-[60px]">
+                                        <option disabled selected>{profile?.nationality}</option>
+                                    </select>
                                 </div>
                                 <div className='flex justify-start items-center'>
                                     <div>Birth Date</div>
                                     <div className='ml-[73px] opacity-50 '>{moment(profile?.birthDate).format('DD / MM / YYYY')}</div>
                                 </div>
                                 <div>
-                                    <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl'>Save</button>
+                                    <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
                                 </div>
                             </form>
                         </div>

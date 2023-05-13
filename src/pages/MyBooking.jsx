@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
+import { Helmet } from 'react-helmet';
 
 
 const MyBooking = () => {
@@ -35,6 +36,13 @@ const MyBooking = () => {
     }
     return (
         <>
+        {/* helmet */}
+        <div>
+                <Helmet>
+                    <title>My Booking</title>
+                    <meta name="description" content="Ini adalah deskripsi halaman saya" />
+                </Helmet>
+            </div>
             <div>
                 {/* Navbar */}
                 <NavbarPrivateRoute />
@@ -51,7 +59,9 @@ const MyBooking = () => {
                                     <div>
                                         <div >
                                             <div className='flex gap-4'>
-                                                <Link><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} alt="" /></Link>
+                                                <div className='border-2 border-indigo-600 rounded-full p-1'>
+                                                    <Link><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} alt="" /></Link>
+                                                </div>
                                                 <div>
                                                     <div className='text-sm font-semibold'>{profile?.fullName}</div>
                                                     <div className='text-xs'>{profile?.profession},{profile?.nationality}</div>

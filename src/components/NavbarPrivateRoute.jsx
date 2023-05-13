@@ -12,7 +12,7 @@ function NavbarPrivateRoute() {
     React.useEffect(() => {
         async function getDataProfile() {
             const { data } = await http(token).get('/profile')
-            console.log(data)
+            // console.log(data)
             setProfile(data.results)
         }
         getDataProfile()

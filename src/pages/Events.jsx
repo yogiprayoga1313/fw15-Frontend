@@ -1,11 +1,13 @@
 import { Helmet } from "react-helmet";
 import React from "react"
-import axios from "axios"
+import http from "../helpers/http";
 import moment from "moment/moment"
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import NewMaps from "../Asset/New-maps-Events.png"
 import { SlLocationPin } from "react-icons/sl"
 import { FiClock } from "react-icons/fi"
+import { AiOutlineHeart } from 'react-icons/ai'
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 
@@ -18,7 +20,8 @@ const Events = () => {
 
     React.useEffect(() => {
         async function getDataEvents() {
-            const { data } = await axios.get(`http://localhost:8888/events/${id}`)
+            const { data } = await http().get(`/events/${id}`)
+            console.log(data)
             setEvents(data.results)
         }
         getDataEvents()
@@ -50,9 +53,12 @@ const Events = () => {
                                         <img className="w-[375px] h-[486px] rounded-2xl" src={`http://localhost:8888/uploads/${events?.picture}`} alt="" />
                                         <div></div>
                                     </div>
-                                    <div className="flex justify-center items-center">
-                                        <div className="text-xl font-semibold">Add to Wishlist</div>
-                                    </div>
+                                    <Link>
+                                        <div className="flex  gap-5 justify-center items-center">
+                                            <div className="opacity-80"><AiOutlineHeart size={30} /></div>
+                                            <div className="text-xl font-semibold">Add to Wishlist</div>
+                                        </div>
+                                    </Link>
                                 </>
                             </div>
                             <div className="flex flex-col">
@@ -64,7 +70,7 @@ const Events = () => {
                                             <div className="flex justify-center items-center gap-1"><SlLocationPin size={15} color="red" />{events?.cityName}</div>
                                         </div>
                                         <div>
-                                            <div className="flex justify-center items-center gap-1"><FiClock color="red" size={15} />{moment(events?.date).format('dddd, DD MMMM YYYY')}</div>
+                                            <div className="flex justify-center items-center gap-1"><FiClock color="red" size={15} />{moment(events?.date).format('ddd, DD MMM YYYY, HH:mm')}</div>
                                         </div>
                                     </div>
                                     <div className="mb-[30px]" >Attendees</div>
@@ -80,7 +86,7 @@ const Events = () => {
                                         <img className="rounded-2xl" src={NewMaps} alt="" />
                                     </div>
                                     <div className="mt-[50px]">
-                                        <button className="btn btn-primary normal-case text-[16px] font-semibold w-[315px] h-[55px] text-white">Buy Tickets</button>
+                                        <Link to='/reservations'><button className="btn btn-primary normal-case text-[16px] font-semibold w-[315px] h-[55px] text-white">Buy Tickets</button></Link>
                                     </div>
                                 </>
                             </div>

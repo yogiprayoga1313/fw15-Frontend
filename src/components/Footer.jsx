@@ -9,7 +9,7 @@ function Footer() {
     return(
         <>
         <div className="mt-[175px]">
-                <div className="font-poppins flex gap-32 justify-center ">
+                <div className="font-poppins flex gap-40 justify-center ">
                     <div className="flex flex-col gap-3">
                         <img src={LogoWetick} alt="" />
                         <div className="font-semibold">Find events you love with our</div>
@@ -43,7 +43,7 @@ function Footer() {
                         <div className="font-semibold">Company</div>
                         <div className="flex flex-col gap-2 opacity-60">
                             <Link><div>Partnership</div></Link>
-                            <Link><div>Partnership</div></Link>
+                            <Link><div>Help</div></Link>
                             <Link><div>Terms of Service</div></Link>
                             <Link><div>Privacy Policy</div></Link>
                             <Link><div>Sitemap</div></Link>

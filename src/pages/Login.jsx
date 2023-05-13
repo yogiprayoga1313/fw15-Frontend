@@ -46,7 +46,8 @@ const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSu
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email} />
-                {errors.email && touched.email && (<label className="label">
+                {errors.email && touched.email && 
+                (<label className="label">
                     <span className="label-text-left text-error text-xs ">{errors.email}</span>
                 </label>
                 )}
@@ -98,8 +99,6 @@ const Login = () => {
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const formError = useSelector(state => state.auth.formError)
-    // const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
-    // const [errorMessage, setErrorMessage] = React.useState('')
 
     React.useEffect(() => {
         if (token) {

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import React from "react";
 import http from "../helpers/http";
 import LogoWetick from "../Asset/Wetick-logo.png"
+import { MdArrowDropDown } from "react-icons/md"
 
 function Navbar() {
     const navigate = useNavigate()
@@ -17,7 +18,7 @@ function Navbar() {
     React.useEffect(() => {
         async function getDataProfile() {
             const { data } = await http(token).get('/profile')
-            console.log(data)
+            // console.log(data)
             setProfile(data.results)
         }
         getDataProfile()
@@ -39,7 +40,9 @@ function Navbar() {
                     <div className='flex gap-12 justify-center items-center font-semibold'>
                         <div><Link to='/'>Home</Link></div>
                         <div><Link>Create Event</Link></div>
-                        <div><Link>Location</Link></div>
+                        <div>
+                            <a href="#location">Location</a>
+                        </div>
                     </div>
                     {token ?
                         <div className="text-black flex justify-center items-center gap-10">
@@ -48,12 +51,19 @@ function Navbar() {
                                     <Link to='/profile'><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} /></Link>
                                 </div>
                                 <div className="text-xl font-semibold"><Link to='/profile'>{profile?.fullName}</Link></div>
+                                <div className="dropdown dropdown-end">
+                                    <div tabIndex={0} className="btn btn-ghost" ><MdArrowDropDown /></div>
+                                    <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li>
+                                            <button onClick={doLogout} className="btn btn-primary normal-case text-white">Log Out</button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <button onClick={doLogout} className="btn btn-primary normal-case text-white">Log Out</button>
                         </div> :
                         <div className="flex justify-center items-center gap-5">
                             <Link className="btn btn-ghost normal-case text-black w-[169px] " to='/Login'>Log In</Link>
-                            <Link  className="btn btn-primary normal-case text-white w-[169px] " to='/signUp'>Sign Up</Link>
+                            <Link className="btn btn-primary normal-case text-white w-[169px] " to='/signUp'>Sign Up</Link>
                         </div>}
                 </div>
             </nav>

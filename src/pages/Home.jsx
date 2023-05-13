@@ -98,8 +98,8 @@ const Home = () => {
             <Navbar />
 
             {/* iklan */}
-            <div className='font-poppins'>
-                <div className='flex bg-primary justify-around'>
+            <div className="font-poppins">
+                <div className="flex bg-primary justify-around bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-1.png')]">
                     <div className='flex flex-col justify-center items-center my-[200px]'>
                         <div className='text-[64px] w-[554px] h-[192px] font-bold text-white mb-10'>Find events you love with our</div>
                         <div className='bg-white w-[600px] h-[75px] rounded-2xl flex justify-center items-center'>
@@ -192,8 +192,8 @@ const Home = () => {
             </div>
 
             {/* Discover Events */}
-            <div className='flex justify-center items-center font-poppins text-white mt-[275px]'>
-                <div className='bg-blue-600 justify-center items-center w-[80%] rounded-3xl'>
+            <div id="location" className="flex justify-center items-center font-poppins text-white mt-[275px]">
+                <div className="bg-blue-600 justify-center items-center w-[80%] rounded-3xl bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-2.png')]">
                     <div className='flex justify-center items-center gap-x-28 mt-[74px]'>
                         <div className='grid grid-cols-4 gap-16'>
                             <div className='flex-col flex gap-5'>
@@ -290,8 +290,8 @@ const Home = () => {
             </div>
 
             {/* partners */}
-            <div className="mt-[175px]" >
-                <div className="justify-center items-center flex bg-[#373A42]">
+            <div className="mt-[175px]  bg-[#373A42]" >
+                <div className="justify-center items-center flex bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-3.png')]">
                     <div className="flex flex-col justify-center items-center font-poppins text-white mt-[75px] gap-7">
                         <div className='bg-white/50 rounded-2xl w-[150px] h-[30px]'>
                             <div className='flex justify-center items-center gap-4'>
