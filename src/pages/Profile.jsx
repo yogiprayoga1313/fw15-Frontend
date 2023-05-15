@@ -65,7 +65,7 @@ const ProfilePage = () => {
                                         <div >
                                             <div className='flex gap-4 justify-center items-center'>
                                                 <div className='border-2 border-indigo-600 rounded-full p-1'>
-                                                    <Link><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} alt="" /></Link>
+                                                    {profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
                                                 </div>
                                                 <div>
                                                     <div className='text-sm font-semibold'>{profile?.fullName}</div>
@@ -136,52 +136,71 @@ const ProfilePage = () => {
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[855px]'>
                         <div className='flex flex-col gap- ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Profile</div>
-                            <form className='flex  flex-col gap-10'>
-                                <div className='flex justify-start items-center'>
-                                    <div>Name</div>
-                                    <form className='ml-[107px]'>
-                                        <input type="text" placeholder={profile?.fullName} className="input input-bordered w-full max-w-xs" />
-                                    </form>
+                            <form className='flex gap-32'>
+                                <div className='flex flex-col gap-10'>
+                                    <div className='flex justify-start items-center'>
+                                        <div>Name</div>
+                                        <form className='ml-[107px]'>
+                                            <input type="text" placeholder={profile?.fullName} className="input input-bordered w-full max-w-xs" />
+                                        </form>
+                                    </div>
+                                    <div className='flex justify-start items-center'>
+                                        <div>Username</div>
+                                        <form className=' ml-[63px]'>
+                                            <input type="text" placeholder={profile?.username} className="input  w-full max-w-xs" />
+                                        </form>
+                                    </div>
+                                    <div className='flex justify-start items-center'>
+                                        <div>Email</div>
+                                        <form className=' ml-[95px]'>
+                                            <input type="text" placeholder={profile?.email} className="input  w-full max-w-xs" />
+                                        </form>
+                                    </div>
+                                    <div className='flex justify-start items-center '>
+                                        <div>Phone Number</div>
+                                        <form className=' ml-[20px]'>
+                                            <input type="text" placeholder={profile?.phoneNumber} className="input  w-full max-w-xs" />
+                                        </form>
+                                    </div>
+                                    <div className='flex justify-start items-center '>
+                                        <div>Gender</div>
+                                    </div>
+                                    <div className='flex justify-start items-center gap-16'>
+                                        <div>Profession</div>
+                                        <select className="select select-bordered w-full max-w-xs opacity-60">
+                                            <option disabled selected>{profile?.profession}</option>
+                                        </select>
+                                    </div>
+                                    <div className='flex justify-start items-center'>
+                                        <div>Nationality</div>
+                                        <select className="select select-bordered w-full max-w-xs opacity-60 ml-[60px]">
+                                            <option disabled selected>{profile?.nationality}</option>
+                                        </select>
+                                    </div>
+                                    <div className='flex justify-start items-center'>
+                                        <div>Birth Date</div>
+                                        <div className='ml-[73px] opacity-50 '>{moment(profile?.birthDate).format('DD / MM / YYYY')}</div>
+                                    </div>
+                                    <div>
+                                        <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
+                                    </div>
                                 </div>
-                                <div className='flex justify-start items-center'>
-                                    <div>Username</div>
-                                    <form className=' ml-[63px]'>
-                                        <input type="text" placeholder={profile?.username} className="input  w-full max-w-xs" />
-                                    </form>
+                                <div className=''>
+                                    <hr />
                                 </div>
-                                <div className='flex justify-start items-center'>
-                                    <div>Email</div>
-                                    <form className=' ml-[95px]'>
-                                        <input type="text" placeholder={profile?.email} className="input  w-full max-w-xs" />
-                                    </form>
-                                </div>
-                                <div className='flex justify-start items-center '>
-                                    <div>Phone Number</div>
-                                    <form className=' ml-[20px]'>
-                                        <input type="text" placeholder={profile?.phoneNumber} className="input  w-full max-w-xs" />
-                                    </form>
-                                </div>
-                                <div className='flex justify-start items-center '>
-                                    <div>Gender</div>
-                                </div>
-                                <div className='flex justify-start items-center gap-16'>
-                                    <div>Profession</div>
-                                    <select className="select select-bordered w-full max-w-xs opacity-60">
-                                        <option disabled selected>{profile?.profession}</option>
-                                    </select>
-                                </div>
-                                <div className='flex justify-start items-center'>
-                                    <div>Nationality</div>
-                                    <select className="select select-bordered w-full max-w-xs opacity-60 ml-[60px]">
-                                        <option disabled selected>{profile?.nationality}</option>
-                                    </select>
-                                </div>
-                                <div className='flex justify-start items-center'>
-                                    <div>Birth Date</div>
-                                    <div className='ml-[73px] opacity-50 '>{moment(profile?.birthDate).format('DD / MM / YYYY')}</div>
-                                </div>
-                                <div>
-                                    <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
+                                <div className='flex flex-col gap-4'>
+                                    <div className='flex gap-3'>
+                                        <div className='border-4 border-indigo-600 rounded-full p-2'>
+                                            {profile.picture && <img className='w-[110px] h-[110px] rounded-full' src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
+                                        </div>
+                                    </div>
+                                    <div className='mt-[30px]'>
+                                        <button className='btn btn-outline btn-info normal-case text-md'>Choose Photo</button>
+                                    </div>
+                                    <div className='flex flex-col gap-4 text-xs opacity-60'>
+                                        <div>Image size: max, 1 MB</div>
+                                        <div>Image formats: .JPG, .JPEG</div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

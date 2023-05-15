@@ -36,14 +36,14 @@ function NavbarPrivateRoute() {
                         <div className="text-black flex justify-center items-center gap-10">
                             <div className="flex justify-center items-center gap-3">
                                 <div className="border-2 border-indigo-600 rounded-full p-[4px]">
-                                    <Link to='/profile'><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} /></Link>
+                                    <Link to='/profile'>{profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}</Link>
                                 </div>
                                 <div className="text-xl font-semibold"><Link to='/profile'>{profile?.fullName}</Link></div>
                             </div>
                         </div> :
                         <div className="flex justify-center items-center gap-5">
                             <Link className="btn btn-ghost normal-case text-black w-[169px] " to='/Login'>Log In</Link>
-                            <Link  className="btn btn-primary normal-case text-white w-[169px] " to='/signUp'>Sign Up</Link>
+                            <Link className="btn btn-primary normal-case text-white w-[169px] " to='/signUp'>Sign Up</Link>
                         </div>}
                 </div>
             </nav>

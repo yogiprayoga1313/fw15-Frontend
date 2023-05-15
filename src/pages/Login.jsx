@@ -20,9 +20,12 @@ const validationSchema = Yup.object({
     password: Yup.string().required('Password is invalid')
 })
 
+
 const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => {
     const errorMessage = useSelector(state => state.auth.errorMessage)
     const warningMessage = useSelector(state => state.auth.warningMessage)
+
+    // console.log(typeof touched);
     return (
         <form onSubmit={handleSubmit} className="flex-col flex gap-3">
             <div className='flex flex-col mb-10 gap-4 w-60'>

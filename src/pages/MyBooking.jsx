@@ -36,8 +36,8 @@ const MyBooking = () => {
     }
     return (
         <>
-        {/* helmet */}
-        <div>
+            {/* helmet */}
+            <div>
                 <Helmet>
                     <title>My Booking</title>
                     <meta name="description" content="Ini adalah deskripsi halaman saya" />
@@ -60,7 +60,7 @@ const MyBooking = () => {
                                         <div >
                                             <div className='flex gap-4'>
                                                 <div className='border-2 border-indigo-600 rounded-full p-1'>
-                                                    <Link><img className="w-[44px] h-[44px] rounded-3xl" src={`http://localhost:8888/uploads/${profile?.picture}`} alt="" /></Link>
+                                                    {profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
                                                 </div>
                                                 <div>
                                                     <div className='text-sm font-semibold'>{profile?.fullName}</div>
