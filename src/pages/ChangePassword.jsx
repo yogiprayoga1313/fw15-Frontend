@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 
 

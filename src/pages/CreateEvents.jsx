@@ -1,7 +1,7 @@
 import http from '../helpers/http';
 import React from 'react';
 import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock, FaListAlt } from "react-icons/fa"

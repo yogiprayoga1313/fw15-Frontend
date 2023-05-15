@@ -9,7 +9,7 @@ import { FiClock } from "react-icons/fi"
 import { AiOutlineHeart } from 'react-icons/ai'
 
 import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
 
 const Events = () => {
     const [events, setEvents] = React.useState([])

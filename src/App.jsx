@@ -19,7 +19,7 @@ import Payment from "./pages/Payment"
 
 
 import { store , persistor} from "./redux/store"
-import PrivateRoute from "./components/privateRoute"
+import PrivateRoute from "./components/PrivateRoute"
 
 
 function App() {

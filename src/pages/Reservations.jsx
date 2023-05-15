@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet"
 import Navbar from "../components/Navbar"
-import Footer from "../components/footer"
+import Footer from "../components/Footer"
 import { Link } from "react-router-dom"
 import rsvSection from "../Asset/rsv-section.png"
 import { TbArrowsSort } from 'react-icons/tb'
