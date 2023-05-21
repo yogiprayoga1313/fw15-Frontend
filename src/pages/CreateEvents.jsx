@@ -59,7 +59,7 @@ const CreateEvents = () => {
                                 {token ?
                                     <div>
                                         <div >
-                                            <div className='flex gap-4'>
+                                            <div className='flex gap-4 justify-start items-center'>
                                                 <div className='border-2 border-indigo-600 rounded-full p-1'>
                                                     {profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
                                                 </div>

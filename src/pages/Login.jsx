@@ -5,7 +5,6 @@ import LogoHumanProfil from "../Asset/new-animation.png"
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import React from "react";
-import http from "../helpers/http";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from 'yup';
@@ -31,6 +30,7 @@ const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSu
             <div className='flex flex-col mb-10 gap-4 w-60'>
                 <div className="font-semibold text-[20px]">Sign In</div>
                 <div className="text-sm">Hi, Welcome back to Urticket! </div>
+                <div className="text-sm">Don't have an account?<Link className="text-blue-800 font-semibold" to="/signUp"> Sign Up</Link></div>
             </div>
             {errorMessage &&
                 (<div>

@@ -13,21 +13,30 @@ import { MdLogout } from 'react-icons/md'
 import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import Footer from '../components/footer';
 import { Helmet } from 'react-helmet';
+import { Field, Formik } from 'formik';
+import ScrollToTop from '../components/ScrollToTop';
+import defaultProfile from '../Asset/avatar-default.png'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+
 
 const ProfilePage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const [profile, setProfile] = React.useState({})
-    const [activeTabProfile, setActiveTabProfile] = React.useState('Edit Profile')
-    const [profileEdit, setProfileEdit] = React.useState({})
-    const EditProfile = ['Edit Profile', 'Change Password', 'My Booking', 'My Wishlist', 'Setting', 'Logout']
+    const [editUserName, setEditUserName] = React.useState(false)
+    const [editEmail, setEditEmail] = React.useState(false)
+    const [editPhoneNumber, setEditPhoneNumber] = React.useState(false)
+    const [editBirthDate, setEditBirthDate] = React.useState(false)
+    const [selectedPicure, setSelectedPicture] = React.useState(false)
+    const [openModal, setOpenModal] = React.useState(false)
+
+
 
 
     React.useEffect(() => {
         async function getDataProfile() {
             const { data } = await http(token).get('/profile')
-            console.log(data)
             setProfile(data.results)
         }
         getDataProfile()
@@ -37,6 +46,38 @@ const ProfilePage = () => {
     const doLogout = () => {
         dispatch(logoutAction()),
             navigate('/login')
+    }
+
+    React.useEffect(() => {
+        console.log(selectedPicure)
+    }, [selectedPicure])
+
+    const editProfile = async (values) => {
+        setOpenModal(true)
+        const form = new FormData()
+        Object.keys(values).forEach((key) => {
+            if (values[key]) {
+                if (key === "birthDate") {
+                    form.append(key, moment(values[key]).format('YYYY/MM/DD'))
+                } else {
+                    form.append(key, values[key])
+                }
+            }
+        })
+        if (selectedPicure) {
+            form.append('picture', selectedPicure)
+        }
+        const { data } = await http(token).patch('/profile', form, {
+            headers: {
+                'Content-Type': 'multipart/from-data'
+            }
+        })
+        setEditBirthDate(false)
+        setEditEmail(false)
+        setEditPhoneNumber(false)
+        setEditUserName(false)
+        setProfile(data.results)
+        setOpenModal(false)
     }
 
     return (
@@ -63,9 +104,9 @@ const ProfilePage = () => {
                                 {token ?
                                     <div>
                                         <div >
-                                            <div className='flex gap-4 justify-center items-center'>
+                                            <div className='flex gap-4 justify-start items-center'>
                                                 <div className='border-2 border-indigo-600 rounded-full p-1'>
-                                                    {profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
+                                                    <img className='w-[45px] h-[45px] rounded-3xl bg-cover' src={profile?.picture?.startsWith('https') ? profile.picture : (profile?.picture === null ? defaultProfile : `http://${import.meta.env.VITE_BACKEND_URL}/uploads/${profile?.picture}`)} />
                                                 </div>
                                                 <div>
                                                     <div className='text-sm font-semibold'>{profile?.fullName}</div>
@@ -133,82 +174,160 @@ const ProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[855px]'>
-                        <div className='flex flex-col gap- ml-20 mt-14'>
+                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[850px]'>
+                        <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Profile</div>
-                            <form className='flex gap-32'>
-                                <div className='flex flex-col gap-10'>
-                                    <div className='flex justify-start items-center'>
-                                        <div>Name</div>
-                                        <form className='ml-[107px]'>
-                                            <input type="text" placeholder={profile?.fullName} className="input input-bordered w-full max-w-xs" />
-                                        </form>
-                                    </div>
-                                    <div className='flex justify-start items-center'>
-                                        <div>Username</div>
-                                        <form className=' ml-[63px]'>
-                                            <input type="text" placeholder={profile?.username} className="input  w-full max-w-xs" />
-                                        </form>
-                                    </div>
-                                    <div className='flex justify-start items-center'>
-                                        <div>Email</div>
-                                        <form className=' ml-[95px]'>
-                                            <input type="text" placeholder={profile?.email} className="input  w-full max-w-xs" />
-                                        </form>
-                                    </div>
-                                    <div className='flex justify-start items-center '>
-                                        <div>Phone Number</div>
-                                        <form className=' ml-[20px]'>
-                                            <input type="text" placeholder={profile?.phoneNumber} className="input  w-full max-w-xs" />
-                                        </form>
-                                    </div>
-                                    <div className='flex justify-start items-center '>
-                                        <div>Gender</div>
-                                    </div>
-                                    <div className='flex justify-start items-center gap-16'>
-                                        <div>Profession</div>
-                                        <select className="select select-bordered w-full max-w-xs opacity-60">
-                                            <option disabled selected>{profile?.profession}</option>
-                                        </select>
-                                    </div>
-                                    <div className='flex justify-start items-center'>
-                                        <div>Nationality</div>
-                                        <select className="select select-bordered w-full max-w-xs opacity-60 ml-[60px]">
-                                            <option disabled selected>{profile?.nationality}</option>
-                                        </select>
-                                    </div>
-                                    <div className='flex justify-start items-center'>
-                                        <div>Birth Date</div>
-                                        <div className='ml-[73px] opacity-50 '>{moment(profile?.birthDate).format('DD / MM / YYYY')}</div>
-                                    </div>
-                                    <div>
-                                        <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
-                                    </div>
-                                </div>
-                                <div className=''>
-                                    <hr />
-                                </div>
-                                <div className='flex flex-col gap-4'>
-                                    <div className='flex gap-3'>
-                                        <div className='border-4 border-indigo-600 rounded-full p-2'>
-                                            {profile.picture && <img className='w-[110px] h-[110px] rounded-full' src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
+                            <Formik
+                                initialValues={{
+                                    fullName: profile?.fullName,
+                                    userName: profile?.userName,
+                                    email: profile?.email,
+                                    phoneNumber: profile?.phoneNumber,
+                                    nationality: profile?.nationality,
+                                    profession: profile?.profession,
+                                    gender: profile?.gender ? "1" : "0" ,
+                                    birthDate: profile?.birthDate
+
+                                }}
+                                onSubmit={editProfile}
+                                enableReinitialize
+                            >
+                                {({ handleSubmit, handleChange, handleBlur, errors, touched, values }) => (
+                                    <form onSubmit={handleSubmit} className='flex gap-32'>
+                                        <div className='flex flex-col gap-10'>
+                                            <div className='flex justify-start items-center'>
+                                                <div>Name</div>
+                                                <div className='ml-[107px]'>
+                                                    <input
+                                                        name="fullName"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        value={values.fullName}
+                                                        type="text"
+                                                        placeholder={profile?.fullName}
+                                                        className="input input-bordered w-full max-w-xs opacity-50" />
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-start items-center'>
+                                                <div>Username</div>
+                                                <div className='flex gap-2 ml-[72px]'>
+                                                    <div>
+                                                        {!editUserName && <span className='opacity-50'>{profile?.userName === null ? <span className='text-red-500'>Not Set</span> : profile?.userName}</span>}
+                                                        {editUserName && <input name='userName' onChange={handleChange} onBlur={handleBlur} value={values.userName} type="text" className="input input-bordered w-full max-w-xs" />}
+                                                    </div>
+                                                    {!editUserName && <div>
+                                                        <button onClick={() => setEditUserName(true)} className='font-semibold text-blue-700'>Edit</button>
+                                                    </div>}
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-start items-center'>
+                                                <div>Email</div>
+                                                <div className='flex gap-2 ml-[110px]'>
+                                                    <div>
+                                                        {!editEmail && <span className='opacity-50'>{profile?.email === null ? <span className='text-red-500'>Not Set</span> : profile?.email}</span>}
+                                                        {editEmail && <input name='email' type="email" onChange={handleChange} onBlur={handleBlur} value={values.email} className="input input-bordered w-full max-w-xs" />}
+                                                    </div>
+                                                    {!editEmail && <div>
+                                                        <button onClick={() => setEditEmail(true)} className='font-semibold text-blue-700'>Edit</button>
+                                                    </div>}
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-start items-center '>
+                                                <div>Phone Number</div>
+                                                <div className='flex gap-2 ml-[34px]'>
+                                                    <div>
+                                                        {!editPhoneNumber && <span className='opacity-50 '>{profile?.phoneNumber === null ? <span className='text-red-500 '>Not Set</span> : profile?.phoneNumber}</span>}
+                                                        {editPhoneNumber && <input name='phoneNumber' onChange={handleChange} onBlur={handleBlur} value={values.phoneNumber} type="text" className="input input-bordered w-full max-w-xs" />}
+                                                    </div>
+                                                    {!editPhoneNumber && <div>
+                                                        <button onClick={() => setEditPhoneNumber(true)} className='font-semibold text-blue-700'>Edit</button>
+                                                    </div>}
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-start items-center'>
+                                                <div>Gender</div>
+                                                <div className='ml-[96px] flex gap-5'>
+                                                    <label className='flex gap-2'>
+                                                        <Field name='gender'  value="0" type="radio" className='radio radio-primary'/>
+                                                        <span>Male</span>
+                                                    </label>
+                                                    <label className='flex gap-2'>
+                                                        <Field name='gender' value="1" type="radio" className='radio radio-primary' />
+                                                        <span>Famel</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-start items-center gap-16'>
+                                                <div>Profession</div>
+                                                <select name='profession' value={values.profession} onChange={handleChange} onBlur={handleBlur} className="ml-[5px] select select-bordered w-full max-w-xs opacity-60">
+                                                    <option className='hidden' >Select Profession</option>
+                                                    <option>Developers</option>
+                                                </select>
+                                            </div>
+                                            <div className='flex justify-start items-center'>
+                                                <div>Nationality</div>
+                                                <select name='nationality' value={values.nationality} onChange={handleChange} onBlur={handleBlur} className="select select-bordered w-full max-w-xs opacity-60 ml-[63px]">
+                                                    <option className='hidden' >Select Nationality</option>
+                                                    <option>Indonesia</option>
+                                                </select>
+                                            </div>
+                                            <div className='flex justify-start items-center '>
+                                                <div>Birth Date</div>
+                                                <div className='flex gap-2 ml-[73px]'>
+                                                    <div>
+                                                        {!editBirthDate && <span className='opacity-50 '>{profile?.birthDate === null ? <span className='text-red-500'>Not Set</span> : moment(profile?.birthDate).format('YYYY/MM/DD')}</span>}
+                                                        {editBirthDate && <input name='birthDate' onChange={handleChange} onBlur={handleBlur} value={values.birthDate} type="date" className="input input-bordered w-full max-w-xs" />}
+                                                    </div>
+                                                    {!editBirthDate && <div>
+                                                        <button onClick={() => setEditBirthDate(true)} className='font-semibold text-blue-700'>Edit</button>
+                                                    </div>}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className='mt-[30px]'>
-                                        <button className='btn btn-outline btn-info normal-case text-md'>Choose Photo</button>
-                                    </div>
-                                    <div className='flex flex-col gap-4 text-xs opacity-60'>
-                                        <div>Image size: max, 1 MB</div>
-                                        <div>Image formats: .JPG, .JPEG</div>
-                                    </div>
-                                </div>
-                            </form>
+                                        <div className=''>
+                                            <hr />
+                                        </div>
+                                        <div className='flex flex-col gap-4'>
+                                            <div>
+                                                <div className='flex gap-3'>
+                                                    <div className='border-4 border-indigo-600 rounded-full p-2'>
+                                                        <img className='w-[110px] h-[110px] bg-cover rounded-full' src={profile?.picture?.startsWith('https') ? profile.picture : (profile?.picture === null ? defaultProfile : `http://${import.meta.env.VITE_BACKEND_URL}/uploads/${profile?.picture}`)} />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className='mt-[30px] btn btn-primary normal-case text-white'>
+                                                        <span>Choose Photo</span>
+                                                        <input name='picture' onChange={(e) => setSelectedPicture(e.target.files[0])} type="file" className='hidden' />
+                                                    </label>
+                                                </div>
+                                            </div>  
+                                            <div className='flex flex-col gap-4 text-xs opacity-60'>
+                                                <div>Image size: max, 1 MB</div>
+                                                <div>Image formats: .JPG, .JPEG</div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                )}
+                            </Formik>
+                        </div>
+                    </div>
+                </div>
+                <input type="checkbox" id="loading" className="modal-toggle" checked={openModal} />
+                <div className="modal">
+                    <div className="modal-box bg-transparent shadow-none">
+                        <div className='justify-center flex '>
+                            <AiOutlineLoading3Quarters className='animate-spin ' color='white' size={60} />
                         </div>
                     </div>
                 </div>
 
+
                 {/* Footer */}
                 <Footer />
+                <ScrollToTop />
             </div>
         </>
     )

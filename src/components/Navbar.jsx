@@ -7,6 +7,7 @@ import React from "react";
 import http from "../helpers/http";
 import LogoWetick from "../Asset/Wetick-logo.png"
 import { MdArrowDropDown } from "react-icons/md"
+import defaultProfile from '../Asset/avatar-default.png'
 
 function Navbar() {
     const navigate = useNavigate()
@@ -48,7 +49,7 @@ function Navbar() {
                         <div className="text-black flex justify-center items-center gap-10">
                             <div className="flex justify-center items-center gap-3">
                                 <div className="border-2 border-indigo-600 rounded-full p-[4px]">
-                                    <Link to='/profile'>{profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https')? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`}/>}</Link>
+                                    <Link to='/profile'><img className='w-[44px] h-[44px] rounded-3xl bg-cover' src={profile?.picture?.startsWith('https') ? profile.picture : (profile?.picture === null ? defaultProfile : `http://${import.meta.env.VITE_BACKEND_URL}/uploads/${profile?.picture}`)} /></Link>
                                 </div>
                                 <div className="text-xl font-semibold"><Link to='/profile'>{profile?.fullName}</Link></div>
                                 <div className="dropdown dropdown-end">

@@ -9,35 +9,8 @@ import http from "../helpers/http"
 import { useState, useEffect } from "react"
 
 
-const ForgotPassword = () => {
-    const [email, setEmail] = React.useState('')
-    const [resetCode, setResetCode] = React.useState('')
-
-    const handleEmailChange = (e) => {
-        setEmail(e.targe.value)
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventsDefault()
-        try {
-            const response = await http().post('/auth/forgotPassword', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            })
-
-            if (response.ok) {
-                const data = await response.json();
-                setResetCode(data.resetCode);
-            } else {
-                throw new Error('Errors, please try again');
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
+const ResetPassword = () => {
+   
 
     return (
         <>
@@ -45,7 +18,7 @@ const ForgotPassword = () => {
             {/* helmet */}
             <div>
                 <Helmet>
-                    <title>Forgot Password</title>
+                    <title>Reset Password</title>
                     <meta name="description" content="Ini adalah deskripsi halaman saya" />
                 </Helmet>
             </div>
@@ -58,23 +31,42 @@ const ForgotPassword = () => {
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
                     <Link to='/'><img src={LogoWetick} alt="" /></Link>
                     <div className='flex flex-col mb-10 gap-4 w-60'>
-                        <div className="font-semibold text-[20px]">Forgot Password</div>
-                        <div className="text-sm">You’ll get mail soon on your email</div>
+                        <div className="font-semibold text-[20px]">Reset Password</div>
+                        <div className="text-sm">Update your Password here!</div>
                     </div>
                     <form>
                         <div>
-                            <form onSubmit={handleSubmit} className="flex-col flex gap-3">
+                            <form className="flex-col flex gap-3">
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="code"
+                                        className="input input-bordered w-full max-w-xs"
+                                    />
+                                </div>
                                 <div>
                                     <input
                                         type="text"
                                         placeholder="email"
                                         className="input input-bordered w-full max-w-xs"
-                                        value={email}
-                                        onChange={handleEmailChange}
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="password"
+                                        placeholder="New Password"
+                                        className="input input-bordered w-full max-w-xs"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="password"
+                                        placeholder="Confirm New Password"
+                                        className="input input-bordered w-full max-w-xs"
                                     />
                                 </div>
                                 <div className="mt-5">
-                                    <Link to="/resetPassword"><button type="submit" className="btn normal-case btn-primary btn-block text-white">Sand</button></Link>
+                                    <Link to='/'><button type="submit" className="btn normal-case btn-primary btn-block text-white">Save</button></Link>
                                 </div>
                             </form>
                         </div>
@@ -95,4 +87,4 @@ const ForgotPassword = () => {
 
 
 
-export default ForgotPassword
+export default ResetPassword

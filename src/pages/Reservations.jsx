@@ -1,11 +1,79 @@
 import { Helmet } from "react-helmet"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import rsvSection from "../Asset/rsv-section.png"
-import { TbArrowsSort } from 'react-icons/tb'
+import React from "react"
+import http from "../helpers/http"
+import { useSelector } from "react-redux"
+import { FiPlus, FiMinus } from "react-icons/fi"
+import fillOne from "../Asset/Fill-ungu.png"
+import { BiSort } from "react-icons/bi";
 
 const Reservation = () => {
+    const { id: eventId } = useParams()
+    const navigate = useNavigate()
+    const [sections, setSections] = React.useState([])
+    const [err, setErr] = React.useState('')
+    const [fillSection, setFillSection] = React.useState({
+        id: 0,
+        quantity: 0
+    })
+    const token = useSelector(state => state.auth.token)
+
+    const increment = (id) => {
+        if (fillSection.quantity === 10) {
+            setErr('')
+        } else {
+            setFillSection({
+                id,
+                quantity: fillSection.quantity + 1
+            })
+        }
+
+    }
+
+    const decrement = (id) => {
+        if(fillSection.quantity === 0){
+            setErr('')
+        }else{
+            setFillSection({
+                id,
+                quantity: fillSection.quantity - 1
+            })
+        }
+       
+    }
+
+    React.useEffect(() => {
+        const getSection = async () => {
+            const { data } = await http(token).get('/section')
+            setSections(data.results)
+        }
+        getSection()
+    }, [])
+
+    const selectedSection = fillSection && sections.filter(item => item.id === fillSection.id)[0]
+
+    const doReservation = async () => {
+        const form = new URLSearchParams({
+            eventId,
+            sectionId: fillSection.id,
+            quantity: fillSection.quantity
+        }).toString()
+        const { data } = await http(token).post('/reservation', form)
+        navigate('/payment', {
+            state:
+            {
+                eventId,
+                eventName: data.results.events.title,
+                reservationId: data.results.id,
+                sectionName: data.results.sectionName,
+                quantity: data.results.quantity,
+                totalPayment: data.results.totalPrice
+            }
+        })
+    }
     return (
         <>
             {/* helmet */}
@@ -30,62 +98,98 @@ const Reservation = () => {
                                     <div>
                                         <img src={rsvSection} alt="" />
                                     </div>
-                                    <div className="flex flex-col gap-10">
-                                        <div className="flex items-center gap-7">
-                                            <div className="font-semibold">Tickets</div>
-                                            <div className="flex items-center justify-center gap-5 ml-[190px]">
-                                                <div className="text-xs text-red-500">BY PRICE</div>
-                                                <div className="bg-white shadow-md shadow-black/20 rounded-xl1 w-[35px] h-[35px] flex justify-center items-center ">
-                                                    <TbArrowsSort color="blue" />
-                                                </div>
+                                    <div>
+                                        <div className="flex justify-between items-center">
+                                            <div>
+                                                <div className="font-semibold">Tickets</div>
                                             </div>
-                                        </div>
-                                        <div className="flex gap-6">
-                                            <div className="bg-white shadow-md shadow-black/20  w-[45px] h-[45px] rounded-xl">
-                                                <div></div>
-                                            </div>
-                                            <div className="flex flex-col gap-5 justify-center">
+                                            <div className="flex gap-3 justify-center items-center">
+                                                <div className="font-semibold text-sm text-red-500">BY PRICE</div>
                                                 <div>
-                                                    <div className="text-sm font-semibold">SECTION REG, ROW 1</div>
-                                                    <div className="text-xs opacity-60">12 Seats available</div>
-                                                </div>
-                                                <div className="text-sm font-semibold">Quantity</div>
-                                            </div>
-                                            <div className="flex flex-col justify-end items-end gap-3">
-                                                <div>
-                                                    <div className="font-semibold">$15</div>
-                                                    <div className="text-sm opacity-60">per person</div>
-                                                </div>
-                                                <div className="flex gap-7 items-center">
-                                                    <div className="border border-black/50 rounded-md w-[33px] h-[33px] flex justify-center items-center">
-                                                        <div className="opacity-50">-</div>
-                                                    </div>
-                                                    <div>0</div>
-                                                    <div className="border border-black/50 rounded-md w-[33px] h-[33px] flex justify-center items-center">
-                                                        <div className="opacity-50">+</div>
-                                                    </div>
+                                                    <button className="btn btn-primary/20 drop-shadow-xl">
+                                                        <BiSort size={20} color="blue" />
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
-                                            <hr />
-                                        </div>
-                                        <div className="flex flex-col gap-4 font-semibold">
-                                            <div className="flex gap-60">
-                                                <div>Ticket Section</div>
-                                                <div className="text-blue-500">VIP</div>
+                                            <div>
+                                                <>
+                                                    <div className="flex flex-col gap-5 mt-[50px]">{sections.map(item => {
+                                                        return (
+                                                            <React.Fragment key={item.id}>
+                                                                <div className="flex gap-10 ">
+                                                                    <div className="flex gap-4">
+                                                                        <div className="bg-gray-400 w-10 h-10 rounded-md flex items-center justify-center">
+                                                                            <img src={fillOne} alt="" />
+                                                                        </div>
+                                                                        <div className="flex flex-col gap-9">
+                                                                            <div>
+                                                                                <div className="text-sm font-semibold">{item.name}</div>
+                                                                                <div className="text-xs opacity-50">Seats available</div>
+                                                                            </div>
+                                                                            <div className="text-sm font-semibold ">Quantity</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="flex flex-col justify-center items-end gap-3">
+                                                                        <div className="flex flex-col justify-end items-end">
+                                                                            <div className="text-sm font-semibold">{item?.price}</div>
+                                                                            <div className="text-sm opacity-30">per person</div>
+                                                                        </div>
+                                                                        <div className="flex gap-3 justify-center items-center">
+                                                                            <button className="btn btn-primary/30" onClick={() => decrement(item.id)}>
+                                                                                <FiMinus size={10} />
+                                                                            </button>
+                                                                            <div>
+                                                                                <div>{err}</div>
+                                                                            </div>
+                                                                            <div>{item.id === fillSection.id ? fillSection.quantity : 0}</div>
+                                                                            <button className="btn btn-primary/30" onClick={() => increment(item.id)}>
+                                                                                <FiPlus size={10} />
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </React.Fragment>
+                                                        )
+                                                    })}
+                                                        <div className="mt-10">
+                                                            <hr />
+                                                        </div>
+                                                        <div className="mt-10 gap-3 flex flex-col">
+                                                            <div className="flex justify-between">
+                                                                <div className="flex text-md font-semibold">
+                                                                    <div>Ticket Section</div>
+                                                                </div>
+                                                                <div className="font-semibold">
+                                                                    <div className="text-blue-700">{(selectedSection?.name) || "-"}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex justify-between">
+                                                                <div className="flex font-semibold">
+                                                                    <div>Quantity</div>
+                                                                </div>
+                                                                <div className="font-semibold">
+                                                                    <div className="text-blue-700">{fillSection?.quantity}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex justify-between">
+                                                                <div className="flex font-semibold">
+                                                                    <div>Total Payment</div>
+                                                                </div>
+                                                                <div className="font-semibold">
+                                                                    <div className="text-blue-700">IDR {(selectedSection?.price * fillSection?.quantity || "0")}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-[30px] drop-shadow-xl">
+                                                            <Link to="/payment"><button onClick={doReservation} className=" w-[315px] btn btn-primary normal-case text-white">Checkout</button></Link>
+                                                        </div>
+                                                    </div>
+                                                </>
+
+
                                             </div>
-                                            <div className="flex gap-72">
-                                                <div>Quantity</div>
-                                                <div className="text-blue-500">2</div>
-                                            </div>
-                                            <div className="flex gap-56">
-                                                <div>Total Payment</div>
-                                                <div className="text-blue-500">$70</div>
-                                            </div>
-                                        </div>
-                                        <div className="">
-                                            <Link to='/payment'><button className=" w-[315px] btn btn-primary normal-case text-white">Checkout</button></Link>
                                         </div>
                                     </div>
                                 </div>
@@ -93,11 +197,9 @@ const Reservation = () => {
                         </div>
                     </div>
                 </div>
-
                 {/* footer */}
                 <Footer />
             </div>
-
         </>
     )
 }

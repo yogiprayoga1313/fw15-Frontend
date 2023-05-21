@@ -1,7 +1,7 @@
 import http from '../helpers/http';
 import React from 'react';
 import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock, FaListAlt } from "react-icons/fa"
@@ -58,7 +58,7 @@ const MyBooking = () => {
                                 {token ?
                                     <div>
                                         <div >
-                                            <div className='flex gap-4'>
+                                            <div className='flex gap-4 justify-start items-center'>
                                                 <div className='border-2 border-indigo-600 rounded-full p-1'>
                                                     {profile.picture && <img className="w-[44px] h-[44px] rounded-3xl" src={profile.picture.startsWith('https') ? profile?.picture : `http://localhost:8888/uploads/${profile.picture}`} />}
                                                 </div>

@@ -16,7 +16,7 @@ import MyWishlist from "./pages/MyWishlist"
 import CreateEvents from "./pages/CreateEvents"
 import Reservation from "./pages/Reservations"
 import Payment from "./pages/Payment"
-
+import ResetPassword from "./pages/ResetPassword"
 
 import { store , persistor} from "./redux/store"
 import PrivateRoute from "./components/PrivateRoute"
@@ -38,7 +38,8 @@ function App() {
                         <Route path="/myBooking" element={<PrivateRoute><MyBooking /></PrivateRoute>} />
                         <Route path="/myWishlist" element={<PrivateRoute><MyWishlist /></PrivateRoute>} />
                         <Route path="/createEvents" element={<PrivateRoute><CreateEvents /></PrivateRoute>} />
-                        <Route path="/reservations" element={<Reservation />} />
+                        <Route path="/reservations/:id" element={<PrivateRoute><Reservation/></PrivateRoute>} />
+                        <Route path="/resetPassword" element={<ResetPassword />} />
                         <Route path="/payment" element={<PrivateRoute><Payment /></PrivateRoute>} />
                     </Routes>
                 </BrowserRouter>

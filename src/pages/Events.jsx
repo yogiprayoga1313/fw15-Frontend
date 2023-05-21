@@ -7,6 +7,7 @@ import NewMaps from "../Asset/New-maps-Events.png"
 import { SlLocationPin } from "react-icons/sl"
 import { FiClock } from "react-icons/fi"
 import { AiOutlineHeart } from 'react-icons/ai'
+import ScrollToTop from "../components/ScrollToTop";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -15,8 +16,7 @@ const Events = () => {
     const [events, setEvents] = React.useState([])
     const { id } = useParams();
 
-
-
+    
 
     React.useEffect(() => {
         async function getDataEvents() {
@@ -86,7 +86,7 @@ const Events = () => {
                                         <img className="rounded-2xl" src={NewMaps} alt="" />
                                     </div>
                                     <div className="mt-[50px]">
-                                        <Link to='/reservations'><button className="btn btn-primary normal-case text-[16px] font-semibold w-[315px] h-[55px] text-white">Buy Tickets</button></Link>
+                                        <Link to={`/reservations/${id}`}><button className="btn btn-primary normal-case text-[16px] font-semibold w-[315px] h-[55px] text-white">Buy Tickets</button></Link>
                                     </div>
                                 </>
                             </div>
@@ -95,6 +95,7 @@ const Events = () => {
                 </div>
                 {/* footer */}
                 <Footer />
+                <ScrollToTop />
             </div>
         </>
     )

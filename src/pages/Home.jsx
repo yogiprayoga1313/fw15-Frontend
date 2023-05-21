@@ -5,14 +5,14 @@ import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import { FaSearch } from "react-icons/fa"
-import { GrLocation } from "react-icons/gr"
+import { SlLocationPin } from "react-icons/sl"
 import { AiOutlineArrowRight } from "react-icons/ai"
 import { TbPointFilled } from "react-icons/tb"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 import { AiOutlineMinus } from "react-icons/ai"
 import http from "../helpers/http"
 import Navbar from "../components/Navbar"
-import Footer from "../components/footer"
+import Footer from "../components/Footer"
 
 const Home = () => {
     const [events, setEvents] = React.useState([])
@@ -109,7 +109,7 @@ const Home = () => {
                                     <input className='outline-none' type="text" placeholder='Search events . . .' />
                                 </div>
                                 <div className='flex justify-center items-center gap-3'>
-                                    <div><GrLocation /></div>
+                                    <div><SlLocationPin /></div>
                                     <input className='outline-none' type="text" placeholder="Where?" />
                                 </div>
                                 <div>
@@ -118,7 +118,7 @@ const Home = () => {
                             </form>
                         </div>
                     </div>
-                    <div className='my-[110px]'>
+                    <div className='animate-pulse my-[110px]'>
                         <img src={LogoHumanProfil} />
                     </div>
                 </div>
@@ -176,7 +176,9 @@ const Home = () => {
                                     <Link to={`/events/${event.id}`} key={event.id}>
                                         <div className='inline-flex'>
                                             <div className="w-64 rounded-2xl overflow-hidden relative text-white" >
-                                                <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
+                                                {event.picture && <img className='w-[260px] h-[376px]' src={event.picture.startsWith('https') ? event.picture :
+                                                    `http://localhost:8888/uploads/${event.picture}`} />}
+                                                {console.log(event.picture)}
                                                 <div className='absolute bottom-0 bg-gradient-to-t from-black/[0.7] to-black/[0.0] w-full p-8 flex flex-col gap-3'>
                                                     <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
                                                     <div className='text-xl font-bold'>{event.title}</div>
@@ -266,7 +268,8 @@ const Home = () => {
                                                 <Link to={`/events/${event.id}`}>
                                                     <div className='inline-flex'>
                                                         <div className='w-64 rounded-2xl overflow-hidden relative text-white' key={event.id}>
-                                                            <img className='w-[260px] h-[376px]' src={`http://localhost:8888/uploads/${event.picture}`} />
+                                                            {event.picture && <img className='w-[260px] h-[376px]' src={event.picture.startsWith('https') ? event.picture :
+                                                                `http://localhost:8888/uploads/${event.picture}`} />}
                                                             <div className='absolute bottom-0 bg-primary w-full h-[150px] min-h-1 p-8 flex flex-col gap-3'>
                                                                 <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
                                                                 <div className='text-2xl font-bold'>{event.title}</div>
@@ -310,7 +313,7 @@ const Home = () => {
                                 {partners.map(partner => {
                                     return (
                                         <>
-                                            <div key={partner.id}>
+                                            <div className="animate-pulse" key={partner.id}>
                                                 <img src={`http://localhost:8888/uploads/${partner.picture}`} />
                                             </div>
                                         </>
@@ -323,8 +326,8 @@ const Home = () => {
             </div>
 
             {/* Footer */}
-            <Footer/>
-            
+            <Footer />
+
         </>
 
     )

@@ -50,7 +50,7 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="ml-[480px] mt-[75px] pb-[100px]">
+                <div className="ml-[430px] mt-[75px] pb-[100px]">
                     <div className="font-bold text-xl">© 2020 Wetick All Rights Reserved</div>
                 </div>
             </div>
