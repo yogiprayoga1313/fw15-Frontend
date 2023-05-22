@@ -191,6 +191,9 @@ const Home = () => {
                         })}
                     </div>
                 </div>
+                <div className='flex justify-center items-center mt-[50px] mb-[73px]'>
+                    <button className='bg-white btn btn-primary w-[255px] h-[40px] normal-case text-blue-800'>See All</button>
+                </div>
             </div>
 
             {/* Discover Events */}

@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom"
 
 function Payment() {
     const state = useLocation()
+    console.log(state)
 
     return (
         <>
@@ -21,6 +22,13 @@ function Payment() {
 
             {/* Detail payment */}
 
+            <div>
+                {state?.eventName}
+                {console.log(state)}
+                {state?.eventId}
+                {state?.sectionName}
+            </div>
+
 
             <div className=" bg-primary/10">
                 <div className="flex justify-center items-center font-poppins ">
@@ -31,7 +39,9 @@ function Payment() {
                                     <div>
                                         <div>
                                             {state?.eventName}
+                                            {console.log(state)}
                                             {state?.eventId}
+                                            {state?.sectionName}
                                         </div>
                                     </div>
                                 </div>

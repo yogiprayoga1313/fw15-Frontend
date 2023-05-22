@@ -262,6 +262,8 @@ const ProfilePage = () => {
                                                 <select name='profession' value={values.profession} onChange={handleChange} onBlur={handleBlur} className="ml-[5px] select select-bordered w-full max-w-xs opacity-60">
                                                     <option className='hidden' >Select Profession</option>
                                                     <option>Developers</option>
+                                                    <option>Freelance</option>
+                                                    <option>Backend</option>
                                                 </select>
                                             </div>
                                             <div className='flex justify-start items-center'>
@@ -269,6 +271,8 @@ const ProfilePage = () => {
                                                 <select name='nationality' value={values.nationality} onChange={handleChange} onBlur={handleBlur} className="select select-bordered w-full max-w-xs opacity-60 ml-[63px]">
                                                     <option className='hidden' >Select Nationality</option>
                                                     <option>Indonesia</option>
+                                                    <option>USA</option>
+                                                    <option>Russia</option>
                                                 </select>
                                             </div>
                                             <div className='flex justify-start items-center '>

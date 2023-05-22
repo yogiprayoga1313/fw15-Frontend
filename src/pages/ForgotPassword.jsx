@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet"
 import { Link } from "react-router-dom"
 // import Login from "./Login"
-import LogoWetick from "../Asset/Wetick-logo.png"
+import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import { setErrorMessage } from "../redux/reducers/auth"
 import React from "react"
@@ -10,31 +10,30 @@ import { useState, useEffect } from "react"
 
 
 const ForgotPassword = () => {
-    const [email, setEmail] = React.useState('')
-    const [resetCode, setResetCode] = React.useState('')
+    const [email, setEmail] = useState("");
+    const [resetCode, setResetCode] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleEmailChange = (e) => {
-        setEmail(e.targe.value)
-    }
+        setEmail(e.target.value);
+    };
 
     const handleSubmit = async (e) => {
-        e.preventsDefault()
+        e.preventDefault();
         try {
-            const response = await http().post('/auth/forgotPassword', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email }),
-            })
+            const response = await http().post("/auth/forgotPassword", {
+                email: email,
+
+            });
 
             if (response.ok) {
                 const data = await response.json();
                 setResetCode(data.resetCode);
             } else {
-                throw new Error('Errors, please try again');
+                throw new Error("Error, please try again");
             }
         } catch (error) {
+            setErrorMessage(error.message);
             console.error(error);
         }
     }
@@ -56,7 +55,11 @@ const ForgotPassword = () => {
                     </div>
                 </div>
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
-                    <Link to='/'><img src={LogoWetick} alt="" /></Link>
+                    <Link to='/'>
+                        <div className="flex justify-start items-center mb-[20px]">
+                            <img className="w-[115px] h-[93px]" src={NewLogo} alt="" />
+                        </div>
+                    </Link>
                     <div className='flex flex-col mb-10 gap-4 w-60'>
                         <div className="font-semibold text-[20px]">Forgot Password</div>
                         <div className="text-sm">You’ll get mail soon on your email</div>
@@ -87,12 +90,6 @@ const ForgotPassword = () => {
 
 
 }
-
-
-
-
-
-
 
 
 export default ForgotPassword

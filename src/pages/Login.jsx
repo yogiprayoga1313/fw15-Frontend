@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet";
 import LogoWetick from "../Asset/Wetick-logo.png"
+import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -49,11 +50,11 @@ const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSu
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email} />
-                {errors.email && touched.email && 
-                (<label className="label">
-                    <span className="label-text-left text-error text-xs ">{errors.email}</span>
-                </label>
-                )}
+                {errors.email && touched.email &&
+                    (<label className="label">
+                        <span className="label-text-left text-error text-xs ">{errors.email}</span>
+                    </label>
+                    )}
             </div>
             <div className="from-control">
                 <input
@@ -118,9 +119,9 @@ const Login = () => {
                 password: formError.filter(item => item.param === "email")[0].message
             })
         }
-        setSubmitting(false) 
+        setSubmitting(false)
     }
-    
+
 
     return (
         <>
@@ -137,8 +138,12 @@ const Login = () => {
                         <img src={LogoHumanProfil} alt="" />
                     </div>
                 </div>
-                <div className="flex-col flex md:mx-36 mx-20 font-poppins">
-                    <Link to='/'><img src={LogoWetick} alt="" /></Link>
+                <div className="flex-col flex md:mx-36 mx-20 font-poppins ">
+                    <Link to='/'>
+                        <div className="flex justify-start items-center mb-[20px]">
+                            <img className="w-[115px] h-[93px]" src={NewLogo} alt="" />
+                        </div>
+                    </Link>
                     <div>
                         <Formik
                             initialValues={{
@@ -151,14 +156,14 @@ const Login = () => {
                             {(props) => (
                                 <FormLogin {...props} />
                             )}
-    
+
                         </Formik>
                     </div>
                 </div>
             </div>
         </>
     )
-    
+
 }
 
 

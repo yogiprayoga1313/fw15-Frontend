@@ -1,4 +1,5 @@
 import LogoWetick from "../Asset/Wetick-logo.png"
+import NewLogo from "../Asset/NEWLOGO.png"
 import FbLogo from "../Asset/fb-icon.png"
 import WaLogo from "../Asset/wa-icon.png"
 import IgLogo from "../Asset/ig-icon.png"
@@ -11,7 +12,7 @@ function Footer() {
         <div className="mt-[175px]">
                 <div className="font-poppins flex gap-40 justify-center ">
                     <div className="flex flex-col gap-3">
-                        <img src={LogoWetick} alt="" />
+                        <img className="w-[210px] h-[140px]" src={NewLogo} alt="" />
                         <div className="font-semibold">Find events you love with our</div>
                         <div className="flex justify-start items-center gap-5">
                             <Link><img src={FbLogo} /></Link>

@@ -3,7 +3,7 @@ import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 
 // import { VitePluginFonts } from "vite-plugin-fonts"
-import PrivateRoute from "./components/PrivateRoute"
+import PrivateRoute from "./components/RoutePrivate"
 import Home from "./pages/Home"
 import SignUp from "./pages/SignUp"
 import Login from "./pages/Login"

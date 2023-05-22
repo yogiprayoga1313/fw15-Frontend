@@ -136,7 +136,7 @@ const Reservation = () => {
                                                                             <div className="text-sm font-semibold">{item?.price}</div>
                                                                             <div className="text-sm opacity-30">per person</div>
                                                                         </div>
-                                                                        <div className="flex gap-3 justify-center items-center">
+                                                                        <div className="flex gap-2 justify-center items-center">
                                                                             <button className="btn btn-primary/30" onClick={() => decrement(item.id)}>
                                                                                 <FiMinus size={10} />
                                                                             </button>

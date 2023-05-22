@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet"
 import { Link } from "react-router-dom"
 // import Login from "./Login"
-import LogoWetick from "../Asset/Wetick-logo.png"
+import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import { setErrorMessage } from "../redux/reducers/auth"
 import React from "react"
@@ -10,7 +10,7 @@ import { useState, useEffect } from "react"
 
 
 const ResetPassword = () => {
-   
+
 
     return (
         <>
@@ -29,7 +29,11 @@ const ResetPassword = () => {
                     </div>
                 </div>
                 <div className="flex-col flex md:mx-36 mx-20 font-poppins">
-                    <Link to='/'><img src={LogoWetick} alt="" /></Link>
+                    <Link to='/'>
+                        <div className="flex justify-start items-center mb-[20px]">
+                            <img className="w-[115px] h-[93px]" src={NewLogo} alt="" />
+                        </div>
+                    </Link>
                     <div className='flex flex-col mb-10 gap-4 w-60'>
                         <div className="font-semibold text-[20px]">Reset Password</div>
                         <div className="text-sm">Update your Password here!</div>
