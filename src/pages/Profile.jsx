@@ -11,7 +11,7 @@ import { logout as logoutAction } from '../redux/reducers/auth';
 import moment from 'moment';
 import { MdLogout } from 'react-icons/md'
 import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 import { Field, Formik } from 'formik';
 import ScrollToTop from '../components/ScrollToTop';

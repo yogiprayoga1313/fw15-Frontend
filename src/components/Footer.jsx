@@ -1,4 +1,3 @@
-import LogoWetick from "../Asset/Wetick-logo.png"
 import NewLogo from "../Asset/NEWLOGO.png"
 import FbLogo from "../Asset/fb-icon.png"
 import WaLogo from "../Asset/wa-icon.png"
