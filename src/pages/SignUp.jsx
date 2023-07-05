@@ -2,8 +2,6 @@ import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet";
 import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
-// import { FcGoogle } from "react-icons/fc";
-// import { FaFacebook } from "react-icons/fa";
 import React from "react";
 import http from "../helpers/http";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -37,7 +35,6 @@ const SignUp = () => {
                 setErrMessage(errMessage)
             }
             const { data } = await http().post('/auth/register', body)
-            console.log(data)
             window.localStorage.setItem('token', data.results.token)
             setToken(data.results.token)
         } catch (err) {

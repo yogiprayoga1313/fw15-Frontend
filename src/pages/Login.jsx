@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet";
-import LogoWetick from "../Asset/Wetick-logo.png"
 import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import { FcGoogle } from "react-icons/fc";
@@ -11,7 +10,7 @@ import { Formik } from "formik";
 import * as Yup from 'yup';
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { clearMessage, setErrorMessage } from "../redux/reducers/auth";
+import { clearMessage } from "../redux/reducers/auth";
 import { asyncLoginAction } from "../redux/actions/auth";
 
 
@@ -25,13 +24,12 @@ const FormLogin = ({ values, errors, touched, handleChange, handleBlur, handleSu
     const errorMessage = useSelector(state => state.auth.errorMessage)
     const warningMessage = useSelector(state => state.auth.warningMessage)
 
-    // console.log(typeof touched);
     return (
         <form onSubmit={handleSubmit} className="flex-col flex gap-3">
             <div className='flex flex-col mb-10 gap-4 w-60'>
                 <div className="font-semibold text-[20px]">Sign In</div>
                 <div className="text-sm">Hi, Welcome back to Urticket! </div>
-                <div className="text-sm">Don't have an account?<Link className="text-blue-800 font-semibold" to="/signUp"> Sign Up</Link></div>
+                <div className="text-sm">Dont have an account?<Link className="text-blue-800 font-semibold" to="/signUp"> Sign Up</Link></div>
             </div>
             {errorMessage &&
                 (<div>
