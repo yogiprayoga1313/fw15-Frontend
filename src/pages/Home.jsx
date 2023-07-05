@@ -1,15 +1,13 @@
 import React from "react"
-import axios from "axios"
 import moment from "moment/moment"
 import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import { FaSearch } from "react-icons/fa"
 import { SlLocationPin } from "react-icons/sl"
-import { AiOutlineArrowRight } from "react-icons/ai"
 import { TbPointFilled } from "react-icons/tb"
 import { AiOutlineArrowLeft } from "react-icons/ai"
-import { AiOutlineMinus } from "react-icons/ai"
+import { AiOutlineMinus, AiOutlineArrowRight } from "react-icons/ai"
 import http from "../helpers/http"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
@@ -77,7 +75,7 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getPartners() {
-            const { data } = await axios.get('http://localhost:8888/partners')
+            const { data } = await http().get('/partners')
             setPartners(data.results)
         }
         getPartners()

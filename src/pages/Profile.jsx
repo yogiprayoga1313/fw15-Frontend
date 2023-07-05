@@ -78,6 +78,7 @@ const ProfilePage = () => {
         setEditUserName(false)
         setProfile(data.results)
         setOpenModal(false)
+        setSelectedPicture(false)
     }
 
     return (
@@ -174,7 +175,7 @@ const ProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[850px]'>
+                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[900px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Profile</div>
                             <Formik
@@ -192,7 +193,7 @@ const ProfilePage = () => {
                                 onSubmit={editProfile}
                                 enableReinitialize
                             >
-                                {({ handleSubmit, handleChange, handleBlur, errors, touched, values }) => (
+                                {({ handleSubmit, handleChange, handleBlur, values }) => (
                                     <form onSubmit={handleSubmit} className='flex gap-32'>
                                         <div className='flex flex-col gap-10'>
                                             <div className='flex justify-start items-center'>
@@ -304,7 +305,7 @@ const ProfilePage = () => {
                                                 <div>
                                                     <label className='mt-[30px] btn btn-primary normal-case text-white'>
                                                         <span>Choose Photo</span>
-                                                        <input name='picture' onChange={(e) => setSelectedPicture(e.target.files[0])} type="file" className='hidden' />
+                                                        <input name='picture'  type="file" className='hidden' />
                                                     </label>
                                                 </div>
                                             </div>  
