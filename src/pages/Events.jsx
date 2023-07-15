@@ -21,7 +21,6 @@ const Events = () => {
     React.useEffect(() => {
         async function getDataEvents() {
             const { data } = await http().get(`/events/${id}`)
-            console.log(data)
             setEvents(data.results)
         }
         getDataEvents()
@@ -50,7 +49,7 @@ const Events = () => {
                             <div className="flex flex-col gap-10">
                                 <>
                                     <div key={events?.id} className="">
-                                        <img className="w-[375px] h-[486px] rounded-2xl" src={`http://localhost:8888/uploads/${events?.picture}`} alt="" />
+                                        <img className="w-[375px] h-[486px] rounded-2xl" src={events?.picture} alt="" />
                                         <div></div>
                                     </div>
                                     <Link>
