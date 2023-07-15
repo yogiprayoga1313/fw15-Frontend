@@ -7,8 +7,8 @@
     } 
     return axios.create({
         headers,
-        // baseURL: 'http://localhost:8888'
-        baseURL: import.meta.env.VITE_BACKEND_URL,
+        baseURL: 'https://lime-frail-crow.cyclic.app'
+        // baseURL: import.meta.env.VITE_BACKEND_URL,
     })
  }
 

@@ -24,8 +24,9 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataEvents() {
-            const { data } = await http().get('/events?limit=8')
+            const { data } = await http().get('/events')
             setEvents(data.results)
+            console.log(data,"events")
         }
         getDataEvents()
 
@@ -34,8 +35,7 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataLocation() {
-            const { data } = await http().get('/citites')
-            console.log(data)
+            const { data } = await http().get('/citites?limit=7')
             setLocation(data.results)
         }
         getDataLocation()
@@ -174,9 +174,7 @@ const Home = () => {
                                     <Link to={`/events/${event.id}`} key={event.id}>
                                         <div className='inline-flex'>
                                             <div className="w-64 rounded-2xl overflow-hidden relative text-white" >
-                                                {event.picture && <img className='w-[260px] h-[376px]' src={event.picture.startsWith('https') ? event.picture :
-                                                    `http://localhost:8888/uploads/${event.picture}`} />}
-                                                {console.log(event.picture)}
+                                               <img className='w-[260px] h-[376px]' src={event?.picture}/>
                                                 <div className='absolute bottom-0 bg-gradient-to-t from-black/[0.7] to-black/[0.0] w-full p-8 flex flex-col gap-3'>
                                                     <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
                                                     <div className='text-xl font-bold'>{event.title}</div>
@@ -213,7 +211,7 @@ const Home = () => {
                                     <>
                                         <div className='flex flex-col gap-5 justify-center items-center'>
                                             <div key={location.id}></div>
-                                            <img className="w-[230px] h-[140px] rounded-[15px]" src={`http://localhost:8888/uploads/${location.picture}`} alt="" />
+                                            <img className="w-[230px] h-[140px] rounded-[15px]" src={location?.picture} alt="" />
                                             <div>{location.name}</div>
                                         </div>
                                     </>
@@ -315,7 +313,7 @@ const Home = () => {
                                     return (
                                         <>
                                             <div className="animate-pulse" key={partner.id}>
-                                                <img src={`http://localhost:8888/uploads/${partner.picture}`} />
+                                                <img src={partner?.picture} />
                                             </div>
                                         </>
                                     )
