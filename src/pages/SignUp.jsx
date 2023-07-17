@@ -4,14 +4,14 @@ import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
 import React from "react";
 import http from "../helpers/http";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const SignUp = () => {
-    const location = useLocation()
-    const navigate = useNavigate()
-    const [errMessage, setErrMessage] = React.useState('')
-    const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
-    const [token, setToken] = React.useState('')
+    // const location = useLocation();
+    const navigate = useNavigate();
+    const [errMessage, setErrMessage] = React.useState('');
+    // const [warningMessage, setWarningMessage] = React.useState(location.state?.warningMessage)
+    const [token, setToken] = React.useState('');
     const [checkedBox, setCheckedBox] = React.useState(false);
     const [buttonDisabled, setButtonDisabled] = React.useState(true);
 
@@ -23,7 +23,7 @@ const SignUp = () => {
     const doSignUp = async (event) => {
         event.preventDefault()
         setErrMessage('')
-        setWarningMessage('')
+        // setWarningMessage('')
         try {
             const { value: fullName } = event.target.fullName
             const { value: email } = event.target.email
@@ -76,6 +76,9 @@ const SignUp = () => {
                         <div className="text-sm">Already have an account? <span className='text-blue-800 font-semibold'><Link to='/Login'>Log In</Link></span></div>
                     </div>
                     <div>
+                    {errMessage && (<div>
+                                <div className="alert alert-error danger text-[11px]">{errMessage}</div>
+                            </div>)}
                         <form onSubmit={doSignUp} className="flex-col flex gap-3">
                             <div>
                                 <input onFocus={() => setErrMessage('')} name="fullName" type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
@@ -89,9 +92,6 @@ const SignUp = () => {
                             <div>
                                 <input onFocus={() => setErrMessage('')} name="confirmPassword" type="password" placeholder="Confirm Password" className="input input-bordered w-full max-w-xs" />
                             </div>
-                            {errMessage && (<div>
-                                <div className="alert alert-error danger text-[11px]">{errMessage}</div>
-                            </div>)}
                             <div >
                                 <label htmlFor="acceptTermsAndConditions" className="flex gap-3 mt-5">
                                     <input

@@ -12,13 +12,23 @@ import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
+import { Formik } from 'formik';
+// import * as Yup from 'yup';
 
+
+// const validationSchema = Yup.object({
+//     oldPassword: Yup.string().required('Password cannot be emprty'),
+//     newPassword: Yup.string().required('Password cannot be emprty'),
+//     confirmPassword: Yup.string().required('Password cannot be emprty')
+
+// })
 
 const ChangePassword = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const [profile, setProfile] = React.useState({})
+    const [errMessage, setErrMessage] = React.useState('');
 
     React.useEffect(() => {
         async function getDataProfile() {
@@ -28,11 +38,27 @@ const ChangePassword = () => {
         }
         getDataProfile()
 
-    }, [])
+    }, [token])
 
     const doLogout = () => {
         dispatch(logoutAction()),
             navigate('/login')
+    }
+
+    const doChange = async (values) => {
+        try {
+            form.append('oldPassword', values.oldPassword);
+            form.append('newPassword', values.newPassword);
+            form.append('confirmPassword', values.confirmPassword);
+            const form = new URLSearchParams()
+            const { data } = await http(token).patch('/changePassword', form.toString())
+            console.log(data)
+        } catch (err) {
+            const message = err?.response?.data?.message
+            if (message) {
+                setErrMessage(message)
+            }
+        }
     }
 
     return (
@@ -132,29 +158,79 @@ const ChangePassword = () => {
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Change Password</div>
-                            <form className='flex  flex-col gap-10'>
-                                <div className='flex justify-start items-center'>
-                                    <div>Old Password</div>
-                                    <div className='ml-[100px]'>
-                                        <input type="password" placeholder="Input Old Password...." className="input input-bordered w-[619px]" />
-                                    </div>
-                                </div>
-                                <div className='flex justify-start items-center'>
-                                    <div>New Password</div>
-                                    <div className='ml-[93px]'>
-                                        <input type="password" placeholder="Input New Password...." className="input input-bordered w-[619px]" />
-                                    </div>
-                                </div>
-                                <div className='flex justify-start items-center'>
-                                    <div>Confirm Password</div>
-                                    <div className='ml-[63px]'>
-                                        <input type="password" placeholder="Input Confirm Password...." className="input input-bordered w-[619px]" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className='btn btn-primary normal-case w-[826px] h-[61px] text-white text-[16px]'>Update</button>
-                                </div>
-                            </form>
+                            {errMessage &&
+                                (<div>
+                                    <div className="alert alert-error danger text-[11px]">{errMessage}</div>
+                                </div>)}
+                            <Formik
+                                initialValues={{
+                                    oldPassword: '',
+                                    newPassword: '',
+                                    confirmPassword: '',
+                                }}
+                                // validationSchema={validationSchema}
+                                onSubmit={doChange}
+                            >
+                                {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+                                    <form onSubmit={handleSubmit} className='flex  flex-col gap-10'>
+                                        <div className='flex justify-start items-center'>
+                                            <div>Old Password</div>
+                                            <div className='ml-[100px]'>
+                                                <input
+                                                    type="password"
+                                                    placeholder="Input Old Password...."
+                                                    className="input input-bordered w-[619px]"
+                                                    name='oldPassword'
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.oldPassword} />
+                                                {errors.oldPassword && touched.oldPassword && (
+                                                    <label className="label">
+                                                        <span className="label-text-left text-error text-xs ">{errors.oldPassword}</span>
+                                                    </label>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className='flex justify-start items-center'>
+                                            <div>New Password</div>
+                                            <div className='ml-[93px]'>
+                                                <input
+                                                    type="password"
+                                                    placeholder="Input New Password...."
+                                                    className="input input-bordered w-[619px]"
+                                                    name='newPassword'
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.newPassword} />
+                                                {errors.newPassword && touched.newPassword && (
+                                                    <label className="label">
+                                                        <span className="label-text-left text-error text-xs ">{errors.newPassword}</span>
+                                                    </label>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className='flex justify-start items-center'>
+                                            <div>Confirm Password</div>
+                                            <div className='ml-[63px]'>
+                                                <input
+                                                    type="password"
+                                                    placeholder="Input Confirm Password...."
+                                                    className="input input-bordered w-[619px]"
+                                                    name='confirmPassword'
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.confirmPassword} />
+                                                {errors.confirmPassword && touched.confirmPassword && (
+                                                    <label className="label">
+                                                        <span className="label-text-left text-error text-xs ">{errors.confirmPassword}</span>
+                                                    </label>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <button type='submit' className='btn btn-primary normal-case w-[826px] h-[61px] text-white text-[16px]'>Update</button>
+                                    </form>
+                                )}
+                            </Formik>
                         </div>
                     </div>
                 </div>
