@@ -72,6 +72,7 @@ const ProfilePage = () => {
                 'Content-Type': 'multipart/from-data'
             }
         })
+        console.log(data)
         setEditBirthDate(false)
         setEditEmail(false)
         setEditPhoneNumber(false)
@@ -289,7 +290,7 @@ const ProfilePage = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <button className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
+                                                <button type='submit' className='btn btn-primary normal-case w-[315px] h-[61px] text-white text-xl tracking-wider'>Save</button>
                                             </div>
                                         </div>
                                         <div className=''>
