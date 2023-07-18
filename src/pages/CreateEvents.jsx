@@ -31,6 +31,20 @@ const CreateEvents = () => {
     const [date, setDate] = React.useState(new Date());
     const [selectedPicure, setSelectedPicture] = React.useState();
     const [pictureURI, setPictureURI] = React.useState('')
+    const [eventByUser, setEventByUser] = React.useState([])
+
+
+
+    React.useEffect(() => {
+        async function getDataEventByUser() {
+            const { data } = await http(token).get('/events/manage')
+            setEventByUser(data.result)
+            console.log(data)
+        }
+        getDataEventByUser()
+    }, [token])
+
+
 
 
     React.useEffect(() => {
@@ -74,7 +88,6 @@ const CreateEvents = () => {
         reader.readAsDataURL(file)
     }
 
-
     const changePicture = (e) => {
         const file = e.target.files[0]
         setSelectedPicture(file)
@@ -106,6 +119,7 @@ const CreateEvents = () => {
             },
         });
         console.log(data)
+        setCreate(false)
     };
 
     return (
@@ -203,153 +217,176 @@ const CreateEvents = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
+                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[925px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
-                            {/* <div>
-                                <div className='flex justify-between '>
-                                    <div className='font-semibold text-xl'>Manage Events</div>
-                                    <div className='mr-20 bg-blue-500 w-24 h-10 rounded-xl justify-center items-center flex'>
-                                        <Link className='text-white'>Create</Link>
+                            <div className='flex items-center justify-between'>
+                                {!create && (<div>
+                                    <div className='flex justify-between '>
+                                        <div className='font-semibold text-xl'>Manage Events</div>
+
                                     </div>
-                                </div>
-                            </div> */}
-                            <div>
-                                <Formik
-                                    initialValues={{
-                                        title: '',
-                                        cityId: '',
-                                        categoriesId: '',
-                                        desciprions: '',
-                                        date: ''
-                                    }}
-                                    onSubmit={createEvent}>
-                                    {({ handleBlur, handleChange, handleSubmit, values }) => (
-                                        <>
-                                            <div className='font-semibold text-xl mb-10'>Create Events</div>
-                                            <form onSubmit={handleSubmit} className='flex  flex-col gap-10'>
-                                                <div className='flex flex-col gap-16 justify-center mr-28'>
-                                                    <div className='flex gap-16'>
-                                                        <div className='flex flex-col gap-10'>
-                                                            <div className='flex flex-col gap-3'>
-                                                                <span>Name</span>
-                                                                <input
-                                                                    className="input input-bordered w-[381px]"
-                                                                    type="text"
-                                                                    placeholder='Input Name Event...'
-                                                                    value={values.title}
-                                                                    onBlur={handleBlur}
-                                                                    onChange={handleChange} />
-                                                            </div>
-                                                            <div className='flex flex-col gap-3'>
-                                                                <span>Location</span>
-                                                                <select
-                                                                    className="select select-primary text-black"
-                                                                    name="cityId"
-                                                                    onBlur={handleBlur}
-                                                                    onChange={handleChange}
-                                                                    value={values.cityId}>
-                                                                    {city.map((item) => {
-                                                                        return (
-                                                                            <>
-                                                                                <div key={`categories-${item.id}`} value={item.id}>
-                                                                                    <options>
-                                                                                        {item?.name}
-                                                                                    </options>
-                                                                                </div>
-                                                                            </>
-                                                                        )
-                                                                    })}
-                                                                </select>
-                                                            </div>
-                                                            <div className='flex flex-col gap-3'>
-                                                                <span>Category</span>
-                                                                <select
-                                                                    className="select select-primary text-black"
-                                                                    name="categoriesId"
-                                                                    onBlur={handleBlur}
-                                                                    onChange={handleChange}
-                                                                    value={values.categoriesId}>
-                                                                    {categories.map((item) => {
-                                                                        return (
-                                                                            <>
-                                                                                <div key={`categories-${item.id}`} value={item.id}>
-                                                                                    <options>
-                                                                                        {item?.name}
-                                                                                    </options>
-                                                                                </div>
-                                                                            </>
-                                                                        )
-                                                                    })}
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div className='flex flex-col gap-10'>
-                                                            <div className='flex flex-col gap-3'>
-                                                                <span>Date Time Show</span>
-                                                                <input
-                                                                    className="input input-bordered w-[381px]"
-                                                                    type="date"
-                                                                    placeholder='Input Name Event...'
-                                                                    onChange={handleChange}
-                                                                    onBlur={handleBlur}
-                                                                    value={values.date} />
-                                                            </div>
-                                                            <div className='flex flex-col gap-3'>
-                                                                <span>Price</span>
-                                                                <input
-                                                                    className="input input-bordered w-[381px]"
-                                                                    type="text"
-                                                                    placeholder='Input Name Event...'
-                                                                    onChange={handleChange}
-                                                                    onSubmit={handleSubmit}
-                                                                    value={values.price} />
-                                                            </div>
-                                                            <div className='flex flex-col gap-3'>
-                                                                <span>Images</span>
-                                                                <input
-                                                                    className="justify-center items-center"
-                                                                    type="file"
-                                                                    name='picture'
-                                                                    onChange={changePicture}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div className="w-full h-100 border-primary text-black font-normal">
-                                                            <Field name="descriptions">
-                                                                {({ field, form }) => (
-                                                                    <CKEditor
-                                                                        editor={ClassicEditor}
-                                                                        config={{
-                                                                            toolbar: {
-                                                                                items: [
-                                                                                    'bold',
-                                                                                    'italic',
-                                                                                    'undo',
-                                                                                    'redo',
-                                                                                ],
-                                                                            },
-                                                                        }}
-                                                                        data={field.value}
-                                                                        onChange={(event, editor) => {
-                                                                            const data = editor.getData();
-                                                                            form.setFieldValue(field.name, data);
-                                                                        }}
-                                                                    />
-                                                                )}
-                                                            </Field>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className='flex justify-cente mr-28'>
-                                                    <button className='btn btn-primary w-full text-white'>Create</button>
-                                                </div>
-                                            </form  >
-                                        </>
-                                    )}
-                                </Formik>
+                                </div>)}
+                                {!create && <div className='mr-20 bg-blue-500 w-24 h-10 rounded-xl justify-center items-center flex'>
+                                    <Link onClick={() => setCreate(true)} className='text-white'>Create</Link>
+                                </div>}
                             </div>
+                            <div className='grid justify-start gap-7'>
+                                {eventByUser && (eventByUser.map(item => {
+                                    return (
+                                        <>
+                                            <div className='flex'>
+                                                <div key={item?.id}></div>
+                                                <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
+                                                    <div className='text-orange-500'>{moment(item?.date).format('DD')}</div>
+                                                    <div className='opacity-60 text-sm'>{moment(item?.date).format('ddd')}</div>
+                                                </div>
+                                                <div className='flex flex-col gap-4 ml-[25px]'>
+                                                    <div className='font-bold text-2xl'>
+                                                        <div>{item?.title}</div>
+                                                    </div>
+                                                    <div className='text-sm font-normal opacity-70'>
+                                                        <div>{item?.cityName}</div>
+                                                        <div>{moment(item?.date).format('ddd, DD MMM YYYY')}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }))}
+                            </div>
+                            {create && (
+                                <div>
+                                    <Formik
+                                        initialValues={{
+                                            title: '',
+                                            cityId: '',
+                                            categoriesId: '',
+                                            desciprions: '',
+                                            date: ''
+                                        }}
+                                        onSubmit={createEvent}>
+                                        {({ handleBlur, handleChange, handleSubmit, values }) => (
+                                            <>
+                                                <div className='font-semibold text-xl mb-10'>Create Events</div>
+                                                <form onSubmit={handleSubmit} className='flex  flex-col gap-10'>
+                                                    <div className='flex flex-col gap-16 justify-center mr-28'>
+                                                        <div className='flex gap-16'>
+                                                            <div className='flex flex-col gap-10'>
+                                                                <div className='flex flex-col gap-3'>
+                                                                    <span>Name</span>
+                                                                    <input
+                                                                        className="input input-bordered w-[381px]"
+                                                                        type="text"
+                                                                        placeholder='Input Name Event...'
+                                                                        value={values.title}
+                                                                        onBlur={handleBlur}
+                                                                        onChange={handleChange}
+                                                                        name='title' />
+                                                                </div>
+                                                                <div className='flex flex-col gap-3'>
+                                                                    <span>Location</span>
+                                                                    <select
+                                                                        className="select select-primary text-black"
+                                                                        name="cityId"
+                                                                        onBlur={handleBlur}
+                                                                        onChange={handleChange}
+                                                                        value={values.cityId}>
+                                                                        {city.map((item) => {
+                                                                            return (
+                                                                                <option key={item.id} value={item.id}>
+                                                                                    {item?.name}
+                                                                                </option>
+                                                                            )
+                                                                        })}
+                                                                    </select>
+                                                                </div>
+                                                                <div className='flex flex-col gap-3 form-control'>
+                                                                    <span>Category</span>
+                                                                    <select
+                                                                        className="select select-primary text-black"
+                                                                        name="categoriesId"
+                                                                        onBlur={handleBlur}
+                                                                        onChange={handleChange}
+                                                                        value={values.categoriesId}>
+                                                                        {categories.map(item => (
+                                                                            <>
+                                                                                <option key={item.id} value={item.id}>
+                                                                                    {item.name}
+                                                                                </option>
+                                                                            </>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div className='flex flex-col gap-10'>
+                                                                <div className='flex flex-col gap-3'>
+                                                                    <span>Date Time Show</span>
+                                                                    <input
+                                                                        className="input input-bordered w-[381px]"
+                                                                        type="date"
+                                                                        placeholder='Input Name Event...'
+                                                                        onChange={handleChange}
+                                                                        onBlur={handleBlur}
+                                                                        value={values.date} />
+                                                                    {values.date && (
+                                                                        <span>
+                                                                            {moment(values.date).format('D MMMM YYYY')}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                                <div className='flex flex-col gap-3'>
+                                                                    <span>Images</span>
+                                                                    <input
+                                                                        className="justify-center items-center"
+                                                                        type="file"
+                                                                        name='picture'
+                                                                        onChange={changePicture}
+                                                                    />
+                                                                </div>
+                                                                <div className='w-[380px] h-[180px] border-gray-900 border-2 flex justify-center items-center rounded-lg' >
+                                                                    {selectedPicure ? (<img src={pictureURI} alt="events" className='w-[370px] h-[170px] rounded-lg bg-cover' />) : (
+                                                                        <span className='font-bold text-red-500'>No Images</span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="w-full h-100 border-primary text-black font-normal">
+                                                                <Field name="descriptions">
+                                                                    {({ field, form }) => (
+                                                                        <CKEditor
+                                                                            editor={ClassicEditor}
+                                                                            config={{
+                                                                                toolbar: {
+                                                                                    items: [
+                                                                                        'bold',
+                                                                                        'italic',
+                                                                                        'undo',
+                                                                                        'redo',
+                                                                                    ],
+                                                                                },
+                                                                            }}
+                                                                            data={field.value}
+                                                                            onChange={(event, editor) => {
+                                                                                const data = editor.getData();
+                                                                                form.setFieldValue(field.name, data);
+                                                                            }}
+                                                                        />
+                                                                    )}
+                                                                </Field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex justify-cente mr-28'>
+                                                        <button className='btn btn-primary w-full text-white normal-case'>Create</button>
+                                                    </div>
+                                                </form  >
+
+                                            </>
+                                        )}
+                                    </Formik>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

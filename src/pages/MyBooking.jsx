@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
 import { Helmet } from 'react-helmet';
+import moment from 'moment';
 
 
 const MyBooking = () => {
@@ -19,6 +20,17 @@ const MyBooking = () => {
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const [profile, setProfile] = React.useState({})
+    const [booking, setBooking] = React.useState([])
+
+
+    React.useEffect(() => {
+        async function getDataBooking() {
+            const { data } = await http(token).get('/history')
+            console.log(data)
+            setBooking(data.results)
+        }
+        getDataBooking()
+    }, [token])
 
     React.useEffect(() => {
         async function getDataProfile() {
@@ -132,7 +144,35 @@ const MyBooking = () => {
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='font-semibold text-xl'>My Booking</div>
                             <form className='flex  flex-col gap-10'>
-
+                                <div>
+                                    <div className='grid justify-start gap-7'>
+                                        {booking.map(wishlist => {
+                                            return (
+                                                <>
+                                                    <div className='flex'>
+                                                        <div key={wishlist?.id}></div>
+                                                        <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
+                                                            <div className='text-orange-500'>{moment(wishlist?.date).format('DD')}</div>
+                                                            <div className='opacity-60 text-sm'>{moment(wishlist?.date).format('ddd')}</div>
+                                                        </div>
+                                                        <div className='flex flex-col gap-4 ml-[25px]'>
+                                                            <div className='font-bold text-2xl'>
+                                                                <div>{wishlist?.title}</div>
+                                                            </div>
+                                                            <div className='text-sm font-normal opacity-70'>
+                                                                <div>{wishlist?.location}</div>
+                                                                <div>{moment(wishlist?.date).format('ddd, DD MMM YYYY')}</div>
+                                                            </div>
+                                                        </div>
+                                                        {/* <div className=''>
+                                                            <Link><div><AiOutlineHeart size={30} color='blue' /></div></Link>
+                                                        </div> */}
+                                                    </div>
+                                                </>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
