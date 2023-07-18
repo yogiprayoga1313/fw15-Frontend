@@ -24,9 +24,8 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataEvents() {
-            const { data } = await http().get('/events')
+            const { data } = await http().get('/events?sortBy=DESC')
             setEvents(data.results)
-            console.log(data,"events")
         }
         getDataEvents()
 
@@ -174,7 +173,7 @@ const Home = () => {
                                     <Link to={`/events/${event.id}`} key={event.id}>
                                         <div className='inline-flex'>
                                             <div className="w-64 rounded-2xl overflow-hidden relative text-white" >
-                                               <img className='w-[260px] h-[376px]' src={event?.picture}/>
+                                                <img className='w-[260px] h-[376px]' src={event?.picture} />
                                                 <div className='absolute bottom-0 bg-gradient-to-t from-black/[0.7] to-black/[0.0] w-full p-8 flex flex-col gap-3'>
                                                     <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
                                                     <div className='text-xl font-bold'>{event.title}</div>
@@ -232,7 +231,7 @@ const Home = () => {
                     <div className='flex flex-col justify-center items-center gap-10'>
                         <div className='flex bg-red-300/50 w-[160px] h-[30px] justify-center items-center gap-5 rounded-full text-red-800/80 font-semibold text-sm'>
                             <div><AiOutlineMinus size={20} /></div>
-                            <div>LOCATION</div>
+                            <div>CATEGORY</div>
                         </div>
                         <div className='text-3xl font-bold'>
                             <div>Browse Events By Category</div>
@@ -261,7 +260,7 @@ const Home = () => {
                                             <button className="btn btn-base-100 shadow-lg shadow-black-500/70" onClick={handlePrevPage}><AiOutlineArrowLeft size={20} color="black" /></button>
                                         </div>
                                     </div>
-                                    {eventsCategory.map(event => {
+                                    {eventsCategory.length > 0 ? (eventsCategory.map(event => {
                                         return (
                                             <>
                                                 <Link to={`/events/${event.id}`}>
@@ -278,7 +277,13 @@ const Home = () => {
                                                 </Link>
                                             </>
                                         )
-                                    })}
+                                    })) : (
+                                        <div className="flex justify-center items-center text-red-500 font-bold">
+                                            <div className="text-2xl">
+                                                No Data Events
+                                            </div>
+                                        </div>
+                                    )}
                                     <div className="flex justify-center items-center">
                                         <div>
                                             <button className="btn btn-primary shadow-lg shadow-black-500/70" onClick={handleNextPage}><AiOutlineArrowRight size={20} color="white" /></button>

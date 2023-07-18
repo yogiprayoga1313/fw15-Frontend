@@ -1,11 +1,30 @@
 import { Helmet } from "react-helmet"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import Http from "../helpers/http"
 
 function Payment() {
-    const state = useLocation()
+    const { state } = useLocation()
     console.log(state)
+    const navigate = useNavigate()
+    const token = useSelector((state) => state.auth.token)
+    const [selectedPayment, setSelectedPayment] = React.useState(null)
+
+    const doPayment = async (e) => {
+        // console.log(selectedPayment)
+        e.preventDefault()
+        const { reservationId } = state
+        const form = new URLSearchParams({
+            reservationId,
+            paymentMethodId: selectedPayment,
+        }).toString()
+        const { data } = await Http(token).post('/payment', form)
+        if (data) {
+            navigate('/user/reservation', { replace: true })
+        }
+    }
 
     return (
         <>

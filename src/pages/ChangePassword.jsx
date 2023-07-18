@@ -13,15 +13,15 @@ import { MdLogout } from 'react-icons/md'
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 import { Formik } from 'formik';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 
 
-// const validationSchema = Yup.object({
-//     oldPassword: Yup.string().required('Password cannot be emprty'),
-//     newPassword: Yup.string().required('Password cannot be emprty'),
-//     confirmPassword: Yup.string().required('Password cannot be emprty')
+const validationSchema = Yup.object({
+    oldPassword: Yup.string().required('Password cannot be emprty'),
+    newPassword: Yup.string().required('Password cannot be emprty'),
+    confirmPassword: Yup.string().required('Password cannot be emprty')
 
-// })
+})
 
 const ChangePassword = () => {
     const navigate = useNavigate()
@@ -46,11 +46,12 @@ const ChangePassword = () => {
     }
 
     const doChange = async (values) => {
+        console.log('1')
         try {
+            const form = new URLSearchParams()
             form.append('oldPassword', values.oldPassword);
             form.append('newPassword', values.newPassword);
             form.append('confirmPassword', values.confirmPassword);
-            const form = new URLSearchParams()
             const { data } = await http(token).patch('/changePassword', form.toString())
             console.log(data)
         } catch (err) {
@@ -159,7 +160,7 @@ const ChangePassword = () => {
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Change Password</div>
                             {errMessage &&
-                                (<div>
+                                (<div className='mr-28'>
                                     <div className="alert alert-error danger text-[11px]">{errMessage}</div>
                                 </div>)}
                             <Formik
@@ -168,7 +169,7 @@ const ChangePassword = () => {
                                     newPassword: '',
                                     confirmPassword: '',
                                 }}
-                                // validationSchema={validationSchema}
+                                validationSchema={validationSchema}
                                 onSubmit={doChange}
                             >
                                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
