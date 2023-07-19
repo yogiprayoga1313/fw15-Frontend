@@ -16,6 +16,7 @@ import { Field, Formik } from 'formik';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import moment from 'moment';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 
 const CreateEvents = () => {
@@ -32,12 +33,13 @@ const CreateEvents = () => {
     const [selectedPicure, setSelectedPicture] = React.useState();
     const [pictureURI, setPictureURI] = React.useState('')
     const [eventByUser, setEventByUser] = React.useState([])
+    const [openModal, setOpenModal] = React.useState(false)
 
 
 
     React.useEffect(() => {
         async function getDataEventByUser() {
-            const { data } = await http(token).get('/events/manage')
+            const { data } = await http(token).get('/events/manage?limit=5')
             setEventByUser(data.result)
             console.log(data)
         }
@@ -50,7 +52,7 @@ const CreateEvents = () => {
     React.useEffect(() => {
         async function getDataCity() {
             const { data } = await http(token).get('/citites')
-            console.log(data)
+            // console.log(data)
             setCity(data.results)
         }
         getDataCity()
@@ -59,7 +61,7 @@ const CreateEvents = () => {
     React.useEffect(() => {
         async function getDataCategory() {
             const { data } = await http(token).get('/categories')
-            console.log(data)
+            // console.log(data)
             setCategories(data.results)
         }
         getDataCategory()
@@ -94,6 +96,7 @@ const CreateEvents = () => {
         fileToDataUrl(file)
     }
     const createEvent = async values => {
+        setOpenModal(true)
         const form = new FormData();
         Object.keys(values).forEach(key => {
             if (values[key] || key === 'descriptions') {
@@ -120,6 +123,8 @@ const CreateEvents = () => {
         });
         console.log(data)
         setCreate(false)
+        setOpenModal(false)
+        navigate('/createEvents')
     };
 
     return (
@@ -231,11 +236,10 @@ const CreateEvents = () => {
                                 </div>}
                             </div>
                             <div className='grid justify-start gap-7'>
-                                {eventByUser && (eventByUser.map(item => {
+                                {eventByUser?.results && (eventByUser.results.map(item => {
                                     return (
                                         <>
-                                            <div className='flex'>
-                                                <div key={item?.id}></div>
+                                            <div className='flex' key={item?.id}>
                                                 <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
                                                     <div className='text-orange-500'>{moment(item?.date).format('DD')}</div>
                                                     <div className='opacity-60 text-sm'>{moment(item?.date).format('ddd')}</div>
@@ -245,7 +249,7 @@ const CreateEvents = () => {
                                                         <div>{item?.title}</div>
                                                     </div>
                                                     <div className='text-sm font-normal opacity-70'>
-                                                        <div>{item?.cityName}</div>
+                                                        <div>{item?.location}</div>
                                                         <div>{moment(item?.date).format('ddd, DD MMM YYYY')}</div>
                                                     </div>
                                                 </div>
@@ -390,6 +394,15 @@ const CreateEvents = () => {
                         </div>
                     </div>
                 </div>
+                <input type="checkbox" id="loading" className="modal-toggle" checked={openModal} />
+                <div className="modal">
+                    <div className="modal-box bg-transparent shadow-none">
+                        <div className='justify-center flex '>
+                            <AiOutlineLoading3Quarters className='animate-spin ' color='white' size={60} />
+                        </div>
+                    </div>
+                </div>
+
 
                 {/* Footer */}
                 <Footer />
