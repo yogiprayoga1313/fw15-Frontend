@@ -41,7 +41,7 @@ function Navbar() {
                     </div>
                     <div className='flex gap-12 justify-center items-center font-semibold'>
                         <div><Link to='/'>Home</Link></div>
-                        <div><Link>Create Event</Link></div>
+                        <div><Link to='/createEvents'>Create Event</Link></div>
                         <div>
                             <a href="#location">Location</a>
                         </div>

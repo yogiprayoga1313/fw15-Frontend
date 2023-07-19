@@ -154,9 +154,14 @@ const MyWishlist = () => {
                                                 <>
                                                     <div className='flex'>
                                                         <div key={wishlist?.id}></div>
-                                                        <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
-                                                            <div className='text-orange-500'>{moment(wishlist?.date).format('DD')}</div>
-                                                            <div className='opacity-60 text-sm'>{moment(wishlist?.date).format('ddd')}</div>
+                                                        <div className='flex flex-col gap-4 justify-center items-center'>
+                                                            <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
+                                                                <div className='text-orange-500'>{moment(wishlist?.date).format('DD')}</div>
+                                                                <div className='opacity-60 text-sm'>{moment(wishlist?.date).format('ddd')}</div>
+                                                            </div>
+                                                            <div className=''>
+                                                                <Link><div><AiOutlineHeart size={30} color='blue' /></div></Link>
+                                                            </div>
                                                         </div>
                                                         <div className='flex flex-col gap-4 ml-[25px]'>
                                                             <div className='font-bold text-2xl'>
@@ -167,9 +172,6 @@ const MyWishlist = () => {
                                                                 <div>{moment(wishlist?.date).format('ddd, DD MMM YYYY')}</div>
                                                             </div>
                                                         </div>
-                                                        {/* <div className=''>
-                                                            <Link><div><AiOutlineHeart size={30} color='blue' /></div></Link>
-                                                        </div> */}
                                                     </div>
                                                 </>
                                             )

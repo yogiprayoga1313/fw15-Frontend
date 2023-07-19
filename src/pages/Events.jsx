@@ -22,6 +22,7 @@ const Events = () => {
         async function getDataEvents() {
             const { data } = await http().get(`/events/${id}`)
             setEvents(data.results)
+            console.log(data)
         }
         getDataEvents()
     }, [id])

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import {  useNavigate, useParams } from "react-router-dom"
 import rsvSection from "../Asset/rsv-section.png"
 import React from "react"
 import http from "../helpers/http"
@@ -11,7 +11,7 @@ import fillOne from "../Asset/Fill-ungu.png"
 import { BiSort } from "react-icons/bi";
 
 const Reservation = () => {
-    const { id: eventId } = useParams()
+    const { id } = useParams()
     const navigate = useNavigate()
     const [sections, setSections] = React.useState([])
     const [err, setErr] = React.useState('')
@@ -34,15 +34,15 @@ const Reservation = () => {
     }
 
     const decrement = (id) => {
-        if(fillSection.quantity === 0){
+        if (fillSection.quantity === 0) {
             setErr('')
-        }else{
+        } else {
             setFillSection({
                 id,
                 quantity: fillSection.quantity - 1
             })
         }
-       
+
     }
 
     React.useEffect(() => {
@@ -51,28 +51,33 @@ const Reservation = () => {
             setSections(data.results)
         }
         getSection()
-    }, [])
+    }, [token])
 
     const selectedSection = fillSection && sections.filter(item => item.id === fillSection.id)[0]
 
     const doReservation = async () => {
-        const form = new URLSearchParams({
-            eventId,
-            sectionId: fillSection.id,
-            quantity: fillSection.quantity
-        }).toString()
-        const { data } = await http(token).post('/reservation', form)
-        navigate('/payment', {
-            state:
-            {
-                eventId,
-                eventName: data.results.events.title,
-                reservationId: data.results.id,
-                sectionName: data.results.sectionName,
-                quantity: data.results.quantity,
-                totalPayment: data.results.totalPrice
-            }
-        })
+        try {
+            const form = new URLSearchParams({
+                eventId: id,
+                sectionId: fillSection.id,
+                quantity: fillSection.quantity
+            }).toString()
+            const { data } = await http(token).post('/reservations', form)
+            // console.log(data)
+            navigate('/payment', {
+                state:
+                {
+                    id,
+                    eventName: data.results.events.title,
+                    reservationId: data.results.id,
+                    sectionName: data.results.sectionName,
+                    quantity: data.results.quantity,
+                    totalPayment: data.results.totalPrice
+                }
+            })
+        } catch (error) {
+            console.log('Error', error)
+        }
     }
     return (
         <>
@@ -183,7 +188,7 @@ const Reservation = () => {
                                                             </div>
                                                         </div>
                                                         <div className="mt-[30px] drop-shadow-xl">
-                                                            <Link to="/payment"><button onClick={doReservation} className=" w-[315px] btn btn-primary normal-case text-white">Checkout</button></Link>
+                                                            <button onClick={doReservation} className=" w-[315px] btn btn-primary normal-case text-white">Checkout</button>
                                                         </div>
                                                     </div>
                                                 </>

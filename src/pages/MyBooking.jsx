@@ -25,7 +25,7 @@ const MyBooking = () => {
 
     React.useEffect(() => {
         async function getDataBooking() {
-            const { data } = await http(token).get('/history')
+            const { data } = await http(token).get('/history?sortBy=DESC')
             console.log(data)
             setBooking(data.results)
         }
@@ -40,7 +40,7 @@ const MyBooking = () => {
         }
         getDataProfile()
 
-    }, [])
+    }, [token])
 
     const doLogout = () => {
         dispatch(logoutAction()),
