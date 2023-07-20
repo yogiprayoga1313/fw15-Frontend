@@ -34,8 +34,9 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataLocation() {
-            const { data } = await http().get('/citites?limit=7')
+            const { data } = await http().get('/citites')
             setLocation(data.results)
+            console.log(data)
         }
         getDataLocation()
     }, [])

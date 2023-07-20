@@ -225,38 +225,37 @@ const CreateEvents = () => {
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[925px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='flex items-center justify-between'>
-                                {!create && (<div>
-                                    <div className='flex justify-between '>
-                                        <div className='font-semibold text-xl'>Manage Events</div>
-
+                                {!create && (
+                                    <div>
+                                        <div className='flex justify-between'>
+                                            <div className='font-semibold text-xl'>Manage Events</div>
+                                        </div>
                                     </div>
-                                </div>)}
-                                {!create && <div className='mr-20 bg-blue-500 w-24 h-10 rounded-xl justify-center items-center flex'>
-                                    <Link onClick={() => setCreate(true)} className='text-white'>Create</Link>
-                                </div>}
+                                )}
+                                {!create && (
+                                    <div className='mr-20 bg-blue-500 w-24 h-10 rounded-xl justify-center items-center flex'>
+                                        <Link onClick={() => setCreate(true)} className='text-white'>Create</Link>
+                                    </div>
+                                )}
                             </div>
                             <div className='grid justify-start gap-7'>
-                                {eventByUser?.results && (eventByUser.results.map(item => {
-                                    return (
-                                        <>
-                                            <div className='flex' key={item?.id}>
-                                                <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
-                                                    <div className='text-orange-500'>{moment(item?.date).format('DD')}</div>
-                                                    <div className='opacity-60 text-sm'>{moment(item?.date).format('ddd')}</div>
-                                                </div>
-                                                <div className='flex flex-col gap-4 ml-[25px]'>
-                                                    <div className='font-bold text-2xl'>
-                                                        <div>{item?.title}</div>
-                                                    </div>
-                                                    <div className='text-sm font-normal opacity-70'>
-                                                        <div>{item?.location}</div>
-                                                        <div>{moment(item?.date).format('ddd, DD MMM YYYY')}</div>
-                                                    </div>
-                                                </div>
+                                {eventByUser?.results && eventByUser.results.map(item => (
+                                    <div className='flex' key={item?.id}>
+                                        <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
+                                            <div className='text-orange-500'>{moment(item?.date).format('DD')}</div>
+                                            <div className='opacity-60 text-sm'>{moment(item?.date).format('ddd')}</div>
+                                        </div>
+                                        <div className='flex flex-col gap-4 ml-[25px]'>
+                                            <div className='font-bold text-2xl'>
+                                                <div>{item?.title}</div>
                                             </div>
-                                        </>
-                                    )
-                                }))}
+                                            <div className='text-sm font-normal opacity-70'>
+                                                <div>{item?.location}</div>
+                                                <div>{moment(item?.date).format('ddd, DD MMM YYYY')}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                             {create && (
                                 <div>

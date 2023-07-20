@@ -80,6 +80,7 @@ const ProfilePage = () => {
         setProfile(data.results)
         setOpenModal(false)
         setSelectedPicture(false)
+        setProfile(data.results)
     }
 
     return (
