@@ -2,7 +2,7 @@ import http from '../helpers/http';
 import React from 'react';
 import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock, FaListAlt } from "react-icons/fa"
 import { BsFillCreditCardFill } from "react-icons/bs"
@@ -20,6 +20,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 
 const CreateEvents = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
@@ -40,8 +41,8 @@ const CreateEvents = () => {
     React.useEffect(() => {
         async function getDataEventByUser() {
             const { data } = await http(token).get('/events/manage?limit=5')
-            setEventByUser(data.result)
-            console.log(data)
+            setEventByUser(data.results)
+            // console.log(data)
         }
         getDataEventByUser()
     }, [token])
@@ -95,6 +96,18 @@ const CreateEvents = () => {
         setSelectedPicture(file)
         fileToDataUrl(file)
     }
+
+    const deleteEvents = async (id) => {
+        try {
+            const { data } = await http(token).delete(`/events/manage/${id}`)
+            console.log(data)
+            setEventByUser(data.results)
+        } catch (error) {
+            console.log("error", error)
+        }
+
+    }
+
     const createEvent = async values => {
         setOpenModal(true)
         const form = new FormData();
@@ -223,7 +236,7 @@ const CreateEvents = () => {
                         </div>
                     </div>
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[925px]'>
-                        <div className='flex flex-col gap-10 ml-20 mt-14'>
+                        <div className='flex flex-col gap-10 ml-20 mt-10'>
                             <div className='flex items-center justify-between'>
                                 {!create && (
                                     <div>
@@ -239,7 +252,7 @@ const CreateEvents = () => {
                                 )}
                             </div>
                             <div className='grid justify-start gap-7'>
-                                {eventByUser?.results && eventByUser.results.map(item => (
+                                {!create && eventByUser && eventByUser.map(item => (
                                     <div className='flex' key={item?.id}>
                                         <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
                                             <div className='text-orange-500'>{moment(item?.date).format('DD')}</div>
@@ -252,6 +265,22 @@ const CreateEvents = () => {
                                             <div className='text-sm font-normal opacity-70'>
                                                 <div>{item?.location}</div>
                                                 <div>{moment(item?.date).format('ddd, DD MMM YYYY')}</div>
+                                            </div>
+                                            <div className='flex gap-3 text-red-500'>
+                                                <Link>Detail</Link>
+                                                <Link>Update</Link>
+                                                {/* <Link onClick={() => deleteEvents(item.id)}>Delete</Link> */}
+                                                <button onClick={() => window.my_modal_5.showModal()}>Delete</button>
+                                                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                                                    <form method="dialog" className="modal-box">
+                                                        <h3 className="font-bold text-lg">Hello!</h3>
+                                                        <p className="py-4">Press ESC key or click the button below to close</p>
+                                                        <div className="modal-action">
+                                                            {/* if there is a button in form, it will close the modal */}
+                                                            <button className="btn">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </dialog>
                                             </div>
                                         </div>
                                     </div>
