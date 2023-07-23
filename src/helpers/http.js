@@ -7,8 +7,8 @@
     } 
     return axios.create({
         headers,
-        baseURL: 'https://lime-frail-crow.cyclic.app'
-        // baseURL: import.meta.env.VITE_BACKEND_URL,
+        baseURL: import.meta.env.VITE_BACKEND_URL,
+        // baseURL: 'https://calm-rose-octopus-sari.cyclic.app'
     })
  }
 
