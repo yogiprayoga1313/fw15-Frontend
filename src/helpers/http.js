@@ -8,7 +8,6 @@
     return axios.create({
         headers,
         baseURL: import.meta.env.VITE_BACKEND_URL,
-        // baseURL: 'https://calm-rose-octopus-sari.cyclic.app'
     })
  }
 

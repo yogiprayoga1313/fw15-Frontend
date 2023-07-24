@@ -35,6 +35,7 @@ const CreateEvents = () => {
     const [pictureURI, setPictureURI] = React.useState('')
     const [eventByUser, setEventByUser] = React.useState([])
     const [openModal, setOpenModal] = React.useState(false)
+    const [update, setUpdate] = React.useState(false)
 
 
 
@@ -46,9 +47,6 @@ const CreateEvents = () => {
         }
         getDataEventByUser()
     }, [token])
-
-
-
 
     React.useEffect(() => {
         async function getDataCity() {
@@ -76,7 +74,7 @@ const CreateEvents = () => {
         }
         getDataProfile()
 
-    }, [])
+    }, [token])
 
     const doLogout = () => {
         dispatch(logoutAction()),
@@ -137,6 +135,44 @@ const CreateEvents = () => {
         console.log(data)
         setCreate(false)
         setOpenModal(false)
+        setLocationValue(false)
+        setcategoriesValue(false)
+        setDate(false)
+        navigate('/createEvents')
+    };
+
+    const updateEvents = async values => {
+        setOpenModal(true)
+        const form = new FormData();
+        Object.keys(values).forEach(key => {
+            if (values[key] || key === 'descriptions') {
+                form.append(key, values[key]);
+            }
+        });
+
+        if (selectedPicure) {
+            form.append('picture', selectedPicure);
+        }
+        if (date) {
+            form.append('date', moment(date).format('YYYY-MM-DD'));
+        }
+        if (categoriesValue) {
+            form.append('categoriesId', categoriesValue);
+        }
+        if (LocationValue) {
+            form.append('cityId', LocationValue);
+        }
+        const { data } = await http(token).patch(`/events/manage/${id}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log(data)
+        setLocationValue('')
+        setcategoriesValue('')
+        setDate(false)
+        setUpdate(false)
+        setOpenModal(false)
         navigate('/createEvents')
     };
 
@@ -154,7 +190,6 @@ const CreateEvents = () => {
                 {/* Navbar */}
                 <NavbarPrivateRoute />
             </div>
-
 
             {/* data profile */}
             <div className=' bg-primary/10'>
@@ -238,21 +273,21 @@ const CreateEvents = () => {
                     <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[925px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-10'>
                             <div className='flex items-center justify-between'>
-                                {!create && (
+                                {!create && !update && (
                                     <div>
                                         <div className='flex justify-between'>
                                             <div className='font-semibold text-xl'>Manage Events</div>
                                         </div>
                                     </div>
                                 )}
-                                {!create && (
+                                {!create && !update && (
                                     <div className='mr-20 bg-blue-500 w-24 h-10 rounded-xl justify-center items-center flex'>
                                         <Link onClick={() => setCreate(true)} className='text-white'>Create</Link>
                                     </div>
                                 )}
                             </div>
                             <div className='grid justify-start gap-7'>
-                                {!create && eventByUser && eventByUser.map(item => (
+                                {!create && !update && eventByUser && eventByUser.map(item => (
                                     <div className='flex' key={item?.id}>
                                         <div className='flex flex-col items-center bg-white shadow-lg shadow-gray-400/30 w-[50px] h-[75px] justify-center rounded-2xl'>
                                             <div className='text-orange-500'>{moment(item?.date).format('DD')}</div>
@@ -268,20 +303,39 @@ const CreateEvents = () => {
                                             </div>
                                             <div className='flex gap-3 text-red-500'>
                                                 <Link>Detail</Link>
-                                                <Link>Update</Link>
-                                                {/* <Link onClick={() => deleteEvents(item.id)}>Delete</Link> */}
-                                                <button onClick={() => window.my_modal_5.showModal()}>Delete</button>
-                                                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                                                    <form method="dialog" className="modal-box">
-                                                        <h3 className="font-bold text-lg">Hello!</h3>
-                                                        <p className="py-4">Press ESC key or click the button below to close</p>
+                                                {/* The button to open modal */}
+                                                <label htmlFor="my_modal_5" className="normal-case text-rose-500 cursor-pointer">Update</label>
+
+                                                {/* Put this part before </body> tag */}
+                                                <input type="checkbox" id="my_modal_5" className="modal-toggle normal-case" />
+                                                <div className="modal">
+                                                    <div className="modal-box">
+                                                        <h3 className="font-bold text-lg">Update event</h3>
+                                                        <p className="py-4">Are you sure for update event?</p>
                                                         <div className="modal-action">
-                                                            {/* if there is a button in form, it will close the modal */}
-                                                            <button className="btn">Close</button>
+                                                            <label onClick={() => setUpdate(true)} htmlFor="my_modal_5" className="btn text-red-500 normal-case">Update</label>
+                                                            <label htmlFor="my_modal_5" className="btn normal-case">Close</label>
                                                         </div>
-                                                    </form>
-                                                </dialog>
+                                                    </div>
+                                                </div>
+
+                                                {/* The button to open modal */}
+                                                <label htmlFor="my_modal_6" className="normal-case text-rose-500 cursor-pointer">Delete</label>
+
+                                                {/* Put this part before </body> tag */}
+                                                <input type="checkbox" id="my_modal_6" className="modal-toggle normal-case" />
+                                                <div className="modal">
+                                                    <div className="modal-box">
+                                                        <h3 className="font-bold text-lg">Delete event</h3>
+                                                        <p className="py-4">Are you sure for delete event?</p>
+                                                        <div className="modal-action">
+                                                            <label  onClick={() => deleteEvents(item.id)} htmlFor="my_modal_6" className="btn text-red-500 normal-case">Delete</label>
+                                                            <label htmlFor="my_modal_6" className="btn normal-case">Close</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 ))}
@@ -419,6 +473,136 @@ const CreateEvents = () => {
                                     </Formik>
                                 </div>
                             )}
+                            {update && (<Formik
+                                initialValues={{
+                                    title: eventByUser.title,
+                                    cityId: eventByUser.cityId,
+                                    categoriesId: eventByUser.categoriesId,
+                                    descriptions: eventByUser.descriptions,
+                                    date: eventByUser.date
+                                }}
+                                onSubmit={updateEvents}
+                                enableReinitialize>
+                                {({ handleBlur, handleChange, handleSubmit, values }) => (
+                                    <>
+                                        <div className='font-semibold text-xl mb-10'>Update Events</div>
+                                        <form onSubmit={handleSubmit} className='flex  flex-col gap-10'>
+                                            <div className='flex flex-col gap-16 justify-center mr-28'>
+                                                <div className='flex gap-16'>
+                                                    <div className='flex flex-col gap-10'>
+                                                        <div className='flex flex-col gap-3'>
+                                                            <span>Name</span>
+                                                            <input
+                                                                className="input input-bordered w-[381px]"
+                                                                type="text"
+                                                                placeholder='Input Name Event...'
+                                                                value={values.title}
+                                                                onBlur={handleBlur}
+                                                                onChange={handleChange}
+                                                                name='title' />
+                                                        </div>
+                                                        <div className='flex flex-col gap-3'>
+                                                            <span>Location</span>
+                                                            <select
+                                                                className="select select-primary text-black"
+                                                                name="cityId"
+                                                                onBlur={handleBlur}
+                                                                onChange={handleChange}
+                                                                value={values.cityId}>
+                                                                {city.map((item) => {
+                                                                    return (
+                                                                        <option key={item.id} value={item.id}>
+                                                                            {item?.name}
+                                                                        </option>
+                                                                    )
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                        <div className='flex flex-col gap-3 form-control'>
+                                                            <span>Category</span>
+                                                            <select
+                                                                className="select select-primary text-black"
+                                                                name="categoriesId"
+                                                                onBlur={handleBlur}
+                                                                onChange={handleChange}
+                                                                value={values.categoriesId}>
+                                                                {categories.map(item => (
+                                                                    <>
+                                                                        <option key={item.id} value={item.id}>
+                                                                            {item.name}
+                                                                        </option>
+                                                                    </>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex flex-col gap-10'>
+                                                        <div className='flex flex-col gap-3'>
+                                                            <span>Date Time Show</span>
+                                                            <input
+                                                                className="input input-bordered w-[381px]"
+                                                                type="date"
+                                                                placeholder='Input Name Event...'
+                                                                onChange={handleChange}
+                                                                onBlur={handleBlur}
+                                                                value={values.date} />
+                                                            {values.date && (
+                                                                <span>
+                                                                    {moment(values.date).format('D MMMM YYYY')}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className='flex flex-col gap-3'>
+                                                            <span>Images</span>
+                                                            <input
+                                                                className="justify-center items-center"
+                                                                type="file"
+                                                                name='picture'
+                                                                onChange={changePicture}
+                                                            />
+                                                        </div>
+                                                        <div className='w-[380px] h-[180px] border-gray-900 border-2 flex justify-center items-center rounded-lg' >
+                                                            {selectedPicure ? (<img src={pictureURI} alt="events" className='w-[370px] h-[170px] rounded-lg bg-cover' />) : (
+                                                                <span className='font-bold text-red-500'>No Images</span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="w-full h-100 border-primary text-black font-normal">
+                                                        <Field name="descriptions">
+                                                            {({ field, form }) => (
+                                                                <CKEditor
+                                                                    editor={ClassicEditor}
+                                                                    config={{
+                                                                        toolbar: {
+                                                                            items: [
+                                                                                'bold',
+                                                                                'italic',
+                                                                                'undo',
+                                                                                'redo',
+                                                                            ],
+                                                                        },
+                                                                    }}
+                                                                    data={field.value}
+                                                                    onChange={(event, editor) => {
+                                                                        const data = editor.getData();
+                                                                        form.setFieldValue(field.name, data);
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-cente mr-28'>
+                                                <button className='btn btn-primary w-full text-white normal-case'>Create</button>
+                                            </div>
+                                        </form  >
+
+                                    </>
+                                )}
+                            </Formik>)}
                         </div>
                     </div>
                 </div>
@@ -430,8 +614,6 @@ const CreateEvents = () => {
                         </div>
                     </div>
                 </div>
-
-
                 {/* Footer */}
                 <Footer />
             </div>
