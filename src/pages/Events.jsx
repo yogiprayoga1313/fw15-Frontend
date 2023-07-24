@@ -2,21 +2,26 @@ import { Helmet } from "react-helmet";
 import React from "react"
 import http from "../helpers/http";
 import moment from "moment/moment"
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import NewMaps from "../Asset/New-maps-Events.png"
 import { SlLocationPin } from "react-icons/sl"
 import { FiClock } from "react-icons/fi"
-import { AiOutlineHeart } from 'react-icons/ai'
 import ScrollToTop from "../components/ScrollToTop";
-
+import { setWarningMessage } from '../redux/reducers/auth'
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { RiHeartLine, RiHeartFill } from 'react-icons/ri'
 
 const Events = () => {
     const [events, setEvents] = React.useState([])
     const { id } = useParams();
+    const [wishlistButton, setWishlistButton] = React.useState(false)
+    const token = useSelector((state) => state.auth.token)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    
+
 
     React.useEffect(() => {
         async function getDataEvents() {
@@ -27,6 +32,43 @@ const Events = () => {
         getDataEvents()
     }, [id])
 
+    React.useState(() => {
+        const eventId = { eventId: id }
+        const qString = new URLSearchParams(eventId).toString()
+        const checkWishlist = async () => {
+            const { data } = await http(token).get(`/wishlist/check?${qString}`)
+            // console.log(data.results)
+            const btnStatus = data.results
+            if (btnStatus) {
+                setWishlistButton(true)
+            }
+        }
+        checkWishlist()
+    }, [])
+
+    const addRemoveWishlist = async (event) => {
+        event.preventDefault()
+        if (!token) {
+            dispatch(setWarningMessage('You have to login first'))
+            navigate('/auth/login')
+        }
+        try {
+            const eventId = { eventId: events.id }
+            const qString = new URLSearchParams(eventId).toString()
+            const { data } = await http(token).post('/wishlist', qString)
+            console.log(data)
+            if (wishlistButton) {
+                setWishlistButton(false)
+            } else {
+                setWishlistButton(true)
+            }
+        } catch (err) {
+            const message = err?.response?.data?.message
+            if (message) {
+                console.log(message)
+            }
+        }
+    }
 
     return (
         <>
@@ -55,7 +97,17 @@ const Events = () => {
                                     </div>
                                     <Link>
                                         <div className="flex  gap-5 justify-center items-center">
-                                            <div className="opacity-80"><AiOutlineHeart size={30} /></div>
+                                            <button onClick={addRemoveWishlist}>
+                                                {wishlistButton ? (
+                                                    <i className='text-red-800'>
+                                                        <RiHeartFill size={30} />
+                                                    </i>
+                                                ) : (
+                                                    <i className=''>
+                                                        <RiHeartLine size={30} />
+                                                    </i>
+                                                )}
+                                            </button>
                                             <div className="text-xl font-semibold">Add to Wishlist</div>
                                         </div>
                                     </Link>
