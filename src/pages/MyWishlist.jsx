@@ -9,11 +9,11 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
-import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
+import HeaderHome from '../components/HeaderHome';
 
 const MyWishlist = () => {
     const navigate = useNavigate()
@@ -21,7 +21,7 @@ const MyWishlist = () => {
     const token = useSelector(state => state.auth.token)
     const [profile, setProfile] = React.useState({})
     const [wishlist, setWishlist] = React.useState([])
-    const { eventId } = useParams()
+    // const { eventId } = useParams()
 
     React.useEffect(() => {
         async function getDataProfile() {
@@ -60,14 +60,14 @@ const MyWishlist = () => {
 
             <div>
                 {/* Navbar */}
-                <NavbarPrivateRoute />
+                <HeaderHome />
             </div>
 
 
             {/* data profile */}
             <div className=' bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins ml-[90px] mt-[50px]'>
+                    <div className='font-poppins ml-[90px] mt-[150px]'>
                         <div>
                             <div className='flex flex-col gap-5'>
                                 {token ?
@@ -143,7 +143,7 @@ const MyWishlist = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
+                    <div className='bg-white rounded-3xl mt-[150px] ml-[188px] w-[1024px] h-[825px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-14'>
                             <div className='font-semibold text-xl'>My Wishlist</div>
                             <div className='flex  flex-col gap-10'>

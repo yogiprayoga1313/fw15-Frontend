@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import React from "react";
 import http from "../helpers/http";
-import LogoWetick from "../Asset/Wetick-logo.png"
+// import LogoWetick from "../Asset/Wetick-logo.png"
 import { MdArrowDropDown } from "react-icons/md"
 import defaultProfile from '../Asset/avatar-default.png'
 import NewLogo from '../Asset/NEWLOGO.png'
@@ -35,11 +35,11 @@ function Navbar() {
         <>
             {/* Navbar */}
             <nav className='font-poppins'>
-                <div className='flex justify-between px-12 my-[15px]'>
+                <div className='md:flex justify-between px-12 my-[15px]'>
                     <div className='flex justify-center items-center w-[180px] h-[70px]'>
                         <Link to='/'><img className=" " src={NewLogo} alt="" /></Link>
                     </div>
-                    <div className='flex gap-12 justify-center items-center font-semibold'>
+                    <div className='md:flex flex flex-col gap-12 justify-center items-center font-semibold'>
                         <div><Link to='/'>Home</Link></div>
                         <div><Link to='/createEvents'>Create Event</Link></div>
                         <div>

@@ -1,6 +1,6 @@
 import http from '../helpers/http';
 import React from 'react';
-import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
+import HeaderHome from '../components/HeaderHome';
 import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -188,13 +188,13 @@ const CreateEvents = () => {
 
             <div>
                 {/* Navbar */}
-                <NavbarPrivateRoute />
+                <HeaderHome />
             </div>
 
             {/* data profile */}
             <div className=' bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins ml-[90px] mt-[50px]'>
+                    <div className='font-poppins ml-[90px] mt-[150px]'>
                         <div>
                             <div className='flex flex-col gap-5'>
                                 {token ?
@@ -270,7 +270,7 @@ const CreateEvents = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[925px]'>
+                    <div className='bg-white rounded-3xl mt-[150px] ml-[188px] w-[1024px] h-[925px]'>
                         <div className='flex flex-col gap-10 ml-20 mt-10'>
                             <div className='flex items-center justify-between'>
                                 {!create && !update && (

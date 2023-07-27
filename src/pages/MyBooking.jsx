@@ -1,6 +1,5 @@
 import http from '../helpers/http';
 import React from 'react';
-import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { logout as logoutAction } from '../redux/reducers/auth';
 import { MdLogout } from 'react-icons/md'
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
+import HeaderHome from '../components/HeaderHome';
 
 
 const MyBooking = () => {
@@ -57,14 +57,14 @@ const MyBooking = () => {
             </div>
             <div>
                 {/* Navbar */}
-                <NavbarPrivateRoute />
+                <HeaderHome />
             </div>
 
 
             {/* data profile */}
             <div className='md:bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins md:ml-[90px] mt-[50px]'>
+                    <div className='font-poppins md:ml-[90px] mt-[150px]'>
                         <div>
                             <div className='md:flex hidden flex-col gap-5'>
                                 {token ?
@@ -140,7 +140,7 @@ const MyBooking = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] md:ml-[188px] p-10 w-[1024px] h-[825px]'>
+                    <div className='bg-white rounded-3xl mt-[150px] md:ml-[188px] p-10 w-[1024px] h-[825px]'>
                         <div className='flex flex-col gap-10 md:ml-20 mt-14'>
                             <div className='font-semibold text-xl'>My Booking</div>
                             <form className='flex  flex-col gap-10'>

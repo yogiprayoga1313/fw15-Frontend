@@ -8,10 +8,11 @@ import { SlLocationPin } from "react-icons/sl"
 import { FiClock } from "react-icons/fi"
 import ScrollToTop from "../components/ScrollToTop";
 import { setWarningMessage } from '../redux/reducers/auth'
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri'
+import HeaderHome from "../components/HeaderHome";
 
 const Events = () => {
     const [events, setEvents] = React.useState([])
@@ -81,7 +82,7 @@ const Events = () => {
             </div>
 
             {/* Navbar */}
-            <Navbar />
+            <HeaderHome />
 
             {/* Detail events */}
 

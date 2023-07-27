@@ -1,6 +1,5 @@
 import http from '../helpers/http';
 import React from 'react';
-import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FaUserCircle, FaUnlock, FaListAlt } from "react-icons/fa"
@@ -14,6 +13,7 @@ import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import HeaderHome from '../components/HeaderHome';
 
 
 const validationSchema = Yup.object({
@@ -74,13 +74,13 @@ const ChangePassword = () => {
 
             <div>
                 {/* Navbar */}
-                <NavbarPrivateRoute />  
+                <HeaderHome/>  
             </div>
 
             {/* data profile */}
             <div className=' md:bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins md:ml-[90px] mt-[50px]'>
+                    <div className='font-poppins md:ml-[90px] mt-[150px]'>
                         <div>
                             <div className='hidden md:flex flex-col gap-5'>
                                 {token ?
@@ -156,7 +156,7 @@ const ChangePassword = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] md:ml-[188px] md:w-[1024px] md:h-[825px]'>
+                    <div className='bg-white rounded-3xl mt-[150px] md:ml-[188px] md:w-[1024px] md:h-[825px]'>
                         <div className='flex flex-col gap-10 p-10 md:ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Change Password</div>
                             {errMessage &&

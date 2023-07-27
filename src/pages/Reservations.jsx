@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet"
-import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import {  useNavigate, useParams } from "react-router-dom"
 import rsvSection from "../Asset/rsv-section.png"
@@ -9,6 +8,7 @@ import { useSelector } from "react-redux"
 import { FiPlus, FiMinus } from "react-icons/fi"
 import fillOne from "../Asset/Fill-ungu.png"
 import { BiSort } from "react-icons/bi";
+import HeaderHome from "../components/HeaderHome"
 
 const Reservation = () => {
     const { id } = useParams()
@@ -90,7 +90,7 @@ const Reservation = () => {
             </div>
 
             {/* Navbar */}
-            <Navbar />
+            <HeaderHome />
 
             {/* Detail Reservations */}
 

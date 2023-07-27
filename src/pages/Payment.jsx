@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet"
-import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
@@ -10,6 +9,7 @@ import { BsCreditCardFill, BsBank2 } from 'react-icons/bs'
 import { IoStorefront } from 'react-icons/io5'
 import { FaDollarSign } from 'react-icons/fa'
 import creditCard from '../Asset/card-display.png'
+import HeaderHome from "../components/HeaderHome"
 
 function Payment() {
     const { state } = useLocation()
@@ -45,7 +45,7 @@ function Payment() {
             </div>
 
             {/* Navbar */}
-            <Navbar />
+            <HeaderHome />
 
             {/* Detail payment */}
 

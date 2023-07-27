@@ -9,8 +9,8 @@ import { TbPointFilled } from "react-icons/tb"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 import { AiOutlineMinus, AiOutlineArrowRight } from "react-icons/ai"
 import http from "../helpers/http"
-import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import HeaderHome from "../components/HeaderHome"
 
 const Home = () => {
     const [events, setEvents] = React.useState([])
@@ -24,7 +24,7 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataEvents() {
-            const { data } = await http().get('/events?sortBy=DESC')
+            const { data } = await http().get('/events?sortBy=ASC')
             setEvents(data.results)
         }
         getDataEvents()
@@ -93,7 +93,8 @@ const Home = () => {
             </div>
 
             {/* Navbar */}
-            <Navbar />
+            {/* <Navbar /> */}
+            <HeaderHome/>
 
             {/* iklan */}
             <div className="font-poppins">

@@ -10,13 +10,13 @@ import { useDispatch } from 'react-redux';
 import { logout as logoutAction } from '../redux/reducers/auth';
 import moment from 'moment';
 import { MdLogout } from 'react-icons/md'
-import NavbarPrivateRoute from '../components/NavbarPrivateRoute';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 import { Field, Formik } from 'formik';
 import ScrollToTop from '../components/ScrollToTop';
 import defaultProfile from '../Asset/avatar-default.png'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import HeaderHome from '../components/HeaderHome';
 
 
 const ProfilePage = () => {
@@ -95,13 +95,13 @@ const ProfilePage = () => {
 
             <div>
                 {/* Navbar */}
-                <NavbarPrivateRoute />
+                <HeaderHome />
             </div>
 
             {/* data profile */}
             <div className=' md:bg-primary/10'>
-                <div className='flex font-poppins '>
-                    <div className='font-poppins md:ml-[90px] mt-[50px] p-5'>
+                <div className='flex font-poppins'>
+                    <div className='font-poppins md:ml-[90px] mt-[150px] p-5'>
                         <div>
                             <div className='hidden md:flex flex-col gap-5'>
                                 {token ?
@@ -177,8 +177,8 @@ const ProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='md:bg-white md:rounded-3xl mt-[50px] md:ml-[188px] md:w-[1024px] md:h-[900px]'>
-                        <div className='flex flex-col justify-center items-center gap-10 md:ml-20 md:mt-14'>
+                    <div className='md:bg-white md:rounded-3xl mt-[150px] md:ml-[188px] md:w-[1024px] md:h-[900px]'>
+                        <div className='flex flex-col  gap-10 md:ml-20 md:mt-14'>
                             <div className='font-semibold text-xl'>Profile</div>
                             <Formik
                                 initialValues={{
