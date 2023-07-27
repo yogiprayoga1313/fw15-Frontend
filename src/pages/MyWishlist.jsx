@@ -40,7 +40,7 @@ const MyWishlist = () => {
 
     React.useEffect(() => {
         async function getDataWishlist() {
-            const { data } = await http(token).get('/wishlist')
+            const { data } = await http(token).get('/wishlist?limit=4')
             // console.log(data)
             setWishlist(data.results)
         }
