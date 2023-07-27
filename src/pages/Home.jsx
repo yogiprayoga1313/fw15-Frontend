@@ -24,7 +24,7 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataEvents() {
-            const { data } = await http().get('/events?sortBy=ASC')
+            const { data } = await http().get('/events?sortBy=DESC')
             setEvents(data.results)
         }
         getDataEvents()
