@@ -1,6 +1,6 @@
 
 # Archive
-![Logo Archive](../fw15-Frontend/src//Asset/NEWLOGO-Copy.png)
+![Logo Archive](src/Asset/NEWLOGO-Copy.png)
 
 #About The Project
 
