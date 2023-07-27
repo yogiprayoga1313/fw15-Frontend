@@ -34,7 +34,7 @@ const Home = () => {
 
     React.useEffect(() => {
         async function getDataLocation() {
-            const { data } = await http().get('/citites')
+            const { data } = await http().get('/citites?limit=7')
             setLocation(data.results)
             console.log(data)
         }
@@ -97,18 +97,18 @@ const Home = () => {
 
             {/* iklan */}
             <div className="font-poppins">
-                <div className="flex bg-primary justify-around bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-1.png')]">
+                <div className="md:flex bg-primary justify-around bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-1.png')]">
                     <div className='flex flex-col justify-center items-center my-[200px]'>
-                        <div className='text-[64px] w-[554px] h-[192px] font-bold text-white mb-10'>Find events you love with our</div>
-                        <div className='bg-white w-[600px] h-[75px] rounded-2xl flex justify-center items-center'>
-                            <form className='flex gap-7'>
-                                <div className='flex justify-center items-center gap-3'>
+                        <div className='md:text-[64px] text-[45px] md:w-[554px] h-[192px] w-[370px] font-bold text-white mb-10 text-center md:text-left'>Find events you love with our</div>
+                        <div className='bg-white md:w-[600px] md:h-[75px] w-[355px] h-[75px] rounded-2xl flex justify-center items-center'>
+                            <form className='md:flex flex gap-10 md:gap-10'>
+                                <div className='flex justify-center items-center gap-2 md:gap-3'>
                                     <div><FaSearch /></div>
-                                    <input className='outline-none' type="text" placeholder='Search events . . .' />
+                                    <input className='outline-none md:w-[170px] w-[65px]' type="text" placeholder='Search events . . .' />
                                 </div>
-                                <div className='flex justify-center items-center gap-3'>
+                                <div className='flex justify-center items-center gap-2 md:gap-3'>
                                     <div><SlLocationPin /></div>
-                                    <input className='outline-none' type="text" placeholder="Where?" />
+                                    <input className='outline-none md:w-[170px] w-[65px]' type="text" placeholder="Where?" />
                                 </div>
                                 <div>
                                     <button className='btn btn-secondary'><AiOutlineArrowRight size={20} /></button>
@@ -116,7 +116,7 @@ const Home = () => {
                             </form>
                         </div>
                     </div>
-                    <div className='animate-pulse my-[110px]'>
+                    <div className='animate-pulse flex items-center justify-center md:my-[110px]'>
                         <img src={LogoHumanProfil} />
                     </div>
                 </div>
@@ -136,12 +136,12 @@ const Home = () => {
                             <div className='text-[36px] font-semibold'>Events For You</div>
                         </div>
                     </div>
-                    <div className='flex gap-10 justify-center items-center mt-[50px]'>
-                        <div className='flex items-center justify-center rounded-md shadow-md'>
+                    <div className='md:flex gap-10 justify-center items-center mt-[50px]'>
+                        <div className='hidden md:flex items-center justify-center rounded-md shadow-md'>
                             <button className='btn btn-base-100'><AiOutlineArrowLeft size={20} /></button>
                         </div>
                         <div className='flex gap-16 justify-center items-center'>
-                            <div className='flex flex-col justify-center items-center opacity-50'>
+                            <div className='hidden md:flex flex-col justify-center items-center opacity-50'>
                                 <div>13</div>
                                 <div>Mon</div>
                             </div>
@@ -158,12 +158,12 @@ const Home = () => {
                                 <div>16</div>
                                 <div>Thu</div>
                             </div>
-                            <div className='flex flex-col justify-center items-center opacity-50'>
+                            <div className='hidden md:flex flex-col justify-center items-center opacity-50'>
                                 <div>17</div>
                                 <div>Fri</div>
                             </div>
                         </div>
-                        <div className='bg-blue-600 justify-center items-center flex rounded-md shadow-2xl'>
+                        <div className='hidden bg-blue-600 justify-center items-center md:flex rounded-md shadow-2xl'>
                             <button className='btn btn-ghost'><AiOutlineArrowRight size={20} color="white" /></button>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ const Home = () => {
                         })}
                     </div>
                 </div>
-                <div className='flex justify-center items-center mt-[50px] mb-[73px]'>
+                <div className='md:flex md:justify-center md:items-center md:mt-[50px] md:mb-[73px] flex justify-center'>
                     <button className='bg-white btn btn-primary w-[255px] h-[40px] normal-case text-blue-800'>See All</button>
                 </div>
             </div>
@@ -195,9 +195,9 @@ const Home = () => {
             {/* Discover Events */}
             <div id="location" className="flex justify-center items-center font-poppins text-white mt-[275px]">
                 <div className="bg-blue-600 justify-center items-center w-[80%] rounded-3xl bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-2.png')]">
-                    <div className='flex justify-center items-center gap-x-28 mt-[74px]'>
-                        <div className='grid grid-cols-4 gap-16'>
-                            <div className='flex-col flex gap-5'>
+                    <div className='md:flex justify-center items-center gap-x-28 mt-[74px]'>
+                        <div className='md:grid grid-cols-4 gap-16'>
+                            <div className='md:flex-col md:flex md:gap-5 gap-5 flex flex-col justify-start items-center'>
                                 <div className='flex justify-center items-center  gap-3 bg-slate-100/50 rounded-2xl w-[150px] h-[30px]'>
                                     <div><AiOutlineMinus size={20} color="white" /></div>
                                     <div className='text-whitetext-sm'>LOCATION</div>
@@ -234,29 +234,31 @@ const Home = () => {
                             <div><AiOutlineMinus size={20} /></div>
                             <div>CATEGORY</div>
                         </div>
-                        <div className='text-3xl font-bold'>
+                        <div className='md:text-3xl text-xl font-bold'>
                             <div>Browse Events By Category</div>
                         </div>
                         <>
-                            <div className="flex gap-24">
+                            <div className="md:flex gap-24">
                                 {Categories.map(category => {
                                     return (
                                         <>
-                                            <button
-                                                key={category}
-                                                className={`font-semibold px-4 py-2 hover:border-red-500  hover:text-red-500 ${activeTabCategory === category ? 'flex gap-10 activ border-b-2 border-red-500 text-red-600 ' : 'opacity-60'} px-4 py-2`}
-                                                onClick={() => handleTabClick(category)}
-                                            >
-                                                {category}
-                                            </button>
+                                            <div className="md:flex flex flex-col items-center">
+                                                <button
+                                                    key={category}
+                                                    className={`font-semibold px-4 py-2 hover:border-red-500  hover:text-red-500 ${activeTabCategory === category ? 'flex gap-10 activ border-b-2 border-red-500 text-red-600 ' : 'opacity-60'} px-4 py-2`}
+                                                    onClick={() => handleTabClick(category)}
+                                                >
+                                                    {category}
+                                                </button>
+                                            </div>
 
                                         </>
                                     )
                                 })}
                             </div>
                             <div>
-                                <div className="flex gap-10">
-                                    <div className="flex justify-center items-center">
+                                <div className="md:flex gap-10">
+                                    <div className=" hidden md:flex justify-center items-center">
                                         <div>
                                             <button className="btn btn-base-100 shadow-lg shadow-black-500/70" onClick={handlePrevPage}><AiOutlineArrowLeft size={20} color="black" /></button>
                                         </div>
@@ -264,18 +266,20 @@ const Home = () => {
                                     {eventsCategory.length > 0 ? (eventsCategory.map(event => {
                                         return (
                                             <>
-                                                <Link to={`/events/${event.id}`}>
-                                                    <div className='inline-flex'>
-                                                        <div className='w-64 rounded-2xl overflow-hidden relative text-white' key={event.id}>
-                                                            {event.picture && <img className='w-[260px] h-[376px]' src={event.picture.startsWith('https') ? event.picture :
-                                                                `http://localhost:8888/uploads/${event.picture}`} />}
-                                                            <div className='absolute bottom-0 bg-primary w-full h-[150px] min-h-1 p-8 flex flex-col gap-3'>
-                                                                <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
-                                                                <div className='text-2xl font-bold'>{event.title}</div>
+                                                <div className="md:flex md:gap-10">
+                                                    <Link to={`/events/${event.id}`}>
+                                                        <div className='inline-flex'>
+                                                            <div className='w-64 rounded-2xl overflow-hidden relative text-white' key={event.id}>
+                                                                {event.picture && <img className='w-[260px] h-[376px]' src={event.picture.startsWith('https') ? event.picture :
+                                                                    `http://localhost:8888/uploads/${event.picture}`} />}
+                                                                <div className='absolute bottom-0 bg-primary w-full h-[150px] min-h-1 p-8 flex flex-col gap-3'>
+                                                                    <div className="text-sm">{moment(event.date).format('dddd, DD-MMMM-YYYY')}</div>
+                                                                    <div className='text-2xl font-bold'>{event.title}</div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </Link>
+                                                    </Link>
+                                                </div>
                                             </>
                                         )
                                     })) : (
@@ -285,9 +289,16 @@ const Home = () => {
                                             </div>
                                         </div>
                                     )}
-                                    <div className="flex justify-center items-center">
-                                        <div>
-                                            <button className="btn btn-primary shadow-lg shadow-black-500/70" onClick={handleNextPage}><AiOutlineArrowRight size={20} color="white" /></button>
+                                    <div className="flex justify-center items-center gap-10">
+                                        <div className="md:hidden flex justify-center items-center">
+                                            <div>
+                                                <button className="btn btn-base-100 shadow-lg shadow-black-500/70" onClick={handlePrevPage}><AiOutlineArrowLeft size={20} color="black" /></button>
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-center items-center">
+                                            <div>
+                                                <button className="btn btn-primary shadow-lg shadow-black-500/70" onClick={handleNextPage}><AiOutlineArrowRight size={20} color="white" /></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -314,7 +325,7 @@ const Home = () => {
                             <div>By companies like :</div>
                         </div>
                         <>
-                            <div className="flex gap-24 mb-20">
+                            <div className="md:flex grid grid-cols-2 gap-24 mb-20">
                                 {partners.map(partner => {
                                     return (
                                         <>

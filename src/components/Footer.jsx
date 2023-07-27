@@ -8,8 +8,8 @@ import { Link } from "react-router-dom"
 function Footer() {
     return(
         <>
-        <div className="mt-[175px]">
-                <div className="font-poppins flex gap-40 justify-center ">
+        <div className="md:mt-[175px] mt-[300px]">
+                <div className="font-poppins md:flex p-10 gap-40 justify-center ">
                     <div className="flex flex-col gap-3">
                         <img className="w-[210px] h-[140px]" src={NewLogo} alt="" />
                         <div className="font-semibold">Find events you love with our</div>
@@ -50,7 +50,7 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="ml-[430px] mt-[75px] pb-[100px]">
+                <div className="p-10 md:ml-[430px] md:mt-[75px] md:pb-[100px]">
                     <div className="font-bold text-xl">© 2020 Wetick All Rights Reserved</div>
                 </div>
             </div>

@@ -85,18 +85,18 @@ const Events = () => {
 
             {/* Detail events */}
 
-            <div className=" bg-primary/10">
+            <div className="md:bg-primary/10">
                 <div className="flex justify-center items-center font-poppins ">
-                    <div className="flex justify-center items-center w-[1126px] h-[915px] bg-white mt-[50px] rounded-2xl ">
-                        <div className="flex gap-20">
-                            <div className="flex flex-col gap-10">
+                    <div className="md:flex justify-center items-center w-[1126px] h-[915px] md:bg-white mt-[200px] rounded-2xl ">
+                        <div className="md:flex md:gap-20 md:justify-center md:items-center m-5  ">
+                            <div className="md:flex flex flex-col gap-10">
                                 <>
                                     <div key={events?.id} className="">
                                         <img className="w-[375px] h-[486px] rounded-2xl" src={events?.picture} alt="" />
                                         <div></div>
                                     </div>
                                     <Link>
-                                        <div className="flex  gap-5 justify-center items-center">
+                                        <div className="md:flex hidden gap-5 justify-center items-center">
                                             <button onClick={addRemoveWishlist}>
                                                 {wishlistButton ? (
                                                     <i className='text-red-800'>
@@ -113,7 +113,7 @@ const Events = () => {
                                     </Link>
                                 </>
                             </div>
-                            <div className="flex flex-col">
+                            <div className="md:flex flex-col flex justify-center">
                                 <>
                                     <div key={events?.id}></div>
                                     <div className="text-3xl font-bold w-[233px] mb-[30px]">{events?.title}</div>

@@ -329,7 +329,7 @@ const CreateEvents = () => {
                                                         <h3 className="font-bold text-lg">Delete event</h3>
                                                         <p className="py-4">Are you sure for delete event?</p>
                                                         <div className="modal-action">
-                                                            <label  onClick={() => deleteEvents(item.id)} htmlFor="my_modal_6" className="btn text-red-500 normal-case">Delete</label>
+                                                            <label onClick={() => deleteEvents(item.id)} htmlFor="my_modal_6" className="btn text-red-500 normal-case">Delete</label>
                                                             <label htmlFor="my_modal_6" className="btn normal-case">Close</label>
                                                         </div>
                                                     </div>
@@ -408,6 +408,7 @@ const CreateEvents = () => {
                                                                 <div className='flex flex-col gap-3'>
                                                                     <span>Date Time Show</span>
                                                                     <input
+                                                                        name='date'
                                                                         className="input input-bordered w-[381px]"
                                                                         type="date"
                                                                         placeholder='Input Name Event...'
@@ -540,6 +541,7 @@ const CreateEvents = () => {
                                                         <div className='flex flex-col gap-3'>
                                                             <span>Date Time Show</span>
                                                             <input
+                                                                name='date'
                                                                 className="input input-bordered w-[381px]"
                                                                 type="date"
                                                                 placeholder='Input Name Event...'

@@ -99,11 +99,11 @@ const ProfilePage = () => {
             </div>
 
             {/* data profile */}
-            <div className=' bg-primary/10'>
+            <div className=' md:bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins ml-[90px] mt-[50px]'>
+                    <div className='font-poppins md:ml-[90px] mt-[50px] p-5'>
                         <div>
-                            <div className='flex flex-col gap-5'>
+                            <div className='hidden md:flex flex-col gap-5'>
                                 {token ?
                                     <div>
                                         <div >
@@ -177,8 +177,8 @@ const ProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[900px]'>
-                        <div className='flex flex-col gap-10 ml-20 mt-14'>
+                    <div className='md:bg-white md:rounded-3xl mt-[50px] md:ml-[188px] md:w-[1024px] md:h-[900px]'>
+                        <div className='flex flex-col justify-center items-center gap-10 md:ml-20 md:mt-14'>
                             <div className='font-semibold text-xl'>Profile</div>
                             <Formik
                                 initialValues={{
@@ -196,11 +196,11 @@ const ProfilePage = () => {
                                 enableReinitialize
                             >
                                 {({ handleSubmit, handleChange, handleBlur, values }) => (
-                                    <form onSubmit={handleSubmit} className='flex gap-32'>
+                                    <form onSubmit={handleSubmit} className='md:flex md:gap-32'>
                                         <div className='flex flex-col gap-10'>
-                                            <div className='flex justify-start items-center'>
+                                            <div className='md:flex justify-start items-center'>
                                                 <div>Name</div>
-                                                <div className='ml-[107px]'>
+                                                <div className='md:ml-[107px]'>
                                                     <input
                                                         name="fullName"
                                                         onChange={handleChange}
@@ -211,9 +211,9 @@ const ProfilePage = () => {
                                                         className="input input-bordered w-full max-w-xs opacity-50" />
                                                 </div>
                                             </div>
-                                            <div className='flex justify-start items-center'>
+                                            <div className='md:flex justify-start items-center'>
                                                 <div>Username</div>
-                                                <div className='flex gap-2 ml-[72px]'>
+                                                <div className='flex gap-2 md:ml-[72px]'>
                                                     <div>
                                                         {!editUserName && <span className='opacity-50'>{profile?.userName === null ? <span className='text-red-500'>Not Set</span> : profile?.userName}</span>}
                                                         {editUserName && <input name='userName' onChange={handleChange} onBlur={handleBlur} value={values.userName} type="text" className="input input-bordered w-full max-w-xs" />}
@@ -223,9 +223,9 @@ const ProfilePage = () => {
                                                     </div>}
                                                 </div>
                                             </div>
-                                            <div className='flex justify-start items-center'>
+                                            <div className='md:flex justify-start items-center'>
                                                 <div>Email</div>
-                                                <div className='flex gap-2 ml-[110px]'>
+                                                <div className='flex gap-2 md:ml-[110px]'>
                                                     <div>
                                                         {!editEmail && <span className='opacity-50'>{profile?.email === null ? <span className='text-red-500'>Not Set</span> : profile?.email}</span>}
                                                         {editEmail && <input name='email' type="email" onChange={handleChange} onBlur={handleBlur} value={values.email} className="input input-bordered w-full max-w-xs" />}
@@ -235,9 +235,9 @@ const ProfilePage = () => {
                                                     </div>}
                                                 </div>
                                             </div>
-                                            <div className='flex justify-start items-center '>
+                                            <div className='md:flex justify-start items-center '>
                                                 <div>Phone Number</div>
-                                                <div className='flex gap-2 ml-[34px]'>
+                                                <div className='flex gap-2 md:ml-[34px]'>
                                                     <div>
                                                         {!editPhoneNumber && <span className='opacity-50 '>{profile?.phoneNumber === null ? <span className='text-red-500 '>Not Set</span> : profile?.phoneNumber}</span>}
                                                         {editPhoneNumber && <input name='phoneNumber' onChange={handleChange} onBlur={handleBlur} value={values.phoneNumber} type="text" className="input input-bordered w-full max-w-xs" />}
@@ -247,9 +247,9 @@ const ProfilePage = () => {
                                                     </div>}
                                                 </div>
                                             </div>
-                                            <div className='flex justify-start items-center'>
+                                            <div className='md:flex justify-start items-center'>
                                                 <div>Gender</div>
-                                                <div className='ml-[96px] flex gap-5'>
+                                                <div className='md:ml-[96px] flex gap-5'>
                                                     <label className='flex gap-2'>
                                                         <Field name='gender'  value="0" type="radio" className='radio radio-primary'/>
                                                         <span>Male</span>
@@ -260,7 +260,7 @@ const ProfilePage = () => {
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div className='flex justify-start items-center gap-16'>
+                                            <div className='md:flex justify-start items-center gap-16'>
                                                 <div>Profession</div>
                                                 <select name='profession' value={values.profession} onChange={handleChange} onBlur={handleBlur} className="ml-[5px] select select-bordered w-full max-w-xs opacity-60">
                                                     <option className='hidden' >Select Profession</option>
@@ -269,18 +269,18 @@ const ProfilePage = () => {
                                                     <option>Backend</option>
                                                 </select>
                                             </div>
-                                            <div className='flex justify-start items-center'>
+                                            <div className='md:flex justify-start items-center'>
                                                 <div>Nationality</div>
-                                                <select name='nationality' value={values.nationality} onChange={handleChange} onBlur={handleBlur} className="select select-bordered w-full max-w-xs opacity-60 ml-[63px]">
+                                                <select name='nationality' value={values.nationality} onChange={handleChange} onBlur={handleBlur} className="select select-bordered w-full max-w-xs opacity-60 md:ml-[63px]">
                                                     <option className='hidden' >Select Nationality</option>
                                                     <option>Indonesia</option>
                                                     <option>USA</option>
                                                     <option>Russia</option>
                                                 </select>
                                             </div>
-                                            <div className='flex justify-start items-center '>
+                                            <div className='md:flex justify-start items-center '>
                                                 <div>Birth Date</div>
-                                                <div className='flex gap-2 ml-[73px]'>
+                                                <div className='flex gap-2 md:ml-[73px]'>
                                                     <div>
                                                         {!editBirthDate && <span className='opacity-50 '>{profile?.birthDate === null ? <span className='text-red-500'>Not Set</span> : moment(profile?.birthDate).format('YYYY/MM/DD')}</span>}
                                                         {editBirthDate && <input name='birthDate' onChange={handleChange} onBlur={handleBlur} value={values.birthDate} type="date" className="input input-bordered w-full max-w-xs" />}
@@ -297,7 +297,7 @@ const ProfilePage = () => {
                                         <div className=''>
                                             <hr />
                                         </div>
-                                        <div className='flex flex-col gap-4'>
+                                        <div className='md:flex flex-col gap-4'>
                                             <div>
                                                 <div className='flex gap-3'>
                                                     <div className='border-4 border-indigo-600 rounded-full p-2'>

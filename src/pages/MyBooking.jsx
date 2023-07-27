@@ -62,11 +62,11 @@ const MyBooking = () => {
 
 
             {/* data profile */}
-            <div className='bg-primary/10'>
+            <div className='md:bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins ml-[90px] mt-[50px]'>
+                    <div className='font-poppins md:ml-[90px] mt-[50px]'>
                         <div>
-                            <div className='flex flex-col gap-5'>
+                            <div className='md:flex hidden flex-col gap-5'>
                                 {token ?
                                     <div>
                                         <div >
@@ -140,8 +140,8 @@ const MyBooking = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
-                        <div className='flex flex-col gap-10 ml-20 mt-14'>
+                    <div className='bg-white rounded-3xl mt-[50px] md:ml-[188px] p-10 w-[1024px] h-[825px]'>
+                        <div className='flex flex-col gap-10 md:ml-20 mt-14'>
                             <div className='font-semibold text-xl'>My Booking</div>
                             <form className='flex  flex-col gap-10'>
                                 <div>

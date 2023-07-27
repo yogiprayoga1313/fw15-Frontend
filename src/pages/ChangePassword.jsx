@@ -74,15 +74,15 @@ const ChangePassword = () => {
 
             <div>
                 {/* Navbar */}
-                <NavbarPrivateRoute />
+                <NavbarPrivateRoute />  
             </div>
 
             {/* data profile */}
-            <div className=' bg-primary/10'>
+            <div className=' md:bg-primary/10'>
                 <div className='flex font-poppins '>
-                    <div className='font-poppins ml-[90px] mt-[50px]'>
+                    <div className='font-poppins md:ml-[90px] mt-[50px]'>
                         <div>
-                            <div className='flex flex-col gap-5'>
+                            <div className='hidden md:flex flex-col gap-5'>
                                 {token ?
                                     <div>
                                         <div >
@@ -156,8 +156,8 @@ const ChangePassword = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white rounded-3xl mt-[50px] ml-[188px] w-[1024px] h-[825px]'>
-                        <div className='flex flex-col gap-10 ml-20 mt-14'>
+                    <div className='bg-white rounded-3xl mt-[50px] md:ml-[188px] md:w-[1024px] md:h-[825px]'>
+                        <div className='flex flex-col gap-10 p-10 md:ml-20 mt-14'>
                             <div className='font-semibold text-xl'>Change Password</div>
                             {errMessage &&
                                 (<div className='mr-28'>
@@ -173,14 +173,14 @@ const ChangePassword = () => {
                                 onSubmit={doChange}
                             >
                                 {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-                                    <form onSubmit={handleSubmit} className='flex  flex-col gap-10'>
-                                        <div className='flex justify-start items-center'>
+                                    <form onSubmit={handleSubmit} className='flex flex-col gap-10'>
+                                        <div className='md:flex justify-start items-center'>
                                             <div>Old Password</div>
-                                            <div className='ml-[100px]'>
+                                            <div className='md:ml-[100px]'>
                                                 <input
                                                     type="password"
                                                     placeholder="Input Old Password...."
-                                                    className="input input-bordered w-[619px]"
+                                                    className="input input-bordered w-[280px] md:w-[619px]"
                                                     name='oldPassword'
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -192,13 +192,13 @@ const ChangePassword = () => {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className='flex justify-start items-center'>
+                                        <div className='md:flex justify-start items-center'>
                                             <div>New Password</div>
-                                            <div className='ml-[93px]'>
+                                            <div className='md:ml-[93px]'>
                                                 <input
                                                     type="password"
                                                     placeholder="Input New Password...."
-                                                    className="input input-bordered w-[619px]"
+                                                    className="input input-bordered w-[280px] md:w-[619px]"
                                                     name='newPassword'
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -210,13 +210,13 @@ const ChangePassword = () => {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className='flex justify-start items-center'>
+                                        <div className='md:flex justify-start items-center'>
                                             <div>Confirm Password</div>
-                                            <div className='ml-[63px]'>
+                                            <div className='md:ml-[63px]'>
                                                 <input
                                                     type="password"
                                                     placeholder="Input Confirm Password...."
-                                                    className="input input-bordered w-[619px]"
+                                                    className="input input-bordered w-[280px] md:w-[619px]"
                                                     name='confirmPassword'
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
@@ -228,7 +228,7 @@ const ChangePassword = () => {
                                                 )}
                                             </div>
                                         </div>
-                                        <button type='submit' className='btn btn-primary normal-case w-[826px] h-[61px] text-white text-[16px]'>Update</button>
+                                        <button type='submit' className='btn btn-primary normal-case md:w-[826px] md:h-[61px] w-[280px] text-white text-[16px]'>Update</button>
                                     </form>
                                 )}
                             </Formik>
