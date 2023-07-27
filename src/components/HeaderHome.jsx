@@ -104,13 +104,13 @@ const HeaderHome = () => {
         ) : (
           <div className="flex items-center gap-8 font-bold hidden md:block md:flex">
             <div>
-              <Link to="/Login" className="hover:text-[#00AFC1] font-bold">
+              <Link to="/Login" className="font-bold">
                 Log In
               </Link>
             </div>
             <div>
               <button className="btn btn-primary text-white w-full h-[20px]">
-                <Link to="/Register" className="hover:text-[#00AFC1] font-bold">
+                <Link to="/signUp" className="font-bold normal-case">
                   Sign Up
                 </Link>
               </button>
