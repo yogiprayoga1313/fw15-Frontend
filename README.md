@@ -36,15 +36,15 @@ Web application For Reservation tickets and Create events
 # How to use
 
 ##Register Page
-![Register](../fw15-Frontend//src//Asset/ScreenShot%20Page/register.png)
+![Register](src/Asset/ScreenShot Page/register.png)
 
 ##Login Page
-![Login](../fw15-Frontend/src/Asset/ScreenShot%20Page/login.png)
+![Login](src/Asset/ScreenShot Page/login.png)
 
 ##Home Page
-![Home](../fw15-Frontend/src/Asset/ScreenShot%20Page/Home.png)
+![Home](src/Asset/ScreenShot Page/Home.png)
 
 ##Events Details
-![Events Details](../fw15-Frontend/src/Asset/ScreenShot%20Page/Detail-Event.png)
+![Events Details](src/Asset/ScreenShot Page/Detail-Event.png)
 ##Pofile Page
-![Profile](../fw15-Frontend//src/Asset/ScreenShot%20Page/profile.png)
+![Profile](src/Asset/ScreenShot Page/profile.png)
