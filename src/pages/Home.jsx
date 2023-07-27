@@ -93,13 +93,12 @@ const Home = () => {
             </div>
 
             {/* Navbar */}
-            {/* <Navbar /> */}
             <HeaderHome/>
 
             {/* iklan */}
-            <div className="font-poppins">
+            <div className="font-poppins pt-[100px]">
                 <div className="md:flex bg-primary justify-around bg-center bg-cover bg-no-repeat bg-[url('./Asset/background-img-1.png')]">
-                    <div className='flex flex-col justify-center items-center my-[200px]'>
+                    <div className='flex flex-col justify-center items-center md:my-[200px]'>
                         <div className='md:text-[64px] text-[45px] md:w-[554px] h-[192px] w-[370px] font-bold text-white mb-10 text-center md:text-left'>Find events you love with our</div>
                         <div className='bg-white md:w-[600px] md:h-[75px] w-[355px] h-[75px] rounded-2xl flex justify-center items-center'>
                             <form className='md:flex flex gap-10 md:gap-10'>
@@ -125,7 +124,7 @@ const Home = () => {
 
             {/* Events */}
             <div>
-                <div className='mt-[175px] font-poppins mb-20'>
+                <div className='md:mt-[175px] font-poppins mb-20 md:pt-0 pt-[100px]'>
                     <div className='flex flex-col justify-center items-center gap-7'>
                         <div className='bg-red-200 rounded-2xl w-[150px] h-[30px]'>
                             <div className='flex justify-center items-center gap-4'>

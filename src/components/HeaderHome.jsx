@@ -52,8 +52,8 @@ const HeaderHome = () => {
 
   return (
     <>
-      <header className="flex md:justify-between  items-center bg-white px-[50px] w-full h-[100px] fixed z-10 font-poppins">
-        <div className="h-[65px] w-[200px] flex items-center justify-center">
+      <header className="flex justify-between  items-center bg-white p-4 md:px-[50px] w-full h-[100px] fixed z-10 font-poppins">
+        <div className="h-[65px] w-[150px] flex items-center justify-center">
           <Link to="/" className="hover:text-[#00AFC1] font-bold h-full flex items-center w-full">
             <img src={NewLogo} />
           </Link>
