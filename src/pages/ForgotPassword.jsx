@@ -1,40 +1,37 @@
 import { Helmet } from "react-helmet"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 // import Login from "./Login"
 import NewLogo from "../Asset/NEWLOGO-Copy.png"
 import LogoHumanProfil from "../Asset/new-animation.png"
-import { setErrorMessage } from "../redux/reducers/auth"
+// import { setErrorMessage } from "../redux/reducers/auth"
 import React from "react"
 import http from "../helpers/http"
-import { useState, useEffect } from "react"
+// import { useState, useEffect } from "react"
 
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState("");
-    const [resetCode, setResetCode] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate()
+    const [errorMessage, setErrorMessage] = React.useState('')
+    const [successMessage, setSuccessMessage] = React.useState('')
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const doForgot = async (event) => {
+        event.preventDefault()
+        setErrorMessage('')
         try {
-            const response = await http().post("/auth/forgotPassword", {
-                email: email,
-
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setResetCode(data.resetCode);
-            } else {
-                throw new Error("Error, please try again");
-            }
+            const { value: email } = event.target.email
+            const body = new URLSearchParams({ email }).toString()
+            const { data } = await http().post('/auth/forgotPassword', body)
+            console.log(data)
+            setSuccessMessage(data.message)
+            setTimeout(() => {
+                setSuccessMessage('')
+            }, 1000)
+            setTimeout(() => {
+                navigate('/resetPassword')
+            }, 2000)
         } catch (error) {
-            setErrorMessage(error.message);
-            console.error(error);
+            const message = error?.response?.data?.message
+            setErrorMessage(message)
         }
     }
 
@@ -64,24 +61,23 @@ const ForgotPassword = () => {
                         <div className="font-semibold text-[20px]">Forgot Password</div>
                         <div className="text-sm">You’ll get mail soon on your email</div>
                     </div>
-                    <form>
-                        <div>
-                            <form onSubmit={handleSubmit} className="flex-col flex gap-3">
-                                <div>
-                                    <input
-                                        type="text"
-                                        placeholder="email"
-                                        className="input input-bordered w-full max-w-xs"
-                                        value={email}
-                                        onChange={handleEmailChange}
-                                    />
-                                </div>
-                                <div className="mt-5">
-                                    <Link to="/resetPassword"><button type="submit" className="btn normal-case btn-primary btn-block text-white">Sand</button></Link>
-                                </div>
-                            </form>
-                        </div>
-                    </form>
+                    <div>
+                        <form onSubmit={doForgot} className="flex-col flex gap-3">
+                            {errorMessage && <div className='alert alert-error'>{errorMessage}</div>}
+                            {successMessage && <div className='alert alert-success'>{successMessage}</div>}
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="email"
+                                    className="input input-bordered w-full max-w-xs"
+                                    name="email"
+                                />
+                            </div>
+                            <div className="mt-5">
+                                <button type="submit" className="btn normal-case btn-primary btn-block text-white">Sand</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </>
